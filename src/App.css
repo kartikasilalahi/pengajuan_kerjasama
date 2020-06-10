@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,47 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+
+.dashboard_mitra .judul_dashboard h4,
+.dashboard_mitra .judul_dashboard h5{
+  font-weight: bolder;
+}
+
+.home_left{
+  text-align: center;
+}
+
+.home_left h4{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.home_left h5{
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+
+.home_right .fa .fa-envelope .prefix{
+  color: black !important;
+}
+
+
+
+.kategori-user{
+	padding-left: 0%;
+	padding-bottom: 10px;
+	width: 93.3%;
+	border-bottom: 1px solid rgb(197, 193, 193);
+	/* border-bottom: 1px solid rgb(6, 143, 143); */
+}
+.kategori-user .true{
+	color: rgb(6, 143, 143);
+	font-weight: bold;
+}
+
+.kategori-user .transaksi:hover{
+	color: cyan;
 }
