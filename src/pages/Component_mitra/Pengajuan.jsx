@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Input, FormGroup, Label, Col, Button, CustomInput } from 'reactstrap';
+import { MDBBtn } from 'mdbreact'
 import { AiOutlineWarning } from 'react-icons/ai'
 import Axios from 'axios'
 import { APIURL } from '../../helper/apiurl'
@@ -24,7 +25,7 @@ function Pengajuan() {
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>No HP/WA: </Label>
-                        <Input size="sm" type="textarea" />
+                        <Input size="sm" type="text" />
                         {/* value={editResto.alamat}
                             onChange={e => seteditResto({ ...editResto, alamat: e.target.value })} /> */}
                     </FormGroup>
@@ -48,13 +49,10 @@ function Pengajuan() {
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Alamat Institusi  </Label>
-                        <Input size="sm" type="text" />
+                        <Input size="sm" type="textarea" />
                         {/* value={editResto.phone}
                             onChange={e => seteditResto({ ...editResto, phone: e.target.value })} /> */}
                     </FormGroup>
-                </div>
-
-                <div className=" right col-6 pr-4 py-3" style={{ backgroundColor: 'whitesmoke' }}>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Bidang Kerjasama </Label>
                         <select name="takeaway" className="form-control" size="sm">
@@ -69,6 +67,9 @@ function Pengajuan() {
                              */}
                         </select>
                     </FormGroup>
+                </div>
+
+                <div className=" right col-6 pr-4 py-3" style={{ backgroundColor: 'whitesmoke' }}>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Pejabat Penandatangan </Label>
                         <Input className="mb-3" size="sm" type="text" placeholder="Nama Pejabat" />
@@ -77,8 +78,20 @@ function Pengajuan() {
                             onChange={e => seteditResto({ ...editResto, phone: e.target.value })} /> */}
                     </FormGroup>
                     <FormGroup>
+                        <Label style={{ fontSize: "15px" }}>Penanggungjawab Pelaksana </Label>
+                        <Input className="mb-3" size="sm" type="text" />
+                        {/* value={editResto.phone}
+                            onChange={e => seteditResto({ ...editResto, phone: e.target.value })} /> */}
+                    </FormGroup>
+                    <FormGroup>
+                        <Label style={{ fontSize: "15px" }}>Unit UMB terkait Kerjasama </Label>
+                        <Input className="mb-3" size="sm" type="text" />
+                        {/* value={editResto.phone}
+                            onChange={e => seteditResto({ ...editResto, phone: e.target.value })} /> */}
+                    </FormGroup>
+                    <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Dokumen: </Label>
-                        <CustomInput type='file' label='Upload file MoU' className='form-control mb-3' />
+                        <CustomInput size="sm" type='file' label='Upload file MoU' className='form-control mb-3' />
                         <CustomInput type='file' label='Uploa file MoA' className='form-control mb-3' />
                         <CustomInput type='file' label='Upload file IA' className='form-control mb-3' />
                         <CustomInput type='file' label='Upload file Perpanjangan MoU/MoA/IA' className='form-control mb-3' />
@@ -86,6 +99,8 @@ function Pengajuan() {
                         {/* <CustomInput type='file' label='Select Image..' onChange={HandleEditImages} className='form-control' /> */}
 
                     </FormGroup>
+
+                    <MDBBtn color='success' >KIRIM</MDBBtn >
                 </div>
             </div>
         </div>
