@@ -5,6 +5,9 @@ import { MDBBtn } from 'mdbreact'
 import Swal from "sweetalert2";
 import { Logout } from '../redux/action'
 import { Redirect } from 'react-router-dom';
+import Profil from './Component_mitra/Profil'
+import Pengajuan from './Component_mitra/Pengajuan'
+import History from './Component_mitra/History'
 
 class Dashboard_mitra extends Component {
 
@@ -59,46 +62,33 @@ class Dashboard_mitra extends Component {
                         <h5>Universitas Mercubuana</h5>
                     </div>
                 </div>
-                <div className="nama-mitra text-center my-3" style={{ width: '20%' }}>
+                {/* <div className="nama-mitra text-center my-3" style={{ width: '20%' }}>
                     <h6>HI, THERE</h6>
-                </div>
+                </div> */}
                 <Tabs defaultTab="vertical-tab-one" vertical>
                     <TabList className="mr-3">
                         <Tab tabFor="vertical-tab-one">
-                            <i className="fa fa-user-circle-o"></i>
-                            <p>Halaman Utama</p>
+                            <i className="fa fa-tasks"></i>
+                            <p>Profil </p>
                         </Tab>
                         <Tab tabFor="vertical-tab-two">
-                            <i className="fa fa-tasks"></i>
-                            <p>Profil Saya</p>
+                            <i className="fa fa-money" ></i>
+                            <p>Pengajuan Kerjasama</p>
                         </Tab>
                         <Tab tabFor="vertical-tab-three">
                             <i className="fa fa-money" ></i>
-                            <p>Pengajuan Kerjasama Baru</p>
+                            <p>History</p>
                         </Tab>
-                        <Tab tabFor="vertical-tab-four">
-                            <i className="fa fa-money" ></i>
-                            <p>Dokumen</p>
-                        </Tab>
-                        <Tab tabFor="vertical-tab-five">
-                            <i className="fa fa-money" ></i>
-                            <p>Work Plan</p>
-                        </Tab>
+
                     </TabList>
                     <TabPanel style={{ width: "100%" }} tabId="vertical-tab-one">
-                        Utama
+                        <Profil />
                     </TabPanel>
                     <TabPanel style={{ width: "100%" }} tabId="vertical-tab-two">
-                        Profil
+                        <Pengajuan />
                     </TabPanel>
                     <TabPanel style={{ width: "100%" }} tabId="vertical-tab-three">
-                        Pengajuan
-                    </TabPanel>
-                    <TabPanel style={{ width: "100%" }} tabId="vertical-tab-four">
-                        Dokumen
-                    </TabPanel>
-                    <TabPanel style={{ width: "100%" }} tabId="vertical-tab-five">
-                        Work Plan
+                        <History />
                     </TabPanel>
                 </Tabs>
                 <div className="button_logout text-center" style={{ width: '20%' }} >
