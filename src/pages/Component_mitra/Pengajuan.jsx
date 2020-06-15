@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Input, FormGroup, Label, Col, Button, CustomInput } from 'reactstrap';
+import { Input, FormGroup, Label, CustomInput } from 'reactstrap';
+import Toast from 'light-toast'
+
 import { MDBBtn } from 'mdbreact'
 import { AiOutlineWarning } from 'react-icons/ai'
 import Axios from 'axios'
@@ -7,11 +9,8 @@ import { APIURL } from '../../helper/apiurl'
 
 function Pengajuan() {
 
-    const [dataPengajuan, setdataPengajuan] = useState([]);
     const [Bidang, setBidang] = useState([]);
-    const [fileMOU, setfileMOU] = useState();
-    const [fileMOA, setfileMOA] = useState();
-    const [fileIA, setfileIA] = useState();
+    const [dokumen, setdokumen] = useState([]);
     const [filePerpanjangan, setfilePerpanjangan] = useState();
     const [tulisBidang, settulisBidang] = useState(false);
 
@@ -51,7 +50,7 @@ function Pengajuan() {
     const handleBidang = (e) => {
         const { name, value } = e.target
         console.log(value)
-        if (value == 5 || value == 6) {
+        if (value === 5 || value === 6) {
             settulisBidang(true)
             setaddPengajuan({ ...addPengajuan, [name]: value })
         } else {
@@ -60,49 +59,13 @@ function Pengajuan() {
         }
     }
 
-    /* ---------- Add File MOU --------- */
-    const addFileMOU = (e) => {
-        console.log('ini mou', e.target.files[0])
-        let fileMOU = e.target.files[0]
-        if (fileMOU) {
-            setfileMOU(e.target.files[0])
-        } else {
-            setfileMOU(undefined)
-        }
+
+    /* -------- Handle Document -------- */
+    const handleDocument = (e) => {
+        setdokumen([...dokumen, ...e.target.files])
+
     }
 
-    /* ---------- Add File MOA --------- */
-    const addFileMOA = (e) => {
-        console.log('ini moa', e.target.files[0])
-        let fileMOA = e.target.files[0]
-        if (fileMOA) {
-            setfileMOA(e.target.files[0])
-        } else {
-            setfileMOA(undefined)
-        }
-    }
-
-    /* ---------- Add File IA --------- */
-    const addFileIA = (e) => {
-        console.log('ini IA', e.target.files[0])
-        let fileIA = e.target.files[0]
-        if (fileIA) {
-            setfileIA(e.target.files[0])
-        } else {
-            setfileIA(undefined)
-        }
-    }
-
-    /* ---------- Add File Perpanjangan --------- */
-    const addFilePerpanjangan = (e) => {
-        console.log('ini Perpanjangan', e.target.files[0])
-        let filePerpanjangan = e.target.files[0]
-        if (filePerpanjangan) {
-            setfilePerpanjangan(e.target.files[0])
-        } else {
-            setfilePerpanjangan(undefined)
-        }
-    }
 
     /* -------- Add Pengajuan -------- */
     const addNewPengajuan = () => {
@@ -123,7 +86,7 @@ function Pengajuan() {
             bidanglain
         } = addPengajuan
 
-        if (tulisBidang == false) {
+        if (tulisBidang === false) {
             addPengajuan.bidanglain = ''
         }
         let newPengajuan = {
@@ -148,25 +111,27 @@ function Pengajuan() {
             }
         }
 
-        // START FORM DATA APPEND ===================
-        formdata.append('fileMOU', fileMOU)
-        formdata.append('fileMOA', fileMOA)
-        formdata.append('fileIA', fileIA)
-        formdata.append('filePerpanjangan', filePerpanjangan)
-        formdata.append('newPengajuan', newPengajuan)
 
+        for (var i = 0; i < dokumen.length; i++) {
+            formdata.append('dokumen', dokumen[i])
+        }
+        console.log('DATAIMG', dokumen)
         formdata.append('data', JSON.stringify(newPengajuan))
         Axios.post(`${APIURL}pengajuan/addpengajuan`, formdata, Headers)
             .then(() => {
                 console.log('successssss')
+                Toast.success('success..', 2000)
             })
             .catch(err => console.log(err))
+        setdokumen([])
 
     }
 
 
     // =========== TEST CONSOLE
-    console.log('INI', addPengajuan)
+
+
+
 
     // =========== TEST CONSOLE
 
@@ -238,10 +203,10 @@ function Pengajuan() {
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Dokumen: </Label>
-                        <CustomInput onChange={addFileMOU} size="sm" type='file' label='Upload file MoU' className='form-control mb-3' />
-                        <CustomInput onChange={addFileMOA} type='file' label='Uploa file MoA' className='form-control mb-3' />
-                        <CustomInput onChange={addFileIA} type='file' label='Upload file IA' className='form-control mb-3' />
-                        <CustomInput onChange={addFilePerpanjangan} type='file' label='Upload file Perpanjangan MoU/MoA/IA' className='form-control mb-3' />
+                        <CustomInput onChange={handleDocument} name='MOU' size="sm" type='file' label='Upload file MoU' className='form-control mb-3' />
+                        <CustomInput onChange={handleDocument} name='MOA' type='file' label='Uploa file MoA' className='form-control mb-3' />
+                        <CustomInput onChange={handleDocument} name='IA' type='file' label='Upload file IA' className='form-control mb-3' />
+                        <CustomInput onChange={handleDocument} name='perpanjangan' type='file' label='Upload file Perpanjangan MoU/MoA/IA' className='form-control mb-3' />
 
                     </FormGroup>
 
@@ -253,4 +218,36 @@ function Pengajuan() {
 
 }
 
-export default Pengajuan 
+export default Pengajuan
+
+
+
+
+
+
+
+
+
+    // < CustomInput onChange = { addFileMOU } size = "sm" type = 'file' label = 'Upload file MoU' className = 'form-control mb-3' />
+    //     <CustomInput onChange={addFileMOA} type='file' label='Uploa file MoA' className='form-control mb-3' />
+    //     <CustomInput onChange={addFileIA} type='file' label='Upload file IA' className='form-control mb-3' />
+    //     <CustomInput onChange={addFilePerpanjangan} type='file' label='Upload file Perpanjangan MoU/MoA/IA' className='form-control mb-3' />
+
+
+
+
+        // // START FORM DATA APPEND ===================
+        // formdata.append('fileMOU', fileMOU)
+        // formdata.append('fileMOA', fileMOA)
+        // formdata.append('fileIA', fileIA)
+        // formdata.append('filePerpanjangan', filePerpanjangan)
+        // // formdata.append('newPengajuan', newPengajuan)
+
+        // formdata.append('data', JSON.stringify(newPengajuan))
+        // Axios.post(`${APIURL}pengajuan/addpengajuan`, formdata, Headers)
+        //     .then(() => {
+        //         console.log('successssss')
+        //     })
+        //     .catch(err => console.log(err))
+
+        // START FORM DATA APPEND ===================
