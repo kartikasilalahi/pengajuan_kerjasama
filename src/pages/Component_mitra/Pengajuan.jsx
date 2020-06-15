@@ -27,10 +27,6 @@ function Pengajuan() {
         idbidang: '',
         pejabat: useRef(),
         jabatan: useRef(),
-        // MOU: useRef(),
-        // MOA: useRef(),
-        // IA: useRef(),
-        // perpanjangan: useRef(),
         penanggungjawab: useRef(),
         unit: useRef(),
         bidanglain: useRef()
@@ -122,15 +118,14 @@ function Pengajuan() {
             idbidang,
             pejabat,
             jabatan,
-            // MOU,
-            // MOA,
-            // IA,
-            // perpanjangan,
             penanggungjawab,
             unit,
             bidanglain
         } = addPengajuan
 
+        if (tulisBidang == false) {
+            addPengajuan.bidanglain = ''
+        }
         let newPengajuan = {
             pengaju: pengaju.current.value,
             no_pengaju: no_pengaju.current.value,
@@ -138,12 +133,12 @@ function Pengajuan() {
             no_PIC: no_PIC.current.value,
             nama_institusi: nama_institusi.current.value,
             alamat_institusi: alamat_institusi.current.value,
-            idbidang: parseInt(idbidang.current.value),
+            idbidang: parseInt(idbidang),
             pejabat: pejabat.current.value,
             jabatan: jabatan.current.value,
             penanggungjawab: penanggungjawab.current.value,
             unit: unit.current.value,
-            bidanglain: bidanglain.current.value
+            // bidanglain: bidanglain.current.value
         }
 
         let Headers = {
@@ -154,12 +149,18 @@ function Pengajuan() {
         }
 
         // START FORM DATA APPEND ===================
-        formdata.append('MOU', fileMOU)
-        formdata.append('MOA', fileMOA)
-        formdata.append('IA', fileIA)
-        formdata.append('perpanjangan', filePerpanjangan)
+        formdata.append('fileMOU', fileMOU)
+        formdata.append('fileMOA', fileMOA)
+        formdata.append('fileIA', fileIA)
+        formdata.append('filePerpanjangan', filePerpanjangan)
         formdata.append('newPengajuan', newPengajuan)
 
+        formdata.append('data', JSON.stringify(newPengajuan))
+        Axios.post(`${APIURL}pengajuan/addpengajuan`, formdata, Headers)
+            .then(() => {
+                console.log('successssss')
+            })
+            .catch(err => console.log(err))
 
     }
 
@@ -198,7 +199,7 @@ function Pengajuan() {
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Nama Institusi  </Label>
-                        <Input size="sm" type="text" innerRef={addPengajuan.alamat_institusi} />
+                        <Input size="sm" type="text" innerRef={addPengajuan.nama_institusi} />
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Alamat Institusi  </Label>
@@ -244,7 +245,7 @@ function Pengajuan() {
 
                     </FormGroup>
 
-                    <MDBBtn color='success' >KIRIM</MDBBtn >
+                    <MDBBtn color='success' onClick={addNewPengajuan} >KIRIM</MDBBtn >
                 </div>
             </div>
         </div>
