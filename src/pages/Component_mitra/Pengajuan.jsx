@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, FormGroup, Label, CustomInput } from 'reactstrap';
 import Toast from 'light-toast'
 
@@ -11,24 +11,23 @@ function Pengajuan() {
 
     const [Bidang, setBidang] = useState([]);
     const [dokumen, setdokumen] = useState([]);
-    const [filePerpanjangan, setfilePerpanjangan] = useState();
     const [tulisBidang, settulisBidang] = useState(false);
 
 
     /* -------  State add Penggajuan -----------*/
     const [addPengajuan, setaddPengajuan] = useState({
-        pengaju: useRef(),
-        no_pengaju: useRef(),
-        PIC: useRef(),
-        no_PIC: useRef(),
-        nama_institusi: useRef(),
-        alamat_institusi: useRef(),
-        idbidang: '',
-        pejabat: useRef(),
-        jabatan: useRef(),
-        penanggungjawab: useRef(),
-        unit: useRef(),
-        bidanglain: useRef()
+        // pengaju: useRef(),
+        // no_pengaju: useRef(),
+        // PIC: useRef(),
+        // no_PIC: useRef(),
+        // nama_institusi: useRef(),
+        // alamat_institusi: useRef(),
+        // idbidang: '',
+        // pejabat: useRef(),
+        // jabatan: useRef(),
+        // penanggungjawab: useRef(),
+        // unit: useRef(),
+        // bidanglain: useRef()
     })
 
 
@@ -50,7 +49,7 @@ function Pengajuan() {
     const handleBidang = (e) => {
         const { name, value } = e.target
         console.log(value)
-        if (value === 5 || value === 6) {
+        if (parseInt(value) === 5 || parseInt(value) === 6) {
             settulisBidang(true)
             setaddPengajuan({ ...addPengajuan, [name]: value })
         } else {
@@ -69,7 +68,7 @@ function Pengajuan() {
 
     /* -------- Add Pengajuan -------- */
     const addNewPengajuan = () => {
-        let id = localStorage.getItem('id')
+        let idmitra = localStorage.getItem('id')
         let formdata = new FormData
         const {
             pengaju,
@@ -90,18 +89,19 @@ function Pengajuan() {
             addPengajuan.bidanglain = ''
         }
         let newPengajuan = {
-            pengaju: pengaju.current.value,
-            no_pengaju: no_pengaju.current.value,
-            PIC: PIC.current.value,
-            no_PIC: no_PIC.current.value,
-            nama_institusi: nama_institusi.current.value,
-            alamat_institusi: alamat_institusi.current.value,
+            pengaju: pengaju,
+            no_pengaju: no_pengaju,
+            PIC: PIC,
+            no_PIC: no_PIC,
+            nama_institusi: nama_institusi,
+            alamat_institusi: alamat_institusi,
             idbidang: parseInt(idbidang),
-            pejabat: pejabat.current.value,
-            jabatan: jabatan.current.value,
-            penanggungjawab: penanggungjawab.current.value,
-            unit: unit.current.value,
-            // bidanglain: bidanglain.current.value
+            pejabat: pejabat,
+            jabatan: jabatan,
+            penanggungjawab: penanggungjawab,
+            unit: unit,
+            bidanglain: bidanglain,
+            idmitra: idmitra
         }
 
         let Headers = {
@@ -115,25 +115,32 @@ function Pengajuan() {
         for (var i = 0; i < dokumen.length; i++) {
             formdata.append('dokumen', dokumen[i])
         }
-        console.log('DATAIMG', dokumen)
+        console.log('DATAIMG', dokumen.length)
         formdata.append('data', JSON.stringify(newPengajuan))
-        Axios.post(`${APIURL}pengajuan/addpengajuan`, formdata, Headers)
-            .then(() => {
-                console.log('successssss')
-                Toast.success('success..', 2000)
-            })
-            .catch(err => console.log(err))
-        setdokumen([])
+
+        if (!pengaju || !no_pengaju || !PIC || !no_PIC || !nama_institusi || !alamat_institusi || !idbidang || !pejabat || !jabatan || !penanggungjawab || !unit) Toast.fail('Ops! Pastikan semua sudah terisi..', 2700)
+        else if (dokumen.length < 4) Toast.fail('Ops! Pastikan semua dokumen lengkap..', 2700)
+        else {
+            Axios.post(`${APIURL}pengajuan/addpengajuan`, formdata, Headers)
+                .then(() => {
+                    console.log('successssss')
+                    Toast.success('Berhasil..', 2000)
+                    setdokumen([])
+                    setaddPengajuan({})
+                })
+                .catch(err => console.log(err))
+        }
 
     }
 
 
-    // =========== TEST CONSOLE
+    // =========== TEST CONSOLE======================================
 
 
+    // console.log('ini data pengajuan', addPengajuan)
+    console.log('tls bdg', tulisBidang)
 
-
-    // =========== TEST CONSOLE
+    // =========== TEST CONSOLE====================================
 
 
 
@@ -148,27 +155,39 @@ function Pengajuan() {
                 <div className="left col-6 mr-2 py-2" style={{ backgroundColor: 'whitesmoke' }}>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Nama Pengaju: </Label>
-                        <Input size="sm" className="w-100" type="text" innerRef={addPengajuan.pengaju} />
+                        <Input size="sm" className="w-100" type="text"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, pengaju: e.target.value })}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>No HP/WA: </Label>
-                        <Input size="sm" type="text" innerRef={addPengajuan.no_pengaju} />
+                        <Input size="sm" type="text"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, no_pengaju: e.target.value })}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>PIC (Mitra)  </Label>
-                        <Input size="sm" type="text" innerRef={addPengajuan.PIC} />
+                        <Input size="sm" type="text"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, PIC: e.target.value })}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>No HP/WA PIC (Mitra)  </Label>
-                        <Input size="sm" type="text" innerRef={addPengajuan.no_PIC} />
+                        <Input size="sm" type="text"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, no_PIC: e.target.value })}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Nama Institusi  </Label>
-                        <Input size="sm" type="text" innerRef={addPengajuan.nama_institusi} />
+                        <Input size="sm" type="text"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, nama_institusi: e.target.value })}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Alamat Institusi  </Label>
-                        <Input size="sm" type="textarea" innerRef={addPengajuan.alamat_institusi} />
+                        <Input size="sm" type="textarea"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, alamat_institusi: e.target.value })}
+                        />
                     </FormGroup>
 
                     <FormGroup>
@@ -181,7 +200,8 @@ function Pengajuan() {
                         {
                             tulisBidang ?
                                 (
-                                    <Input className="mt-3" type="text" placeholder='Sebutkan Bidang kerja sama' innerRef={addPengajuan.bidanglain} />
+                                    <Input className="mt-3" type="text" placeholder='Sebutkan Bidang kerja sama'
+                                        onChange={e => setaddPengajuan({ ...addPengajuan, bidanglain: e.target.value })} />
                                 ) : <Input disabled className="mt-3" size="sm" type="text" placeholder='Sebutkan Bidang kerja sama' />
                         }
                     </FormGroup>
@@ -190,16 +210,24 @@ function Pengajuan() {
                 <div className=" right col-6 pr-4 py-3" style={{ backgroundColor: 'whitesmoke' }}>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Pejabat Penandatangan </Label>
-                        <Input className="mb-3" size="sm" type="text" placeholder="Nama Pejabat" innerRef={addPengajuan.pejabat} />
-                        <Input size="sm" type="text" placeholder="Jabatan" innerRef={addPengajuan.jabatan} />
+                        <Input className="mb-3" size="sm" type="text" placeholder="Nama Pejabat"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, pejabat: e.target.value })}
+                        />
+                        <Input size="sm" type="text" placeholder="Jabatan"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, jabatan: e.target.value })}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Penanggungjawab Pelaksana </Label>
-                        <Input className="mb-3" size="sm" type="text" innerRef={addPengajuan.penanggungjawab} />
+                        <Input className="mb-3" size="sm" type="text"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, penanggungjawab: e.target.value })}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Unit UMB terkait Kerjasama </Label>
-                        <Input className="mb-3" size="sm" type="text" innerRef={addPengajuan.unit} />
+                        <Input className="mb-3" size="sm" type="text"
+                            onChange={e => setaddPengajuan({ ...addPengajuan, unit: e.target.value })}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Dokumen: </Label>
