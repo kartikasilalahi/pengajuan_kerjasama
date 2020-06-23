@@ -17,14 +17,9 @@ function Pengajuan(props) {
     /* -------  State Awal -----------*/
     const [Bidang, setBidang] = useState([]);
     const [dokumen, setdokumen] = useState([]);
-    const [labelDocument, setlabelDocument] = useState('Select File ');
+    const [dataAjuan, setdataAjuan] = useState([]);
     const [formAjuan, setformAjuan] = useState('true');
     const [ajuan, setajuan] = useState('false');
-
-    // const [dokumen, setdokumen] = useState([{
-    //     fileName: undefined,
-    //     fileCapt: 'Selecr File..'
-    // }]);
 
     const [tulisBidang, settulisBidang] = useState(false);
     const [addPengajuan, setaddPengajuan] = useState({})
@@ -32,10 +27,15 @@ function Pengajuan(props) {
 
     /* -------- USEEFFECT -------- */
     useEffect(() => {
+        let id = parseInt(localStorage.getItem('id'))
+        Axios.get(`${APIURL}pengajuan/getajuan/${id}`)
+            .then(res => { setdataAjuan(res.data) })
+            .catch(err => { console.log(err) })
         Axios.get(`${APIURL}pengajuan/getbidang`)
             .then(res => { setBidang(res.data) })
             .catch(err => { console.log(err) })
     }, [])
+
 
     /* ----------- Render Option Bidang ------------- */
     const renderSelectBidang = () => {
@@ -60,11 +60,7 @@ function Pengajuan(props) {
 
     /* -------- Handle Document -------- */
     const handleDocument = (e) => {
-        if (e.target.files) {
-            setdokumen([...dokumen, ...e.target.files])
-        } else {
-            setlabelDocument('Select File ')
-        }
+        setdokumen([...dokumen, ...e.target.files])
     }
 
 
@@ -103,7 +99,7 @@ function Pengajuan(props) {
             penanggungjawab: penanggungjawab,
             unit: unit,
             bidanglain: bidanglain,
-            idmitra: idmitra
+            idmitra: parseInt(idmitra)
         }
 
         let Headers = {
@@ -148,13 +144,23 @@ function Pengajuan(props) {
                         setajuan('true')
                         setformAjuan('false')
                         // window.location.reload()
+                        let id = parseInt(localStorage.getItem('id'))
+                        Axios.get(`${APIURL}pengajuan/getajuan/${id}`)
+                            .then(res1 => { setdataAjuan(res1.data) })
+                            .catch(err1 => { console.log(err1) })
                     }).catch(err => console.log(err))
             }, 2000);
         }
 
     }
 
-    /* -------- Render Titik -------- */
+    /* -------- Render Sedang Diajukan -------- */
+    // const renderSedangdiajukan = () => {
+    //     console.log(dataAjuan)
+    //     return dataAjuan.map((val,i)=>{
+    //         return <p key=></p>
+    //     })
+    // }
 
 
     // =========== TEST CONSOLE======================================
@@ -163,11 +169,12 @@ function Pengajuan(props) {
     // console.log('ini data pengajuan', addPengajuan)
     // console.log('tls bdg', tulisBidang)
     // console.log(addPengajuan.idbidang)
-    // console.log(labelDocument)
+    console.log(dataAjuan.length)
 
     // =========== TEST CONSOLE====================================
 
     /* --------- RETURN -----------*/
+
     return (
         <div className='m-1'>
             <div className="menu-pengajuan d-flex mb-4">
@@ -294,20 +301,7 @@ function Pengajuan(props) {
                                 <FormGroup>
                                     <Label style={{ fontSize: "15px" }}>Dokumen: </Label>
                                     <CustomInput
-                                        onChange={handleDocument}
-                                        // onChange={(e) => {
-                                        //     if (e.target.files) {
-                                        //         setdokumen([...dokumen, ...e.target.files])
-                                        //         console.log(e.target.files[0].name)
-                                        //     } else {
-                                        //         setlabelDocument('Select File ')
-                                        //     }
-                                        // }}
-                                        label='Select MoU'
-                                        name='MOU'
-                                        size="sm"
-                                        type='file'
-                                        className='form-control mb-3' />
+                                        onChange={handleDocument} label='Select MoU' name='MOU' size="sm" type='file' className='form-control mb-3' />
                                     <CustomInput
                                         onChange={handleDocument}
                                         name='MOA' type='file' label='Upload file MoA' className='form-control mb-3' />
@@ -325,27 +319,43 @@ function Pengajuan(props) {
                         </div>
                     </div>
                     :
-                    <div className="sedang-diajukan d-flex">
-                        <div className="label-ajuan col-5">
-                            <p>Nama yang mengajukan </p>
-                            <p>No HP/WA </p>
-                            <p>PIC </p>
-                            <p>No HP/WA PIC</p>
-                            <p>Nama Institusi</p>
-                            <p>Alamat Institusi</p>
-                            <p>Bidang Kerjasama</p>
-                            <p>Pejabat Penandatangan</p>
-                            <p>Penanggungjawab Pelaksanaan Kerjasama</p>
-                            <p>Unit di UMB yang terlibat dalam Kerjsama</p>
-                            <p>File MoU</p>
-                            <p>File MOA</p>
-                            <p>File IA</p>
-                            <p>File Perpanjangan MoU/MoA/IA</p>
+                    dataAjuan.length === 0 || dataAjuan === [] ?
+                        <p>Belum ada</p>
+                        :
+                        <div className="sedang-diajukan d-flex">
+                            <div className="label-ajuan col-5">
+                                <p>Nama yang mengajukan </p>
+                                <p>No HP/WA </p>
+                                <p>PIC </p>
+                                <p>No HP/WA PIC</p>
+                                <p>Nama Institusi</p>
+                                <p>Alamat Institusi</p>
+                                <p>Bidang Kerjasama</p>
+                                <p>Pejabat Penandatangan</p>
+                                <p>Penanggungjawab Pelaksanaan Kerjasama</p>
+                                <p>Unit di UMB yang terlibat dalam Kerjsama</p>
+                                <p>File MoU</p>
+                                <p>File MOA</p>
+                                <p>File IA</p>
+                                <p>File Perpanjangan MoU/MoA/IA</p>
+                            </div>
+                            <div className="isi-ajuan col-7">
+                                <p>{dataAjuan[0].pengaju}</p>
+                                <p>{dataAjuan[0].no_pengaju}</p>
+                                <p>{dataAjuan[0].PIC}</p>
+                                <p>{dataAjuan[0].no_PIC}</p>
+                                <p>{dataAjuan[0].nama_institusi}</p>
+                                <p>{dataAjuan[0].alamat_institusi}</p>
+                                <p>{dataAjuan[0].pejabat}</p>
+                                <p>{dataAjuan[0].jabatan}</p>
+                                <p>{dataAjuan[0].penanggungjawab}</p>
+                                <p>{dataAjuan[0].unit}</p>
+                                <p>{dataAjuan[0].MOU}</p>
+                                <p>{dataAjuan[0].MOA}</p>
+                                <p>{dataAjuan[0].IA}</p>
+                                <p>{dataAjuan[0].perpanjangan}</p>
+                            </div>
                         </div>
-                        <div className="isi-ajuan col-7">
-
-                        </div>
-                    </div>
             }
         </div>
     )
