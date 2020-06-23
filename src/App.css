@@ -79,3 +79,17 @@
 .kategori-user .transaksi:hover{
 	color: cyan;
 }
+
+.menu-pengajuan{
+  border-bottom: 1px solid rgb(197, 193, 193);
+}
+
+.menu-pengajuan .true{
+	color: rgb(6, 143, 143);
+  font-weight: bold;
+  font-size: 23px;
+}
+.menu-pengajuan .false{
+  color: rgb(46, 51, 51);
+  font-size: 18px;
+}

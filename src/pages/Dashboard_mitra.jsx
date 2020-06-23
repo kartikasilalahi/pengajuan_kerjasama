@@ -11,6 +11,10 @@ import History from './Component_mitra/History'
 
 class Dashboard_mitra extends Component {
 
+    state = {
+        tabActive: 'vertical-tab-one'
+    }
+
 
     btnlogout = () => {
         Swal.fire({
@@ -47,7 +51,7 @@ class Dashboard_mitra extends Component {
 
     render() {
         let id = localStorage.getItem('id')
-        console.log(id)
+        console.log('aktif di', this.state.tabActive)
         if (id === null || id === undefined) {
             return <Redirect to={'/'} />
         }
@@ -65,13 +69,15 @@ class Dashboard_mitra extends Component {
                 {/* <div className="nama-mitra text-center my-3" style={{ width: '20%' }}>
                     <h6>HI, THERE</h6>
                 </div> */}
-                <Tabs defaultTab="vertical-tab-one" vertical>
+
+                {/* ----------------- TAB START HERE --------------------- */}
+                <Tabs defaultTab={this.state.tabActive} vertical>
                     <TabList className="mr-3">
                         <Tab tabFor="vertical-tab-one">
                             <i className="fa fa-tasks"></i>
                             <p>Profil </p>
                         </Tab>
-                        <Tab tabFor="vertical-tab-two">
+                        <Tab tabFor="vertical-tab-two" onClick={() => this.setState({ tabActive: 'vertical-tab-two' })}>
                             <i className="fa fa-money" ></i>
                             <p>Pengajuan Kerjasama</p>
                         </Tab>
@@ -85,12 +91,14 @@ class Dashboard_mitra extends Component {
                         <Profil />
                     </TabPanel>
                     <TabPanel style={{ width: "100%" }} tabId="vertical-tab-two">
-                        <Pengajuan />
+                        <Pengajuan tabId={() => this.setState({ tabActive: "vertical-tab-three" })} />
                     </TabPanel>
                     <TabPanel style={{ width: "100%" }} tabId="vertical-tab-three">
                         <History />
                     </TabPanel>
                 </Tabs>
+                {/* ----------------- TAB END HERE --------------------- */}
+
                 <div className="button_logout text-center" style={{ width: '20%' }} >
                     <MDBBtn onClick={this.btnlogout} >Logout</MDBBtn>
                 </div>
