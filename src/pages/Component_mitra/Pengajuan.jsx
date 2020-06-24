@@ -258,7 +258,6 @@ function Pengajuan() {
                                 <FormGroup>
                                     <Label style={{ fontSize: "15px" }}>Bidang Kerjasama </Label>
                                     <select name="idbidang" className="form-control" onChange={handleBidang}>
-
                                         {
                                             addPengajuan.idbidang === undefined ?
                                                 <option selected hidden value="">Pilih Kategori..</option>
