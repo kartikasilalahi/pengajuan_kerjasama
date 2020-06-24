@@ -7,12 +7,7 @@ import { AiOutlineWarning } from 'react-icons/ai'
 import Axios from 'axios'
 import { APIURL, APIURLDoc } from '../../helper/apiurl'
 
-function Pengajuan(props) {
-    const {
-        tabActive
-    } = props
-
-
+function Pengajuan() {
 
     /* -------  State Awal -----------*/
     const [Bidang, setBidang] = useState([]);
@@ -168,13 +163,12 @@ function Pengajuan(props) {
 
     // =========== TEST CONSOLE======================================
 
-
     // console.log('ini data pengajuan', addPengajuan)
     // console.log('tls bdg', tulisBidang)
     // console.log(addPengajuan.idbidang)
     console.log(dataAjuan[0])
 
-    // =========== TEST CONSOLE====================================
+    // =========== TEST CONSOLE=======================================
 
 
 
@@ -328,11 +322,11 @@ function Pengajuan(props) {
                                 </FormGroup>
                                 {
                                     dataAjuan.length === 0 || dataAjuan === [] ?
-                                        <MDBBtn color='success' onClick={addNewPengajuan} tabId={tabActive} >KIRIM</MDBBtn >
+                                        <MDBBtn color='success' onClick={addNewPengajuan}  >KIRIM</MDBBtn >
                                         :
-                                        <MDBBtn color='success' tabId={tabActive} style={{ cursor: 'text' }} >KIRIM</MDBBtn >
-
+                                        <MDBBtn color='success' style={{ cursor: 'text' }} >KIRIM</MDBBtn >
                                 }
+
 
                             </div>
                         </div>
@@ -341,45 +335,49 @@ function Pengajuan(props) {
                     dataAjuan.length === 0 || dataAjuan === [] ?
                         <p>Belum ada</p>
                         :
-                        <div className="sedang-diajukan d-flex">
-                            <div className="label-ajuan col-6">
-                                <p>Nama yang mengajukan </p>
-                                <p>No HP/WA </p>
-                                <p>PIC </p>
-                                <p>No HP/WA PIC</p>
-                                <p>Nama Institusi</p>
-                                <p>Alamat Institusi</p>
-                                <p>Bidang Kerjasama</p>
-                                <p>Pejabat Penandatangan</p>
-                                <p>Jabatan Pejabat Penandatangan</p>
-                                <p>Penanggungjawab Pelaksanaan Kerjasama</p>
-                                <p>Unit di UMB yang terlibat dalam Kerjsama</p>
-                                <p>File MoU</p>
-                                <p>File MOA</p>
-                                <p>File IA</p>
-                                <p>File Perpanjangan MoU/MoA/IA</p>
-                            </div>
-                            <div className="isi-ajuan col-6">
-                                <p>{dataAjuan[0].pengaju}</p>
-                                <p>{dataAjuan[0].no_pengaju}</p>
-                                <p>{dataAjuan[0].PIC}</p>
-                                <p>{dataAjuan[0].no_PIC}</p>
-                                <p>{dataAjuan[0].nama_institusi}</p>
-                                <p>{dataAjuan[0].alamat_institusi}</p>
-                                {
-                                    dataAjuan[0].bidanglain != "tidak ada" ?
-                                        <p>{dataAjuan[0].idbidang + '(' + dataAjuan[0].bidanglain + ')'}</p>
-                                        :
-                                        <p>{dataAjuan[0].idbidang}</p>
-                                }
-                                <p>{dataAjuan[0].pejabat}</p>
-                                <p>{dataAjuan[0].jabatan}</p>
-                                <p>{dataAjuan[0].penanggungjawab}</p>
-                                <p>{dataAjuan[0].unit}</p>
-                                <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOU}>{showDocs(dataAjuan[0].MOU)}</a></p>
-                                <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOA}>{showDocs(dataAjuan[0].MOA)}</a></p>
-                                <p><a target="_blank" href={APIURLDoc + dataAjuan[0].IA}>{showDocs(dataAjuan[0].IA)}</a></p>
-                                <p><a target="_blank" href={APIURLDoc + dataAjuan[0].perpanjangan}>{showDocs(dataAjuan[0].perpanjangan)}</a></p>
+                        <div>
+                            <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
+                                <AiOutlineWarning />  Pengajuan sedang dalam proses menunggu. Dimohon menunggu respon dari Administrator/Pihak UMB.</p>
+                            <div className="sedang-diajukan d-flex">
+                                <div className="label-ajuan col-6">
+                                    <p>Nama yang mengajukan </p>
+                                    <p>No HP/WA </p>
+                                    <p>PIC </p>
+                                    <p>No HP/WA PIC</p>
+                                    <p>Nama Institusi</p>
+                                    <p>Alamat Institusi</p>
+                                    <p>Bidang Kerjasama</p>
+                                    <p>Pejabat Penandatangan</p>
+                                    <p>Jabatan Pejabat Penandatangan</p>
+                                    <p>Penanggungjawab Pelaksanaan Kerjasama</p>
+                                    <p>Unit di UMB yang terlibat dalam Kerjsama</p>
+                                    <p>File MoU</p>
+                                    <p>File MOA</p>
+                                    <p>File IA</p>
+                                    <p>File Perpanjangan MoU/MoA/IA</p>
+                                </div>
+                                <div className="isi-ajuan col-6">
+                                    <p>{dataAjuan[0].pengaju}</p>
+                                    <p>{dataAjuan[0].no_pengaju}</p>
+                                    <p>{dataAjuan[0].PIC}</p>
+                                    <p>{dataAjuan[0].no_PIC}</p>
+                                    <p>{dataAjuan[0].nama_institusi}</p>
+                                    <p>{dataAjuan[0].alamat_institusi}</p>
+                                    {
+                                        dataAjuan[0].bidanglain != "tidak ada" ?
+                                            <p>{dataAjuan[0].nama + '(' + dataAjuan[0].bidanglain + ')'}</p>
+                                            :
+                                            <p>{dataAjuan[0].nama}</p>
+                                    }
+                                    <p>{dataAjuan[0].pejabat}</p>
+                                    <p>{dataAjuan[0].jabatan}</p>
+                                    <p>{dataAjuan[0].penanggungjawab}</p>
+                                    <p>{dataAjuan[0].unit}</p>
+                                    <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOU}>{showDocs(dataAjuan[0].MOU)}</a></p>
+                                    <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOA}>{showDocs(dataAjuan[0].MOA)}</a></p>
+                                    <p><a target="_blank" href={APIURLDoc + dataAjuan[0].IA}>{showDocs(dataAjuan[0].IA)}</a></p>
+                                    <p><a target="_blank" href={APIURLDoc + dataAjuan[0].perpanjangan}>{showDocs(dataAjuan[0].perpanjangan)}</a></p>
+                                </div>
                             </div>
                         </div>
             }

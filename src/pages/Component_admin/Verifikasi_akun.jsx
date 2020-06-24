@@ -119,12 +119,10 @@ class Verifikasi_akun extends Component {
                     })
                 }
             })
-
         }
 
         return (
             <div>
-
                 <div className="kategori-user  d-flex pl-0 ml-4" style={{ cursor: 'pointer' }}>
                     <div className={`${unverified} verified mr-4 pl-0`}
                         onClick={() => {

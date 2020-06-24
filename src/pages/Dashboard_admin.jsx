@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { Logout } from '../redux/action'
 import { Redirect } from 'react-router-dom';
 import Verifikasi_akun from './Component_admin/Verifikasi_akun'
+import Manajemen_kerjasama from './Component_admin/Manajemen_kerjasama'
 
 
 class Dashboard_admin extends Component {
@@ -69,14 +70,10 @@ class Dashboard_admin extends Component {
                     <TabList className="mr-3">
                         <Tab tabFor="vertical-tab-one">
                             <i className="fa fa-user-circle-o"></i>
-                            <p>Verifikasi Pendaftar Baru</p>
+                            <p>Manajemen Akun</p>
                         </Tab>
                         <Tab tabFor="vertical-tab-two">
                             <i className="fa fa-tasks"></i>
-                            <p>Manajemen Akun</p>
-                        </Tab>
-                        <Tab tabFor="vertical-tab-three">
-                            <i className="fa fa-money" ></i>
                             <p>Manajemen Kerjasama</p>
                         </Tab>
                         <Tab>
@@ -89,10 +86,7 @@ class Dashboard_admin extends Component {
                         <Verifikasi_akun />
                     </TabPanel>
                     <TabPanel style={{ width: "100%" }} tabId="vertical-tab-two">
-                        Manajemen Akun
-                    </TabPanel>
-                    <TabPanel style={{ width: "100%" }} tabId="vertical-tab-three">
-                        Manajemen Kerjasama
+                        <Manajemen_kerjasama />
                     </TabPanel>
                 </Tabs>
 
