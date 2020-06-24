@@ -66,11 +66,9 @@ function Manajemen_kerjasama() {
                                     <thead>
                                         <tr className="text-center">
                                             <th>No.</th>
-                                            <th>Nama Company</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
+                                            <th>Nama Instansi</th>
                                             <th>Alamat</th>
-                                            <th>Status</th>
+                                            <th>Bidang Kerjasama</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
