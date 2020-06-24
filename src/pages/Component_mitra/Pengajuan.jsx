@@ -5,7 +5,7 @@ import Toast from 'light-toast'
 import { MDBBtn } from 'mdbreact'
 import { AiOutlineWarning } from 'react-icons/ai'
 import Axios from 'axios'
-import { APIURL } from '../../helper/apiurl'
+import { APIURL, APIURLDoc } from '../../helper/apiurl'
 
 function Pengajuan(props) {
     const {
@@ -68,6 +68,10 @@ function Pengajuan(props) {
     const addNewPengajuan = () => {
         let idmitra = localStorage.getItem('id')
         let formdata = new FormData
+        if (tulisBidang === false) {
+            console.log('bidanglain', tulisBidang)
+            addPengajuan.bidanglain = 'tidak ada'
+        }
         const {
             pengaju,
             no_pengaju,
@@ -83,9 +87,9 @@ function Pengajuan(props) {
             bidanglain
         } = addPengajuan
 
-        if (tulisBidang === false) {
-            addPengajuan.bidanglain = ''
-        }
+
+        console.log('bidanglain nya', addNewPengajuan.bidanglain)
+
         let newPengajuan = {
             pengaju: pengaju,
             no_pengaju: no_pengaju,
@@ -154,13 +158,12 @@ function Pengajuan(props) {
 
     }
 
-    /* -------- Render Sedang Diajukan -------- */
-    // const renderSedangdiajukan = () => {
-    //     console.log(dataAjuan)
-    //     return dataAjuan.map((val,i)=>{
-    //         return <p key=></p>
-    //     })
-    // }
+    /* -------- function show doc -------- */
+    const showDocs = (k) => {
+        let result = ''
+        for (var i = 15; i < k.length; i++) result += k[i]
+        return result
+    }
 
 
     // =========== TEST CONSOLE======================================
@@ -169,14 +172,16 @@ function Pengajuan(props) {
     // console.log('ini data pengajuan', addPengajuan)
     // console.log('tls bdg', tulisBidang)
     // console.log(addPengajuan.idbidang)
-    console.log(dataAjuan.length)
+    console.log(dataAjuan[0])
 
     // =========== TEST CONSOLE====================================
 
-    /* --------- RETURN -----------*/
 
+
+    /* --------- RETURN -----------*/
     return (
         <div className='m-1'>
+            {/* -- menu -- */}
             <div className="menu-pengajuan d-flex mb-4">
                 <div className={`${formAjuan} mr-4 pl-0`}
                     onClick={() => {
@@ -200,8 +205,17 @@ function Pengajuan(props) {
                 formAjuan === 'true' ?
                     <div>
                         <h5 style={{ fontWeight: 'bolder' }}>Form Pengajuan Kerjasama</h5>
-                        <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
-                            <AiOutlineWarning />  Perhatikan! Pastikan semua form terisi,</p>
+                        {
+                            dataAjuan.length === 0 || dataAjuan === [] ?
+                                <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
+                                    <AiOutlineWarning />  Perhatikan! Pastikan semua form terisi.</p>
+                                :
+                                <p className="alert alert-danger mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
+                                    <AiOutlineWarning />  Perhatikan! Saat ini Anda belum dapat mengajukan kerjasama baru, dikarenakan pengajuan sebelumnya masih proses menunggu. <span style={{ cursor: 'pointer', fontWeight: 'bolder' }} onClick={() => {
+                                        setformAjuan('false')
+                                        setajuan('true')
+                                    }}>klik untuk melihat</span> </p>
+                        }
                         <div className="form-pengajuan d-flex">
                             <div className="left col-6 mr-2 py-2" style={{ backgroundColor: 'whitesmoke' }}>
                                 <FormGroup>
@@ -256,7 +270,6 @@ function Pengajuan(props) {
                                                 <option selected hidden value="">Pilih Kategori..</option>
                                                 :
                                                 <option hidden value="">Pilih Kategori..</option>
-
                                         }
                                         {renderSelectBidang()}
                                     </select>
@@ -313,8 +326,14 @@ function Pengajuan(props) {
                                         name='perpanjangan' type='file' label='Upload file Perpanjangan MoU/MoA/IA' className='form-control mb-3' />
 
                                 </FormGroup>
+                                {
+                                    dataAjuan.length === 0 || dataAjuan === [] ?
+                                        <MDBBtn color='success' onClick={addNewPengajuan} tabId={tabActive} >KIRIM</MDBBtn >
+                                        :
+                                        <MDBBtn color='success' tabId={tabActive} style={{ cursor: 'text' }} >KIRIM</MDBBtn >
 
-                                <MDBBtn color='success' onClick={addNewPengajuan} tabId={tabActive} >KIRIM</MDBBtn >
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -323,7 +342,7 @@ function Pengajuan(props) {
                         <p>Belum ada</p>
                         :
                         <div className="sedang-diajukan d-flex">
-                            <div className="label-ajuan col-5">
+                            <div className="label-ajuan col-6">
                                 <p>Nama yang mengajukan </p>
                                 <p>No HP/WA </p>
                                 <p>PIC </p>
@@ -332,6 +351,7 @@ function Pengajuan(props) {
                                 <p>Alamat Institusi</p>
                                 <p>Bidang Kerjasama</p>
                                 <p>Pejabat Penandatangan</p>
+                                <p>Jabatan Pejabat Penandatangan</p>
                                 <p>Penanggungjawab Pelaksanaan Kerjasama</p>
                                 <p>Unit di UMB yang terlibat dalam Kerjsama</p>
                                 <p>File MoU</p>
@@ -339,21 +359,27 @@ function Pengajuan(props) {
                                 <p>File IA</p>
                                 <p>File Perpanjangan MoU/MoA/IA</p>
                             </div>
-                            <div className="isi-ajuan col-7">
+                            <div className="isi-ajuan col-6">
                                 <p>{dataAjuan[0].pengaju}</p>
                                 <p>{dataAjuan[0].no_pengaju}</p>
                                 <p>{dataAjuan[0].PIC}</p>
                                 <p>{dataAjuan[0].no_PIC}</p>
                                 <p>{dataAjuan[0].nama_institusi}</p>
                                 <p>{dataAjuan[0].alamat_institusi}</p>
+                                {
+                                    dataAjuan[0].bidanglain != "tidak ada" ?
+                                        <p>{dataAjuan[0].idbidang + '(' + dataAjuan[0].bidanglain + ')'}</p>
+                                        :
+                                        <p>{dataAjuan[0].idbidang}</p>
+                                }
                                 <p>{dataAjuan[0].pejabat}</p>
                                 <p>{dataAjuan[0].jabatan}</p>
                                 <p>{dataAjuan[0].penanggungjawab}</p>
                                 <p>{dataAjuan[0].unit}</p>
-                                <p>{dataAjuan[0].MOU}</p>
-                                <p>{dataAjuan[0].MOA}</p>
-                                <p>{dataAjuan[0].IA}</p>
-                                <p>{dataAjuan[0].perpanjangan}</p>
+                                <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOU}>{showDocs(dataAjuan[0].MOU)}</a></p>
+                                <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOA}>{showDocs(dataAjuan[0].MOA)}</a></p>
+                                <p><a target="_blank" href={APIURLDoc + dataAjuan[0].IA}>{showDocs(dataAjuan[0].IA)}</a></p>
+                                <p><a target="_blank" href={APIURLDoc + dataAjuan[0].perpanjangan}>{showDocs(dataAjuan[0].perpanjangan)}</a></p>
                             </div>
                         </div>
             }
