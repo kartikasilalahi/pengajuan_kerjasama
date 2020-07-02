@@ -22,12 +22,14 @@ class Home extends Component {
         var alamat = this.alamat.value
         var password = this.password.value
         var confpassword = this.confpassword.value
-        var linkperusahaan = this.linkperusahaan
+        var linkperusahaan = this.linkperusahaan.value
         var jenisperusahaan = this.state.jenisperusahaan
 
         this.props.Register({
             nama, email, phone, alamat, password, confpassword, linkperusahaan, jenisperusahaan
         })
+        console.log('limk', linkperusahaan)
+        console.log('jenis', jenisperusahaan)
     }
 
     // ---------- render error register ------------
