@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, FormGroup, Label, CustomInput } from 'reactstrap';
+import { Input, FormGroup, Label, CustomInput, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Toast from 'light-toast'
 
 import { MDBBtn } from 'mdbreact'
@@ -13,11 +13,28 @@ function Pengajuan() {
     const [Bidang, setBidang] = useState([]);
     const [dokumen, setdokumen] = useState([]);
     const [dataAjuan, setdataAjuan] = useState([]);
+    const [dataOnprocess, setdataOnprocess] = useState([]);
     const [formAjuan, setformAjuan] = useState('true');
     const [ajuan, setajuan] = useState('false');
+    const [onprocess, setonprocess] = useState('false');
+    const [dataReview, setdataReview] = useState([]);
+    const [detailPengajuan, setdetailPengajuan] = useState([]);
+
 
     const [tulisBidang, settulisBidang] = useState(false);
     const [addPengajuan, setaddPengajuan] = useState({})
+
+    const [idSellect, setidSellect] = useState(0);
+
+
+    /* ----------- modal------------- */
+    const [modalDetail, setmodalDetail] = useState(false);
+    const toggleDetail = () => setmodalDetail(!modalDetail);
+
+    const [modalReview, setmodalReview] = useState(false);
+    const toggleReview = () => setmodalReview(!modalReview);
+    /* ----------- modal------------- */
+
 
 
     /* -------- USEEFFECT -------- */
@@ -25,6 +42,9 @@ function Pengajuan() {
         let id = parseInt(localStorage.getItem('id'))
         Axios.get(`${APIURL}pengajuan/getajuan/${id}`)
             .then(res => { setdataAjuan(res.data) })
+            .catch(err => { console.log(err) })
+        Axios.get(`${APIURL}pengajuan/getonprocess/${id}`)
+            .then(res => { setdataOnprocess(res.data) })
             .catch(err => { console.log(err) })
         Axios.get(`${APIURL}pengajuan/getbidang`)
             .then(res => { setBidang(res.data) })
@@ -142,7 +162,7 @@ function Pengajuan() {
                         settulisBidang(false)
                         setajuan('true')
                         setformAjuan('false')
-                        // window.location.reload()
+                        setonprocess('false')
                         let id = parseInt(localStorage.getItem('id'))
                         Axios.get(`${APIURL}pengajuan/getajuan/${id}`)
                             .then(res1 => { setdataAjuan(res1.data) })
@@ -161,12 +181,70 @@ function Pengajuan() {
     }
 
 
+    /* ------ Render Daftar Accept/Kerjasama Onprocess ------ */
+    const renderOnprocessKerjasama = () => {
+        return dataOnprocess.map((val, i) => {
+            return (
+                <tr key={i} className="text-center">
+                    <th>{i + 1}</th>
+                    <td>{val.nama_institusi}</td>
+                    <td>{val.alamat_institusi}</td>
+                    {
+                        val.bidanglain === 'tidak ada' ?
+                            <td>{val.nama}</td>
+                            :
+                            <td>{val.nama + ' (' + val.bidanglain + ')'}</td>
+                    }
+                    <td>
+                        <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                            setmodalDetail(true)
+                            setdetailPengajuan(dataOnprocess[i])
+                            setidSellect(val.id)
+                        }}>Detail</MDBBtn>
+                    </td>
+                    <td>
+                        <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                            setmodalReview(true)
+                            // setsellectrole('decline')
+                            Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
+                                .then(res => { setdataReview(res.data) })
+                                .catch(err => { console.log(err) })
+                        }}>Review</MDBBtn>
+                    </td>
+                    <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>ONPROCESS</td>
+                    <td>
+                        <MDBBtn size='sm' className="my-0" color='success' > finish </MDBBtn>
+                    </td>
+                </tr>
+            )
+        })
+    }
+
+
+    /* ------------ Render Review Penilain Kelayakan --------- */
+    const renderReviewPenilaian = () => {
+        return dataReview.map((val, i) => {
+            return (
+                <tr key={i}>
+                    <td>{val.nama_reviewer}</td>
+                    <td>{val.jabatan_reviewer}</td>
+                    <td>{val.nilai_profil}</td>
+                    <td>{val.nilai_kinerja}</td>
+                    <td>{val.nilai_reputasi}</td>
+                </tr>
+            )
+        })
+
+    }
+
+
+
     // =========== TEST CONSOLE======================================
 
     // console.log('ini data pengajuan', addPengajuan)
-    console.log('tls bdg', tulisBidang)
+    // console.log('tls bdg', tulisBidang)
     // console.log(addPengajuan.idbidang)
-    console.log(dataAjuan[0])
+    console.log(dataOnprocess[0])
 
     // =========== TEST CONSOLE=======================================
 
@@ -174,24 +252,133 @@ function Pengajuan() {
 
     /* --------- RETURN -----------*/
     return (
+
         <div className='m-1'>
+            {/* ---- start modal detail new pengajuan ---- */}
+            <Modal isOpen={modalDetail} toggle={toggleDetail} centered style={{ width: "100%", maxWidth: "1200px" }}>
+                <div className="m-2">
+                    <ModalHeader>
+                        <h4 className="font-weight-bold">Detail Pengajuan Kerjasama</h4>
+                    </ModalHeader>
+                    <ModalBody>
+                        {
+                            detailPengajuan.length === 0 || detailPengajuan === [] ?
+                                null
+                                :
+                                <div className="d-flex">
+                                    <div className="d-flex col-5 p-0">
+                                        <div className="label-ajuan col-6 p-0">
+                                            <p>Nama yang mengajukan </p>
+                                            <p>No HP/WA </p>
+                                            <p>PIC </p>
+                                            <p>No HP/WA PIC</p>
+                                            <p>Nama Institusi</p>
+                                            <p>Alamat Institusi</p>
+                                            <p>Bidang Kerjasama</p>
+                                        </div>
+                                        <div className="isi-ajuan col-6 p-0">
+                                            <p>{detailPengajuan.pengaju}</p>
+                                            <p>{detailPengajuan.no_pengaju}</p>
+                                            <p>{detailPengajuan.PIC}</p>
+                                            <p>{detailPengajuan.no_PIC}</p>
+                                            <p>{detailPengajuan.nama_institusi}</p>
+                                            <p>{detailPengajuan.alamat_institusi}</p>
+                                            {
+                                                detailPengajuan.bidanglain != "tidak ada" ?
+                                                    <p>{detailPengajuan.nama + '(' + detailPengajuan.bidanglain + ')'}</p>
+                                                    :
+                                                    <p>{detailPengajuan.nama}</p>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="d-flex col-7 p-0">
+
+                                        <div className="label-ajuan col-6 p-0">
+                                            <p>Pejabat Penandatangan</p>
+                                            <p>Jabatan Pejabat Penandatangan</p>
+                                            <p>Penanggungjawab Pelaksanaan Kerjasama</p>
+                                            <p>Unit di UMB yang terlibat</p>
+                                            <p>File MoU</p>
+                                            <p>File MOA</p>
+                                            <p>File IA</p>
+                                            <p>File Perpanjangan MoU/MoA/IA</p>
+                                        </div>
+                                        <div className="isi-ajuan col-6 p-0">
+                                            <p>{detailPengajuan.pejabat}</p>
+                                            <p>{detailPengajuan.jabatan}</p>
+                                            <p>{detailPengajuan.penanggungjawab}</p>
+                                            <p>{detailPengajuan.unit}</p>
+                                            <p><a target="_blank" href={APIURLDoc + detailPengajuan.MOU}>{showDocs(detailPengajuan.MOU)}</a></p>
+                                            <p><a target="_blank" href={APIURLDoc + detailPengajuan.MOA}>{showDocs(detailPengajuan.MOA)}</a></p>
+                                            <p><a target="_blank" href={APIURLDoc + detailPengajuan.IA}>{showDocs(detailPengajuan.IA)}</a></p>
+                                            <p><a target="_blank" href={APIURLDoc + detailPengajuan.perpanjangan}>{showDocs(detailPengajuan.perpanjangan)}</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                        }
+                    </ModalBody>
+                    <ModalFooter>
+                        <MDBBtn onClick={toggleDetail} size="sm" color="warning"> close </MDBBtn>
+                    </ModalFooter>
+                </div>
+            </Modal>
+            {/* ---- end modal detail new pengajuan ---- */}
+
+            {/* ---- start modal review penilaian kelayakan  ---- */}
+            <Modal isOpen={modalReview} toggle={toggleReview} centered style={{ width: "50%", maxWidth: "1200px" }}>
+                <ModalHeader>
+                    <h4 className="font-weight-bold">Table Review Kelayakan Persetujuan Kerjasama</h4>
+                </ModalHeader>
+                <ModalBody>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Nama Reviewer</th>
+                                <th>Jabatan Reviewer</th>
+                                <th>Profil</th>
+                                <th>Kinerja</th>
+                                <th>Reputasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderReviewPenilaian()}
+                        </tbody>
+                    </Table>
+                </ModalBody>
+                <ModalFooter>
+                    <MDBBtn onClick={toggleReview} size="sm" color="warning"> close </MDBBtn>
+                </ModalFooter>
+            </Modal>
+            {/* ---- end modal review penilaian kelayakan  ---- */}
+
             {/* -- menu -- */}
             <div className="menu-pengajuan d-flex mb-4">
                 <div className={`${formAjuan} mr-4 pl-0`}
                     onClick={() => {
                         setformAjuan('true')
                         setajuan('false')
+                        setonprocess('false')
                     }}
                     style={{ cursor: 'pointer' }}>
                     Isi form
                 </div>
-                <div className={`${ajuan} `}
+                <div className={`${ajuan} mr-4 pl-0`}
                     onClick={() => {
                         setformAjuan('false')
                         setajuan('true')
+                        setonprocess('false')
                     }}
                     style={{ cursor: 'pointer' }}>
                     Sedang diajukan
+                </div>
+                <div className={`${onprocess} `}
+                    onClick={() => {
+                        setonprocess('true')
+                        setformAjuan('false')
+                        setajuan('false')
+                    }}
+                    style={{ cursor: 'pointer' }}>
+                    Onprocess
                 </div>
             </div>
 
@@ -331,55 +518,76 @@ function Pengajuan() {
                         </div>
                     </div>
                     :
-                    dataAjuan.length === 0 || dataAjuan === [] ?
-                        <p>Belum ada</p>
-                        :
-                        <div>
-                            <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
-                                <AiOutlineWarning />  Pengajuan sedang dalam proses menunggu. Dimohon menunggu respon dari Administrator/Pihak UMB.</p>
-                            <div className="sedang-diajukan d-flex">
-                                <div className="label-ajuan col-6">
-                                    <p>Nama yang mengajukan </p>
-                                    <p>No HP/WA </p>
-                                    <p>PIC </p>
-                                    <p>No HP/WA PIC</p>
-                                    <p>Nama Institusi</p>
-                                    <p>Alamat Institusi</p>
-                                    <p>Bidang Kerjasama</p>
-                                    <p>Pejabat Penandatangan</p>
-                                    <p>Jabatan Pejabat Penandatangan</p>
-                                    <p>Penanggungjawab Pelaksanaan Kerjasama</p>
-                                    <p>Unit di UMB yang terlibat dalam Kerjsama</p>
-                                    <p>File MoU</p>
-                                    <p>File MOA</p>
-                                    <p>File IA</p>
-                                    <p>File Perpanjangan MoU/MoA/IA</p>
-                                </div>
-                                <div className="isi-ajuan col-6">
-                                    <p>{dataAjuan[0].pengaju}</p>
-                                    <p>{dataAjuan[0].no_pengaju}</p>
-                                    <p>{dataAjuan[0].PIC}</p>
-                                    <p>{dataAjuan[0].no_PIC}</p>
-                                    <p>{dataAjuan[0].nama_institusi}</p>
-                                    <p>{dataAjuan[0].alamat_institusi}</p>
-                                    {
-                                        dataAjuan[0].bidanglain != "tidak ada" ?
-                                            <p>{dataAjuan[0].nama + '(' + dataAjuan[0].bidanglain + ')'}</p>
-                                            :
-                                            <p>{dataAjuan[0].nama}</p>
-                                    }
-                                    <p>{dataAjuan[0].pejabat}</p>
-                                    <p>{dataAjuan[0].jabatan}</p>
-                                    <p>{dataAjuan[0].penanggungjawab}</p>
-                                    <p>{dataAjuan[0].unit}</p>
-                                    <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOU}>{showDocs(dataAjuan[0].MOU)}</a></p>
-                                    <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOA}>{showDocs(dataAjuan[0].MOA)}</a></p>
-                                    <p><a target="_blank" href={APIURLDoc + dataAjuan[0].IA}>{showDocs(dataAjuan[0].IA)}</a></p>
-                                    <p><a target="_blank" href={APIURLDoc + dataAjuan[0].perpanjangan}>{showDocs(dataAjuan[0].perpanjangan)}</a></p>
+                    ajuan === 'true' ?
+                        dataAjuan.length === 0 || dataAjuan === [] ?
+                            <p>Belum ada</p>
+                            :
+                            <div>
+                                <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
+                                    <AiOutlineWarning />  Pengajuan sedang dalam proses menunggu. Dimohon menunggu respon dari Administrator/Pihak UMB.</p>
+                                <div className="sedang-diajukan d-flex">
+                                    <div className="label-ajuan col-6">
+                                        <p>Nama yang mengajukan </p>
+                                        <p>No HP/WA </p>
+                                        <p>PIC </p>
+                                        <p>No HP/WA PIC</p>
+                                        <p>Nama Institusi</p>
+                                        <p>Alamat Institusi</p>
+                                        <p>Bidang Kerjasama</p>
+                                        <p>Pejabat Penandatangan</p>
+                                        <p>Jabatan Pejabat Penandatangan</p>
+                                        <p>Penanggungjawab Pelaksanaan Kerjasama</p>
+                                        <p>Unit di UMB yang terlibat dalam Kerjsama</p>
+                                        <p>File MoU</p>
+                                        <p>File MOA</p>
+                                        <p>File IA</p>
+                                        <p>File Perpanjangan MoU/MoA/IA</p>
+                                    </div>
+                                    <div className="isi-ajuan col-6">
+                                        <p>{dataAjuan[0].pengaju}</p>
+                                        <p>{dataAjuan[0].no_pengaju}</p>
+                                        <p>{dataAjuan[0].PIC}</p>
+                                        <p>{dataAjuan[0].no_PIC}</p>
+                                        <p>{dataAjuan[0].nama_institusi}</p>
+                                        <p>{dataAjuan[0].alamat_institusi}</p>
+                                        {
+                                            dataAjuan[0].bidanglain != "tidak ada" ?
+                                                <p>{dataAjuan[0].nama + '(' + dataAjuan[0].bidanglain + ')'}</p>
+                                                :
+                                                <p>{dataAjuan[0].nama}</p>
+                                        }
+                                        <p>{dataAjuan[0].pejabat}</p>
+                                        <p>{dataAjuan[0].jabatan}</p>
+                                        <p>{dataAjuan[0].penanggungjawab}</p>
+                                        <p>{dataAjuan[0].unit}</p>
+                                        <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOU}>{showDocs(dataAjuan[0].MOU)}</a></p>
+                                        <p><a target="_blank" href={APIURLDoc + dataAjuan[0].MOA}>{showDocs(dataAjuan[0].MOA)}</a></p>
+                                        <p><a target="_blank" href={APIURLDoc + dataAjuan[0].IA}>{showDocs(dataAjuan[0].IA)}</a></p>
+                                        <p><a target="_blank" href={APIURLDoc + dataAjuan[0].perpanjangan}>{showDocs(dataAjuan[0].perpanjangan)}</a></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        :
+                        <Table striped >
+                            <thead>
+                                <tr className="text-center">
+                                    <th>No.</th>
+                                    <th>Nama Instansi</th>
+                                    <th>Alamat</th>
+                                    <th>Bidang Kerjasama</th>
+                                    <th>Detail</th>
+                                    <th>Review</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {renderOnprocessKerjasama()}
+                            </tbody>
+                        </Table>
+
             }
+
         </div>
     )
 

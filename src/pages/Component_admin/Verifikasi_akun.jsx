@@ -52,6 +52,8 @@ class Verifikasi_akun extends Component {
                         <td>{val.email}</td>
                         <td>{val.phone}</td>
                         <td>{val.alamat}</td>
+                        <td>{val.jenisperusahaan}</td>
+                        <td ><a href={val.linkperusahaan} target="_blank" style={{ color: 'blue' }}>{val.linkperusahaan}</a></td>
                         {/* <td>{val.status}</td> */}
                         <td >
                             <Tooltip TransitionComponent={Zoom} title="unverified" arrow placement="top">
@@ -80,14 +82,14 @@ class Verifikasi_akun extends Component {
                         <td>{val.email}</td>
                         <td>{val.phone}</td>
                         <td>{val.alamat}</td>
+                        <td>{val.jenisperusahaan}</td>
+                        <td ><a href={val.linkperusahaan} target="_blank" style={{ color: 'blue' }}>{val.linkperusahaan}</a></td>
                         <td>
                             <Tooltip TransitionComponent={Zoom} title="verified" arrow placement="top">
                                 <img src={require('../../image/verified.png')} width="22px" style={{ cursor: "pointer" }} alt='img' />
                             </Tooltip>
                         </td>
-                        <td>
-                            <MDBBtn size='sm' className="my-0">Detail</MDBBtn>
-                        </td>
+
                     </tr>
                 )
             })
@@ -152,6 +154,8 @@ class Verifikasi_akun extends Component {
                                                     <th>Email</th>
                                                     <th>Phone</th>
                                                     <th>Alamat</th>
+                                                    <th>Jenis Instansi</th>
+                                                    <th>Website/Link</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -174,8 +178,9 @@ class Verifikasi_akun extends Component {
                                                     <th>Email</th>
                                                     <th>Phone</th>
                                                     <th>Alamat</th>
+                                                    <th>Jenis Instansi</th>
+                                                    <th>Website/Link</th>
                                                     <th>Status</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

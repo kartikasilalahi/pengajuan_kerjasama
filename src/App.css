@@ -37,6 +37,10 @@
   }
 } */
 
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bellefair&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@1&display=swap');
+
 
 .dashboard_mitra .judul_dashboard h4,
 .dashboard_mitra .judul_dashboard h5{
@@ -96,4 +100,52 @@
 
 .isi-ajuan p{
   font-weight: 500;
+}
+
+.footer {
+  /* background-color: #F0FFF0; */
+  /* background-color: #F0FFF0; */
+
+}
+
+.footer .quotes h5{
+  font-family: open sans;
+}
+
+.homepage {
+  /* background-color: #F0FFF0; */
+  background-color: whitesmoke;
+
+}
+
+.visi-side{
+  /* border: 1px solid black; */
+}
+
+.isi-visi{
+  /* background-color: whitesmoke;
+  box-shadow: 3px 5px rgb(207, 207, 207); */
+  font-family: 'Cinzel', serif;
+  
+}
+
+.isi-misi h6{
+  /* background-color: #F0FFF0; */
+  font-size: 20px;
+  font-weight: bolder;
+  margin-bottom: 4%;
+  /* font-family: 'Cinzel', serif; */
+  font-family: 'Bellefair', serif;
+
+}
+
+.quotes, .prof {
+  background-color: #F0FFF0;
+
+
+}
+.quotes h5{
+  /* font-family: 'Kaushan Script', cursive; */
+  /* font-family: 'Bellefair', serif; */
+
 }

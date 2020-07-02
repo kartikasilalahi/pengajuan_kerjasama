@@ -106,96 +106,138 @@ class Home extends Component {
             return <Redirect to={'/dashboard_admin'} />
         }
         return (
-            <div className="homepage p-4">
+            <div>
 
-                {/* ----modal register----- */}
-                <Modal centered isOpen={this.props.modalregister} toggle={() => { this.props.Open_Register(false) }}>
-                    <ModalBody >
-                        <div className="gbr_login text-center">
-                            <img alt='img' src={require('../image/logo_mercubuana.png')} />
-                        </div>
-                        <div className="formlogin px-4"  >
-                            <h5 className="text-center judul_form mt-3" style={{ fontWeight: 'bold' }}>Registrasi</h5>
-                            {/* start form register */}
-                            <form>
-                                <div className="grey-text">
-                                    <MDBInput size="sm" label="Nama Perusahaan/Instansi" icon="user" group type="text" className=" mt-1" inputRef={ref => this.nama = ref} />
-                                    <MDBInput size="sm" label="Email Perusahaan/Instansi" icon="envelope" group type="email" inputRef={ref => this.email = ref} />
-                                    <MDBInput size="sm" label="No. Telp Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.phone = ref} />
-                                    <MDBInput size="sm" label="Alamat Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.alamat = ref} />
-                                    <MDBInput size="sm" label="Input password" icon="lock" group type="password" inputRef={ref => this.password = ref} />
-                                    <MDBInput size="sm" label="Confirm password" icon="exclamation-triangle" group type="password" inputRef={ref => this.confpassword = ref} />
-                                    <MDBInput size="sm" label={`Link website Perushaan (Kalau tidak ada, ketik " tidak ada " )`} icon="exclamation-triangle" group type="text" inputRef={ref => this.linkperusahaan = ref} />
-                                    <FormGroup className="ml-4 pl-1" style={{ width: '50%' }}>
-                                        <select name="jenisperusahaan" className="form-control"
-                                            onChange={e => this.setState({ jenisperusahaan: e.target.value })}
-                                            style={{ color: 'grey', fontSize: '14px' }}>
-                                            <option selected hidden value="">Jenis instansi..</option>
-                                            <option value="Pemerintahan">Pemerintahan</option>
-                                            <option value="Non Pemerintahan">Non Pemerintahan</option>
-                                        </select>
-                                    </FormGroup>
-                                </div>
-                                <div className="render_error_register">
-                                    {this.renderErrorRegister()}
-                                </div>
-                                <div className="text-center">
-                                    <MDBBtn color='blue' onClick={this.btnRegister}>Registrasi</MDBBtn>
-                                </div>
-                            </form>
-                            {/* end form register */}
+                <div className="homepage p-4">
 
-                        </div>
-                    </ModalBody>
-                </Modal>
-
-
-                <MDBCard className="p-5 " style={{ backgroundColor: 'whitesmoke' }}>
-                    <div className="text-center">
-                    </div>
-                    <div className="d-flex">
-                        <div className="home_left w-50 mr-0">
-                            <div className="home_slide">
-                                <Carousel className="carosel mx-auto" infiniteLoop showThumbs={false} showStatus={false} autoPlay>
-                                    <div><img alt='img' src={require('../image/umb1.jpeg')} width="50px" /></div>
-                                    <div><img alt='img' src={require('../image/umb2.jpeg')} width="50px" /></div>
-                                    <div><img alt='img' src={require('../image/umb3.jpeg')} width="50px" /></div>
-                                    <div><img alt='img' src={require('../image/umb4.jpeg')} width="50px" /></div>
-                                </Carousel>
+                    {/* ----modal register----- */}
+                    <Modal centered isOpen={this.props.modalregister} toggle={() => { this.props.Open_Register(false) }}>
+                        <ModalBody >
+                            <div className="gbr_login text-center">
+                                <img alt='img' src={require('../image/logo_mercubuana.png')} />
                             </div>
-                        </div>
-                        <div className="home_right w-50 px-5 pb-3" >
-                            <div className="home_logo pb-4 pt-0 mt-0 ">
-                                <img alt='img' src={require('../image/logo_mercubuana.png')} width="300px" />
-                            </div>
-                            <h4>Sistem Pengajuan Kerjasama</h4>
-                            <h5>Universitas Mercubuana</h5>
-                            {/* ----start form login----- */}
-                            <Card className="mt-3">
-                                <form className="py-3 pr-3" >
-                                    <p className="h5 text-center mb-4">Sign in</p>
+                            <div className="formlogin px-4"  >
+                                <h5 className="text-center judul_form mt-3" style={{ fontWeight: 'bold' }}>Registrasi</h5>
+                                {/* start form register */}
+                                <form>
                                     <div className="grey-text">
-                                        <MDBInput inputRef={ref => this.email_log = ref} label="Type your email" icon="envelope" group type="email" validate error="wrong"
-                                            success="right" />
-                                        <MDBInput inputRef={ref => this.password_log = ref} label="Type your password" icon="lock" group type="password" validate />
+                                        <MDBInput size="sm" label="Nama Perusahaan/Instansi" icon="user" group type="text" className=" mt-1" inputRef={ref => this.nama = ref} />
+                                        <MDBInput size="sm" label="Email Perusahaan/Instansi" icon="envelope" group type="email" inputRef={ref => this.email = ref} />
+                                        <MDBInput size="sm" label="No. Telp Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.phone = ref} />
+                                        <MDBInput size="sm" label="Alamat Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.alamat = ref} />
+                                        <MDBInput size="sm" label="Input password" icon="lock" group type="password" inputRef={ref => this.password = ref} />
+                                        <MDBInput size="sm" label="Confirm password" icon="exclamation-triangle" group type="password" inputRef={ref => this.confpassword = ref} />
+                                        <MDBInput size="sm" label={`Link website Perushaan (Kalau tidak ada, ketik " tidak ada " )`} icon="exclamation-triangle" group type="text" inputRef={ref => this.linkperusahaan = ref} />
+                                        <FormGroup className="ml-4 pl-1" style={{ width: '50%' }}>
+                                            <select name="jenisperusahaan" className="form-control"
+                                                onChange={e => this.setState({ jenisperusahaan: e.target.value })}
+                                                style={{ color: 'grey', fontSize: '14px' }}>
+                                                <option selected hidden value="">Jenis instansi..</option>
+                                                <option value="Pemerintahan">Pemerintahan</option>
+                                                <option value="Non Pemerintahan">Non Pemerintahan</option>
+                                            </select>
+                                        </FormGroup>
                                     </div>
-                                    <div className="error_login">
-                                        {this.renderErrorLogin()}
+                                    <div className="render_error_register">
+                                        {this.renderErrorRegister()}
                                     </div>
                                     <div className="text-center">
-                                        <MDBBtn color='blue' onClick={this.btnLogin}>sign in</MDBBtn>
-                                    </div>
-                                    <div className="mt-1 pr-2 pb-3 text-right" style={{ fontSize: "13px" }}>
-                                        Belum terdaftar?
-                                    <br />Register <a className='blue-text font-weight-bold' onClick={() => { this.props.Open_Register(true) }}>disini sekarang!</a>{" "}
+                                        <MDBBtn color='blue' onClick={this.btnRegister}>Registrasi</MDBBtn>
                                     </div>
                                 </form>
-                            </Card>
-                            {/* ----end form login----- */}
+                                {/* end form register */}
 
+                            </div>
+                        </ModalBody>
+                    </Modal>
+
+
+                    {/* <MDBCard className="p-5 " style={{ backgroundColor: 'whitesmoke' }}> */}
+                    <div className="p-5">
+
+                        <div className="d-flex">
+                            <div className="home_left w-50 mr-0">
+                                <div className="home_slide">
+                                    <Carousel className="carosel mx-auto" infiniteLoop showThumbs={false} showStatus={false} autoPlay>
+                                        <div><img alt='img' src={require('../image/umb1.jpeg')} width="50px" /></div>
+                                        <div><img alt='img' src={require('../image/umb2.jpeg')} width="50px" /></div>
+                                        <div><img alt='img' src={require('../image/umb3.jpeg')} width="50px" /></div>
+                                        <div><img alt='img' src={require('../image/umb4.jpeg')} width="50px" /></div>
+                                    </Carousel>
+                                </div>
+                            </div>
+                            <div className="home_right w-50 px-5 pb-3" >
+                                <div className="home_logo pb-4 pt-0 mt-0 ">
+                                    <img alt='img' src={require('../image/logo_mercubuana.png')} width="300px" />
+                                </div>
+                                <h4>Sistem Pengajuan Kerjasama</h4>
+                                <h5>Universitas Mercubuana</h5>
+                                {/* ----start form login----- */}
+                                <Card className="mt-3">
+                                    <form className="py-3 pr-3" >
+                                        <p className="h5 text-center mb-4">Sign in</p>
+                                        <div className="grey-text">
+                                            <MDBInput inputRef={ref => this.email_log = ref} label="Type your email" icon="envelope" group type="email" validate error="wrong"
+                                                success="right" />
+                                            <MDBInput inputRef={ref => this.password_log = ref} label="Type your password" icon="lock" group type="password" validate />
+                                        </div>
+                                        <div className="error_login">
+                                            {this.renderErrorLogin()}
+                                        </div>
+                                        <div className="text-center">
+                                            <MDBBtn color='blue' onClick={this.btnLogin}>sign in</MDBBtn>
+                                        </div>
+                                        <div className="mt-1 pr-2 pb-3 text-right" style={{ fontSize: "13px" }}>
+                                            Belum terdaftar?
+                                    <br />Register <a className='blue-text font-weight-bold' onClick={() => { this.props.Open_Register(true) }}>disini sekarang!</a>{" "}
+                                        </div>
+                                    </form>
+                                </Card>
+                                {/* ----end form login----- */}
+
+                            </div>
                         </div>
                     </div>
-                </MDBCard>
+                    {/* </MDBCard> */}
+
+                </div>
+
+                {/* --------------- start footer -------------------- */}
+                <div className="footer py-4">
+                    <div className="visi-side d-flex" style={{ padding: '10% 2%' }}>
+                        <div className="visi col-6 text-center" style={{ paddingTop: '7%' }}>
+                            <h3 style={{ fontWeight: 'bold', fontSize: '43px' }}>VISI</h3>
+                        </div>
+                        <div className="isi-visi col-6 text-center px-4 py-5">
+                            <h5 style={{ fontWeight: 'bolder', fontSize: '25px' }}>“Menjadi Universitas Unggul dan Terkemuka di Indonesia untuk Menghasilkan Tenaga Profesional yang Memenuhi Kebutuhan Industri dan Masyarakat dalam Persaingan Global Pada tahun 2024”.</h5>
+                        </div>
+                    </div>
+
+                    <div className="misi-side d-flex" style={{ padding: '5% 2% 10% 2%' }}>
+                        <div className="isi-misi col-6 text-center">
+                            <h6>
+                                Menyelenggarakan pendidikan, penelitian dan pengabdian kepada masyarakat, dan mencapai keunggulan akademik untuk menghasilkan tenaga profesional dan lulusan yang memenuhi standar kualitas kerja yang disyaratkan.
+                            </h6>
+                            <h6>Menerapkan manajemen pendidikan tinggi yang efektif dan efisien, serta mengembangkan jaringan kerjasama dengan industri dan kemitraan yang berkelanjutan sebagai respon atas perubahan arus dan daya saing global.</h6>
+                            <h6>Mengembangkan kompetensi dan menumbuh kembangkan jiwa kewirausahaan dan etika profesional kepada para mahasiswa dan staf yang memberikan kontribusi positif terhadap peningkatan kualitas hidup.</h6>
+                        </div>
+                        <div className="misi col-6 text-center " style={{ paddingTop: '10%' }}>
+                            <h3 style={{ fontWeight: 'bold', fontSize: '43px' }}>MISI</h3>
+                        </div>
+                    </div>
+
+                    <div className="quotes text-center" style={{ padding: '5% 8% 3% 8%' }}>
+                        <h5 style={{ fontFamily: 'Josefin Sans' }}>" ... perguruan tinggi memiliki tanggung jawab pada pundaknya, sesuai amanah dalam Undang-Undang No.12 Tahun 2012 tentang Pendidikan Tinggi yaitu perguruan tinggi memiliki kewajiban untuk turut serta dalam kemajuan peradaban bangsa Indonesia. Amanah tersebut memberi arti bahwa Universitas Mercu Buana harus terus mendorong kualitas dirinya, mengembangkan kemampuan ilmu pengetahuannya, sekaligus meningkatkan produk riset dan inovasi yang semua itu menjadi ukuran kinerja perguruan tinggi."</h5>
+                    </div>
+                    <div className="prof text-center" style={{ paddingBottom: '5%' }}>
+                        <p><span style={{ fontWeight: 'bold' }}>Prof. Dr Ngadino Surip, MS</span> <br />
+                        Rektor Universitas Mercu Buana 2018-2022</p>
+                        <button className="btn btn-outline-dark-blue" style={{ borderRadius: "25px" }}><a className="regist" target='_blank' href='https://www.mercubuana.ac.id' style={{ color: 'black' }}>Selengkapnya</a></button>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+                {/* --------------- end footer -------------------- */}
             </div >
         )
     }
