@@ -175,7 +175,7 @@ class Home extends Component {
                                 {/* ----start form login----- */}
                                 <Card className="mt-3">
                                     <form className="py-3 pr-3" >
-                                        <p className="h5 text-center mb-4">Sign in</p>
+                                        <p className="h5 text-center mt-3 mb-4">Sign in</p>
                                         <div className="grey-text">
                                             <MDBInput inputRef={ref => this.email_log = ref} label="Type your email" icon="envelope" group type="email" validate error="wrong"
                                                 success="right" />
@@ -206,7 +206,7 @@ class Home extends Component {
                 <div className="footer py-4">
                     <div className="visi-side d-flex" style={{ padding: '10% 2%' }}>
                         <div className="visi col-6 text-center" style={{ paddingTop: '7%' }}>
-                            <h3 style={{ fontWeight: 'bold', fontSize: '43px' }}>VISI</h3>
+                            <h3 style={{ fontWeight: 'bold', fontSize: '45px' }}>VISI</h3>
                         </div>
                         <div className="isi-visi col-6 text-center px-4 py-5">
                             <h5 style={{ fontWeight: 'bolder', fontSize: '25px' }}>“Menjadi Universitas Unggul dan Terkemuka di Indonesia untuk Menghasilkan Tenaga Profesional yang Memenuhi Kebutuhan Industri dan Masyarakat dalam Persaingan Global Pada tahun 2024”.</h5>
@@ -221,8 +221,8 @@ class Home extends Component {
                             <h6>Menerapkan manajemen pendidikan tinggi yang efektif dan efisien, serta mengembangkan jaringan kerjasama dengan industri dan kemitraan yang berkelanjutan sebagai respon atas perubahan arus dan daya saing global.</h6>
                             <h6>Mengembangkan kompetensi dan menumbuh kembangkan jiwa kewirausahaan dan etika profesional kepada para mahasiswa dan staf yang memberikan kontribusi positif terhadap peningkatan kualitas hidup.</h6>
                         </div>
-                        <div className="misi col-6 text-center " style={{ paddingTop: '10%' }}>
-                            <h3 style={{ fontWeight: 'bold', fontSize: '43px' }}>MISI</h3>
+                        <div className="misi col-6 text-center " style={{ paddingTop: '8%' }}>
+                            <h3 style={{ fontWeight: 'bold', fontSize: '45px' }}>MISI</h3>
                         </div>
                     </div>
 

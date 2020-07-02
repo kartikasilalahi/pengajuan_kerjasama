@@ -118,20 +118,14 @@
 
 }
 
-.visi-side{
-  /* border: 1px solid black; */
-}
-
 .isi-visi{
-  /* background-color: whitesmoke;
-  box-shadow: 3px 5px rgb(207, 207, 207); */
   font-family: 'Cinzel', serif;
   
 }
 
 .isi-misi h6{
   /* background-color: #F0FFF0; */
-  font-size: 20px;
+  font-size: 23px;
   font-weight: bolder;
   margin-bottom: 4%;
   /* font-family: 'Cinzel', serif; */
@@ -141,11 +135,5 @@
 
 .quotes, .prof {
   background-color: #F0FFF0;
-
-
-}
-.quotes h5{
-  /* font-family: 'Kaushan Script', cursive; */
-  /* font-family: 'Bellefair', serif; */
 
 }
