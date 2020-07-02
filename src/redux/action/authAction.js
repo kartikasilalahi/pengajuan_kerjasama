@@ -20,17 +20,17 @@ export const Open_Register = act => {
 
 
 // -------------- REGISTER ---------------
-export const Register = ({ nama, email, phone, alamat, password, confpassword }) => {
+export const Register = ({ nama, email, phone, alamat, password, confpassword, linkperusahaan, jenisperusahaan }) => {
     return (dispacth) => {
-        if (nama === '' || email === '' || phone === '' || alamat === '' || password === '' || confpassword === '') {
-            return dispacth({ type: REGISTER_ERROR, payload: "Ops.. pastika semua form terisi." })
+        if (nama === '' || email === '' || phone === '' || alamat === '' || password === '' || confpassword === '' || jenisperusahaan === '' || linkperusahaan === '') {
+            return dispacth({ type: REGISTER_ERROR, payload: "Ops.. pastikan semua form terisi." })
         }
         if (password !== confpassword) {
             return dispacth({ type: REGISTER_ERROR, payload: 'Pastikan Password dan Konfirmasi Password sudah sesuai' })
         }
         // axios start here ==============================
         else {
-            Axios.post(APIURL + 'auth/register', { nama, email, phone, alamat, password })
+            Axios.post(APIURL + 'auth/register', { nama, email, phone, alamat, password, linkperusahaan, jenisperusahaan })
                 .then((res) => {
                     if (res.data.status === REGISTER_ERROR) {
                         dispacth({ type: REGISTER_ERROR, payload: res.data.message })

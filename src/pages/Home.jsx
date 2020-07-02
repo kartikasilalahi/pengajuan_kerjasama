@@ -3,12 +3,16 @@ import Toast from 'light-toast'
 import { MDBBtn, MDBCard, MDBInput } from 'mdbreact';
 import { Carousel } from 'react-responsive-carousel'
 import { Card } from 'reactstrap';
-import { Modal, ModalBody } from 'reactstrap'
+import { Modal, ModalBody, FormGroup, Label } from 'reactstrap'
 import { Register, Open_Register, Error_Register, Login, Error_Login } from '../redux/action'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 class Home extends Component {
+
+    state = {
+        jenisperusahaan: ''
+    }
 
     // ---------- button Register ------------
     btnRegister = () => {
@@ -18,9 +22,11 @@ class Home extends Component {
         var alamat = this.alamat.value
         var password = this.password.value
         var confpassword = this.confpassword.value
+        var linkperusahaan = this.linkperusahaan
+        var jenisperusahaan = this.state.jenisperusahaan
 
         this.props.Register({
-            nama, email, phone, alamat, password, confpassword
+            nama, email, phone, alamat, password, confpassword, linkperusahaan, jenisperusahaan
         })
     }
 
@@ -75,13 +81,15 @@ class Home extends Component {
         }
     }
 
+
     render() {
+        // console.log('jenis', this.state.jenisperusahaan)
         let id = localStorage.getItem('id')
 
         if (this.props.succes_register.length > 0) {
             Toast.success(`${this.props.succes_register}`, 2500)
         }
-        // this.props.login && this.props.roleid === 2
+
         if (id > 1) {
             this.props.Error_Login('')
             Toast.success('Berhasil login, Selamat datang..', 2000)
@@ -105,22 +113,32 @@ class Home extends Component {
                             <img alt='img' src={require('../image/logo_mercubuana.png')} />
                         </div>
                         <div className="formlogin px-4"  >
-                            <h4 className="text-center judul_form mt-3">Register</h4>
+                            <h5 className="text-center judul_form mt-3" style={{ fontWeight: 'bold' }}>Registrasi</h5>
                             {/* start form register */}
                             <form>
                                 <div className="grey-text">
-                                    <MDBInput size="sm" label="Your Company" icon="user" group type="text" className=" mt-1" inputRef={ref => this.nama = ref} />
-                                    <MDBInput size="sm" label="Your Comapany email" icon="envelope" group type="email" inputRef={ref => this.email = ref} />
-                                    <MDBInput size="sm" label="Your Company Phone" icon="phone" group type="text" inputRef={ref => this.phone = ref} />
-                                    <MDBInput size="sm" label="Your Company Address" icon="phone" group type="text" inputRef={ref => this.alamat = ref} />
-                                    <MDBInput size="sm" label="Your password" icon="lock" group type="password" inputRef={ref => this.password = ref} />
-                                    <MDBInput size="sm" label="Confirm your password" icon="exclamation-triangle" group type="password" inputRef={ref => this.confpassword = ref} />
+                                    <MDBInput size="sm" label="Nama Perusahaan/Instansi" icon="user" group type="text" className=" mt-1" inputRef={ref => this.nama = ref} />
+                                    <MDBInput size="sm" label="Email Perusahaan/Instansi" icon="envelope" group type="email" inputRef={ref => this.email = ref} />
+                                    <MDBInput size="sm" label="No. Telp Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.phone = ref} />
+                                    <MDBInput size="sm" label="Alamat Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.alamat = ref} />
+                                    <MDBInput size="sm" label="Input password" icon="lock" group type="password" inputRef={ref => this.password = ref} />
+                                    <MDBInput size="sm" label="Confirm password" icon="exclamation-triangle" group type="password" inputRef={ref => this.confpassword = ref} />
+                                    <MDBInput size="sm" label={`Link website Perushaan (Kalau tidak ada, ketik " tidak ada " )`} icon="exclamation-triangle" group type="text" inputRef={ref => this.linkperusahaan = ref} />
+                                    <FormGroup className="ml-4 pl-1" style={{ width: '50%' }}>
+                                        <select name="jenisperusahaan" className="form-control"
+                                            onChange={e => this.setState({ jenisperusahaan: e.target.value })}
+                                            style={{ color: 'grey', fontSize: '14px' }}>
+                                            <option selected hidden value="">Jenis instansi..</option>
+                                            <option value="Pemerintahan">Pemerintahan</option>
+                                            <option value="Non Pemerintahan">Non Pemerintahan</option>
+                                        </select>
+                                    </FormGroup>
                                 </div>
                                 <div className="render_error_register">
                                     {this.renderErrorRegister()}
                                 </div>
                                 <div className="text-center">
-                                    <MDBBtn color='blue' onClick={this.btnRegister}>register</MDBBtn>
+                                    <MDBBtn color='blue' onClick={this.btnRegister}>Registrasi</MDBBtn>
                                 </div>
                             </form>
                             {/* end form register */}
@@ -131,25 +149,28 @@ class Home extends Component {
 
 
                 <MDBCard className="p-5 " style={{ backgroundColor: 'whitesmoke' }}>
+                    <div className="text-center">
+                    </div>
                     <div className="d-flex">
                         <div className="home_left w-50 mr-0">
-                            <h4>Sistem Pengajuan Kerjasama</h4>
-                            <h5>Universitas Mercubuana</h5>
-                            <div className="home_logo p-3">
-                                <img alt='img' src={require('../image/logo_mercubuana.png')} />
-                            </div>
                             <div className="home_slide">
                                 <Carousel className="carosel mx-auto" infiniteLoop showThumbs={false} showStatus={false} autoPlay>
-                                    <div><img alt='img' src={require('../image/kerjasama1.jpg')} width="50px" /></div>
-                                    <div><img alt='img' src={require('../image/kerjasama2.jpg')} width="50px" /></div>
-                                    <div><img alt='img' src={require('../image/kerjasama3.jpg')} width="50px" /></div>
+                                    <div><img alt='img' src={require('../image/umb1.jpeg')} width="50px" /></div>
+                                    <div><img alt='img' src={require('../image/umb2.jpeg')} width="50px" /></div>
+                                    <div><img alt='img' src={require('../image/umb3.jpeg')} width="50px" /></div>
+                                    <div><img alt='img' src={require('../image/umb4.jpeg')} width="50px" /></div>
                                 </Carousel>
                             </div>
                         </div>
-                        <div className="home_right w-50 px-5 py-3">
+                        <div className="home_right w-50 px-5 pb-3" >
+                            <div className="home_logo pb-4 pt-0 mt-0 ">
+                                <img alt='img' src={require('../image/logo_mercubuana.png')} width="300px" />
+                            </div>
+                            <h4>Sistem Pengajuan Kerjasama</h4>
+                            <h5>Universitas Mercubuana</h5>
                             {/* ----start form login----- */}
-                            <Card>
-                                <form className="py-5 pr-3">
+                            <Card className="mt-3">
+                                <form className="py-3 pr-3" >
                                     <p className="h5 text-center mb-4">Sign in</p>
                                     <div className="grey-text">
                                         <MDBInput inputRef={ref => this.email_log = ref} label="Type your email" icon="envelope" group type="email" validate error="wrong"
@@ -160,11 +181,11 @@ class Home extends Component {
                                         {this.renderErrorLogin()}
                                     </div>
                                     <div className="text-center">
-                                        <MDBBtn color='blue' onClick={this.btnLogin}>Login</MDBBtn>
+                                        <MDBBtn color='blue' onClick={this.btnLogin}>sign in</MDBBtn>
                                     </div>
                                     <div className="mt-1 pr-2 pb-3 text-right" style={{ fontSize: "13px" }}>
-                                        Don't have an Account?
-                                    <br />Register <a className='blue-text font-weight-bold' onClick={() => { this.props.Open_Register(true) }}>here!</a>{" "}
+                                        Belum terdaftar?
+                                    <br />Register <a className='blue-text font-weight-bold' onClick={() => { this.props.Open_Register(true) }}>disini sekarang!</a>{" "}
                                     </div>
                                 </form>
                             </Card>

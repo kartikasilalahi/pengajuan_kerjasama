@@ -35,7 +35,7 @@ function Pengajuan() {
     /* ----------- Render Option Bidang ------------- */
     const renderSelectBidang = () => {
         return Bidang.map((val, i) => {
-            return <option value={val.id} key={i}>{val.nama}</option>
+            return <option value={val.id_bidang} key={i}>{val.nama}</option>
         })
     }
 
@@ -164,7 +164,7 @@ function Pengajuan() {
     // =========== TEST CONSOLE======================================
 
     // console.log('ini data pengajuan', addPengajuan)
-    // console.log('tls bdg', tulisBidang)
+    console.log('tls bdg', tulisBidang)
     // console.log(addPengajuan.idbidang)
     console.log(dataAjuan[0])
 

@@ -15,6 +15,8 @@ const INITIAL_STATE = {
     alamat: '',
     status: '',
     roleid: 0,
+    jenisperusahaan: '',
+    linperusahaan: '',
 
     errorRegister: '',
     register: false,
