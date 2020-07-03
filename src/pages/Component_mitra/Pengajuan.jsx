@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Input, FormGroup, Label, CustomInput, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Toast from 'light-toast'
-
+import Swal from "sweetalert2";
 import { MDBBtn } from 'mdbreact'
 import { AiOutlineWarning } from 'react-icons/ai'
 import Axios from 'axios'
@@ -19,6 +19,8 @@ function Pengajuan() {
     const [onprocess, setonprocess] = useState('false');
     const [dataReview, setdataReview] = useState([]);
     const [detailPengajuan, setdetailPengajuan] = useState([]);
+    const [daftarOption, setdaftarOption] = useState(['Sangat Kurang', 'Kurang', 'Baik', 'Sangat Baik']);
+
 
 
     const [tulisBidang, settulisBidang] = useState(false);
@@ -33,6 +35,9 @@ function Pengajuan() {
 
     const [modalReview, setmodalReview] = useState(false);
     const toggleReview = () => setmodalReview(!modalReview);
+
+    const [modalEvaluasi, setmodalEvaluasi] = useState(false);
+    const toggleEvaluasi = () => setmodalEvaluasi(!modalEvaluasi);
     /* ----------- modal------------- */
 
 
@@ -180,6 +185,49 @@ function Pengajuan() {
         return result
     }
 
+    /* ------ Render Option Nilai ------ */
+    const OptionNilai = () => {
+        return daftarOption.map((val, i) => {
+            return <option value={val} key={i}>{val}</option>
+        })
+    }
+
+    /* -------- function finish kerjasama -------- */
+    const finishKerjasama = () => {
+        Swal.fire({
+            title: 'Akhiri Kerjasama?',
+            icon: 'warning',
+            showCancelButton: 'true',
+            cancelButtonText: 'Tidak',
+            confirmButtonText: "Ya"
+        }).then(result => {
+            if (result.value) {
+                Swal.fire({
+                    title: 'Memproses',
+                    text: 'Tunggu Sebentar',
+                    timer: 2100,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+                    .then(() => {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            text: `Kerjasama Berakhir`,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2100
+                        }).then(() => {
+                            setmodalEvaluasi(true)
+                        })
+                    })
+            }
+        })
+    }
+
+
 
     /* ------ Render Daftar Accept/Kerjasama Onprocess ------ */
     const renderOnprocessKerjasama = () => {
@@ -211,9 +259,9 @@ function Pengajuan() {
                                 .catch(err => { console.log(err) })
                         }}>Review</MDBBtn>
                     </td>
-                    <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>ONPROCESS</td>
+                    <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>Sedang Berlangsung</td>
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='success' > finish </MDBBtn>
+                        <MDBBtn size='sm' className="my-0" color='success' onClick={finishKerjasama}> Selesai </MDBBtn>
                     </td>
                 </tr>
             )
@@ -318,7 +366,7 @@ function Pengajuan() {
                         }
                     </ModalBody>
                     <ModalFooter>
-                        <MDBBtn onClick={toggleDetail} size="sm" color="warning"> close </MDBBtn>
+                        <MDBBtn onClick={toggleDetail} size="sm" color="warning"> Tutup </MDBBtn>
                     </ModalFooter>
                 </div>
             </Modal>
@@ -346,10 +394,124 @@ function Pengajuan() {
                     </Table>
                 </ModalBody>
                 <ModalFooter>
-                    <MDBBtn onClick={toggleReview} size="sm" color="warning"> close </MDBBtn>
+                    <MDBBtn onClick={toggleReview} size="sm" color="warning"> Tutup </MDBBtn>
                 </ModalFooter>
             </Modal>
             {/* ---- end modal review penilaian kelayakan  ---- */}
+
+
+            {/* ---- start modal evaluasi ---- */}
+            <Modal isOpen={modalEvaluasi} toggle={toggleEvaluasi} centered style={{ width: "80%", maxWidth: "1200px" }}>
+                <ModalHeader>
+                    <h4 className="font-weight-bold">Form Evaluasi Kerjasama</h4>
+                </ModalHeader>
+                <ModalBody>
+                    <div className="d-flex">
+                        <div className="col-5">
+                            <FormGroup>
+                                <Label style={{ fontSize: "15px" }}>Nama Reviewer: </Label>
+                                <Input size="sm" className="w-100" type="text"
+                                // onChange={e => setdataPenilaian({ ...dataPenilaian, nama_reviewer: e.target.value })}
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label style={{ fontSize: "15px" }}>Inatansi: </Label>
+                                <Input size="sm" className="w-100" type="text"
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label style={{ fontSize: "15px" }}>Jenis Kerjasama: </Label>
+                                <Input size="sm" className="w-100" type="text"
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label style={{ fontSize: "15px" }}>Skop Kerjasama: </Label>
+                                <Input size="sm" className="w-100" type="text"
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label style={{ fontSize: "15px" }}>Bidang Kerjasama: </Label>
+                                <Input size="sm" className="w-100" type="text"
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label style={{ fontSize: "15px" }}>Lama Kerjasama dengan UMB: </Label>
+                                <Input size="sm" className="w-100" type="text"
+                                />
+                            </FormGroup>
+                        </div>
+
+                        <div className="col-7 mt-4 pt-2">
+                            <FormGroup>
+                                <select name="nilaiKinerja" className="form-control"
+                                // onChange={e => setdataPenilaian({ ...dataPenilaian, kinerja_institusi: e.target.value })} 
+                                >
+                                    <option selected hidden value="">Kesepakatan kerjasama di lakukan dengan mudah</option>
+                                    {OptionNilai()}
+                                </select>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <select name="nilaiKinerja" className="form-control"
+                                >
+                                    <option selected hidden value="">Pihak UMB Jakarta telah menanggapi usulan kerjasama dengan cepat</option>
+                                    {OptionNilai()}
+                                </select>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <select name="nilaiKinerja" className="form-control"
+                                >
+                                    <option selected hidden value="">Kesepakatan kerjasama di lakukan dengan mudah</option>
+                                    {OptionNilai()}
+                                </select>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <select name="nilaiKinerja" className="form-control"
+                                >
+                                    <option selected hidden value="">Kerjasama telah di implementasikan dengan kegiatan</option>
+                                    {OptionNilai()}
+                                </select>
+                            </FormGroup>
+                            <FormGroup>
+                                <select name="nilaiKinerja" className="form-control"
+                                >
+                                    <option selected hidden value="">Implementasi kerjasama telah sesuai</option>
+                                    {OptionNilai()}
+                                </select>
+                            </FormGroup>
+                            <FormGroup>
+                                <select name="nilaiKinerja" className="form-control"
+                                >
+                                    <option selected hidden value="">Kerjasama kami telah memuaskan</option>
+                                    {OptionNilai()}
+                                </select>
+                            </FormGroup>
+                            <FormGroup>
+                                <select name="nilaiKinerja" className="form-control"
+                                >
+                                    <option selected hidden value="">Kami tetap akan melanjutkan kerjasama ini</option>
+                                    <option value='ya'>Ya</option>
+                                    <option value='tidak'>Tidak</option>
+                                </select>
+                            </FormGroup>
+
+                        </div>
+                    </div>
+
+
+                </ModalBody>
+                <ModalFooter>
+                    <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                        // setmodalDetail(true)
+                        // setdetailPengajuan(daftarDecline[i])
+                        // setidSellect(val.id)
+                    }}>Simpan</MDBBtn>
+                </ModalFooter>
+            </Modal>
+            {/* ---- end modal evaluasi ---- */}
+
 
             {/* -- menu -- */}
             <div className="menu-pengajuan d-flex mb-4">
@@ -389,13 +551,15 @@ function Pengajuan() {
                         {
                             dataAjuan.length === 0 || dataAjuan === [] ?
                                 <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
-                                    <AiOutlineWarning />  Perhatikan! Pastikan semua form terisi.</p>
+                                    <AiOutlineWarning />  Perhatikan! Pastikan Semua fForm Terisi.</p>
                                 :
                                 <p className="alert alert-danger mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
-                                    <AiOutlineWarning />  Perhatikan! Saat ini Anda belum dapat mengajukan kerjasama baru, dikarenakan pengajuan sebelumnya masih proses menunggu. <span style={{ cursor: 'pointer', fontWeight: 'bolder' }} onClick={() => {
-                                        setformAjuan('false')
-                                        setajuan('true')
-                                    }}>klik untuk melihat</span> </p>
+                                    <AiOutlineWarning />  Perhatikan! Saat Ini Anda Belum Dapat Mengajukan Kerjasama Baru, Karena Pengajuan Sebelumnya Masih Proses Menunggu. <span
+                                        style={{ cursor: 'pointer', fontWeight: 'bold' }}
+                                        onClick={() => {
+                                            setformAjuan('false')
+                                            setajuan('true')
+                                        }}>klik Untuk melihat</span> </p>
                         }
                         <div className="form-pengajuan d-flex">
                             <div className="left col-6 mr-2 py-2" style={{ backgroundColor: 'whitesmoke' }}>

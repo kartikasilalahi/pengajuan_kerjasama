@@ -147,7 +147,7 @@ class Verifikasi_akun extends Component {
                 <div>
                     {
                         unverified === "true" ?
-                            <div className="mx-auto" style={{ width: '90%' }}>
+                            <div className="mx-auto" style={{ width: '98%' }}>
                                 {
                                     daftarUnverified.length > 0 ?
                                         <Table className="tabel-user m-3" striped >
@@ -172,7 +172,7 @@ class Verifikasi_akun extends Component {
                             </div>
                             :
                             verified === "true" ?
-                                <div className="mx-auto" style={{ width: '90%' }}>{
+                                <div className="mx-auto" style={{ width: '98%' }}>{
                                     daftarVerified.length > 0 ?
                                         <Table className="tabel-user m-3" striped >
                                             <thead>

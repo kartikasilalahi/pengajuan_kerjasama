@@ -270,9 +270,9 @@ function Manajemen_kerjasama() {
                         }}>Review</MDBBtn>
                     </td>
                     <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>Sedang Berlangsung</td>
-                    <td>
+                    {/* <td>
                         <MDBBtn size='sm' className="my-0" color='success' onClick={finishKerjasama}> Selesai </MDBBtn>
-                    </td>
+                    </td> */}
                 </tr>
             )
         })
@@ -455,7 +455,7 @@ function Manajemen_kerjasama() {
                         <FormGroup>
                             <select name="nilaiProfil" className="form-control"
                                 onChange={e => setdataPenilaian({ ...dataPenilaian, profil_institusi: e.target.value })} >
-                                <option selected hidden value="">Nilai Profil Institusi..</option>
+                                <option selected hidden value="">Nilai Profil Institusi</option>
                                 {OptionNilai()}
                             </select>
                         </FormGroup>
@@ -463,7 +463,7 @@ function Manajemen_kerjasama() {
                         <FormGroup>
                             <select name="nilaiKinerja" className="form-control"
                                 onChange={e => setdataPenilaian({ ...dataPenilaian, kinerja_institusi: e.target.value })} >
-                                <option selected hidden value="">Nilai Kinerja Institusi..</option>
+                                <option selected hidden value="">Nilai Kinerja Institusi</option>
                                 {OptionNilai()}
                             </select>
                         </FormGroup>
@@ -471,7 +471,7 @@ function Manajemen_kerjasama() {
                         <FormGroup>
                             <select name="nilaiReputasi" className="form-control"
                                 onChange={e => setdataPenilaian({ ...dataPenilaian, reputasi_institusi: e.target.value })} >
-                                <option selected hidden value="">Nilai Reputasi Institusi..</option>
+                                <option selected hidden value="">Nilai Reputasi Institusi</option>
                                 {OptionNilai()}
                             </select>
                         </FormGroup>
@@ -481,7 +481,7 @@ function Manajemen_kerjasama() {
                 <ModalFooter>
                     <MDBBtn size='sm' className="my-0" onClick={acceptPengajuan}>accept</MDBBtn>
                     <MDBBtn size='sm' className="my-0" onClick={declinePengajuan} color='danger'>decline</MDBBtn>
-                    <MDBBtn onClick={toggleKelayakan} size="sm" color="warning"> close </MDBBtn>
+                    <MDBBtn onClick={toggleKelayakan} size="sm" color="warning"> Tutup </MDBBtn>
                 </ModalFooter>
             </Modal >
             {/* ---- end modal kelayakan persetujuan ---- */}
@@ -495,7 +495,7 @@ function Manajemen_kerjasama() {
                 <ModalBody>
                     <Table>
                         <thead>
-                            <tr>
+                            <tr style={{ fontWeight: 'bold' }}>
                                 <th>Nama Reviewer</th>
                                 <th>Jabatan Reviewer</th>
                                 <th>Profil</th>
@@ -509,7 +509,7 @@ function Manajemen_kerjasama() {
                     </Table>
                 </ModalBody>
                 <ModalFooter>
-                    <MDBBtn onClick={toggleReview} size="sm" color="warning"> close </MDBBtn>
+                    <MDBBtn onClick={toggleReview} size="sm" color="warning"> Tutup </MDBBtn>
                 </ModalFooter>
             </Modal>
             {/* ---- end modal review penilaian kelayakan  ---- */}
@@ -563,7 +563,7 @@ function Manajemen_kerjasama() {
             </div>
             {
                 baru === 'true' ?
-                    <div className="mx-auto pt-2" style={{ width: '85%' }
+                    <div className="mx-auto pt-2" style={{ width: '98%' }
                     } >
                         {
                             newPengajuan.length > 0 ?
@@ -588,7 +588,7 @@ function Manajemen_kerjasama() {
                     </div >
                     :
                     accept === 'true' ?
-                        <div className="mx-auto pt-2" style={{ width: '85%' }
+                        <div className="mx-auto pt-2" style={{ width: '98%' }
                         } >
                             {
                                 daftarKerjasama.length > 0 ?
@@ -602,7 +602,7 @@ function Manajemen_kerjasama() {
                                                 <th>Detail</th>
                                                 <th>Review</th>
                                                 <th>Status</th>
-                                                <th>Aksi</th>
+                                                {/* <th>Aksi</th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -615,7 +615,7 @@ function Manajemen_kerjasama() {
                         </div >
                         :
                         decline === 'true' ?
-                            <div className="mx-auto pt-2" style={{ width: '85%' }
+                            <div className="mx-auto pt-2" style={{ width: '98%' }
                             } >
                                 {
                                     daftarDecline.length > 0 ?
