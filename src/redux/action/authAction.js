@@ -23,10 +23,10 @@ export const Open_Register = act => {
 export const Register = ({ nama, email, phone, alamat, password, confpassword, linkperusahaan, jenisperusahaan }) => {
     return (dispacth) => {
         if (nama === '' || email === '' || phone === '' || alamat === '' || password === '' || confpassword === '' || jenisperusahaan === '' || linkperusahaan === '') {
-            return dispacth({ type: REGISTER_ERROR, payload: "Ops.. pastikan semua form terisi." })
+            return dispacth({ type: REGISTER_ERROR, payload: "Pastikan Semua Form Terisi." })
         }
         if (password !== confpassword) {
-            return dispacth({ type: REGISTER_ERROR, payload: 'Pastikan Password dan Konfirmasi Password sudah sesuai' })
+            return dispacth({ type: REGISTER_ERROR, payload: 'Pastikan Password dan Konfirmasi Password Sudah Sesuai' })
         }
         // axios start here ==============================
         else {

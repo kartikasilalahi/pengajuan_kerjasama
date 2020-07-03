@@ -56,12 +56,12 @@ class Verifikasi_akun extends Component {
                         <td ><a href={val.linkperusahaan} target="_blank" style={{ color: 'blue' }}>{val.linkperusahaan}</a></td>
                         {/* <td>{val.status}</td> */}
                         <td >
-                            <Tooltip TransitionComponent={Zoom} title="unverified" arrow placement="top">
+                            <Tooltip TransitionComponent={Zoom} title="Belum Diverifikasi" arrow placement="top">
                                 <img src={require('../../image/unverified.png')} width="22px" alt='img' style={{ cursor: "pointer" }} />
                             </Tooltip>
                         </td>
                         <td>
-                            <MDBBtn className="my-0" size='sm' color='light-blue' onClick={() => { this.onVerify(i) }}>Verify</MDBBtn>
+                            <MDBBtn className="my-0" size='sm' color='light-blue' onClick={() => { this.onVerify(i) }}>Verifikasi</MDBBtn>
                         </td>
                     </tr >
                 )
@@ -85,7 +85,7 @@ class Verifikasi_akun extends Component {
                         <td>{val.jenisperusahaan}</td>
                         <td ><a href={val.linkperusahaan} target="_blank" style={{ color: 'blue' }}>{val.linkperusahaan}</a></td>
                         <td>
-                            <Tooltip TransitionComponent={Zoom} title="verified" arrow placement="top">
+                            <Tooltip TransitionComponent={Zoom} title="Sudah Diverifikasi" arrow placement="top">
                                 <img src={require('../../image/verified.png')} width="22px" style={{ cursor: "pointer" }} alt='img' />
                             </Tooltip>
                         </td>
@@ -102,14 +102,15 @@ class Verifikasi_akun extends Component {
 
         if (indexedit > -1) {
             Swal.fire({
-                title: 'Yakin untuk verifikasi akun ini?',
+                title: 'Verifikasi Akun Ini?',
                 icon: 'warning',
                 showCancelButton: 'true',
-                confirmButtonText: "ya!"
+                cancelButtonText: 'Tidak',
+                confirmButtonText: "Ya"
             }).then(result => {
                 if (result.value) {
                     Swal.fire({
-                        title: 'Sudah diverifikasi',
+                        title: 'Berhasil Diverifikasi',
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 1000
@@ -119,7 +120,10 @@ class Verifikasi_akun extends Component {
                             .then(res => { this.setState({ daftarUnverified: res.data.unver, daftarVerified: res.data.ver, indexedit: -1 }) })
                             .catch(err => { console.log(err) })
                     })
+                    this.setState({ indexedit: -1 })
                 }
+                this.setState({ indexedit: -1 })
+
             })
         }
 
@@ -130,34 +134,34 @@ class Verifikasi_akun extends Component {
                         onClick={() => {
                             this.setState({ verified: 'false', unverified: 'true' })
                         }}>
-                        Belum diverifikasi
+                        Belum Diverifikasi
                     </div>
                     <div className={`${verified} verified mr-4 pl-0`}
                         onClick={() => {
                             this.setState({ unverified: 'false', verified: 'true' })
                         }}>
-                        Sudah diverifikasi
+                        Sudah Diverifikasi
                     </div>
                 </div>
 
                 <div>
                     {
                         unverified === "true" ?
-                            <div className="mx-auto" style={{ width: '85%' }}>
+                            <div className="mx-auto" style={{ width: '90%' }}>
                                 {
                                     daftarUnverified.length > 0 ?
                                         <Table className="tabel-user m-3" striped >
                                             <thead>
                                                 <tr className="text-center">
-                                                    <th>No.</th>
-                                                    <th>Nama Company</th>
+                                                    <th>No</th>
+                                                    <th>Nama Instansi</th>
                                                     <th>Email</th>
-                                                    <th>Phone</th>
+                                                    <th>No. Telp</th>
                                                     <th>Alamat</th>
                                                     <th>Jenis Instansi</th>
-                                                    <th>Website/Link</th>
+                                                    <th>Website</th>
                                                     <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="p-3">
@@ -168,18 +172,18 @@ class Verifikasi_akun extends Component {
                             </div>
                             :
                             verified === "true" ?
-                                <div className="mx-auto" style={{ width: '85%' }}>{
+                                <div className="mx-auto" style={{ width: '90%' }}>{
                                     daftarVerified.length > 0 ?
                                         <Table className="tabel-user m-3" striped >
                                             <thead>
                                                 <tr className="text-center">
-                                                    <th>No.</th>
-                                                    <th>Nama Company</th>
+                                                    <th>No</th>
+                                                    <th>Nama Instansi</th>
                                                     <th>Email</th>
-                                                    <th>Phone</th>
+                                                    <th>No. Telp</th>
                                                     <th>Alamat</th>
                                                     <th>Jenis Instansi</th>
-                                                    <th>Website/Link</th>
+                                                    <th>Website</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>

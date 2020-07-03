@@ -102,7 +102,7 @@ class Home extends Component {
             console.log('idnya', id)
             console.log(this.props.succes_register)
             this.props.Error_Login('')
-            Toast.success('Berhasil login, Selamat datang.. Anda sebagai ADMIN', 2000)
+            Toast.success('Berhasil Masuk', 2000)
             return <Redirect to={'/dashboard_admin'} />
         }
         return (
@@ -125,16 +125,16 @@ class Home extends Component {
                                         <MDBInput size="sm" label="Email Perusahaan/Instansi" icon="envelope" group type="email" inputRef={ref => this.email = ref} />
                                         <MDBInput size="sm" label="No. Telp Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.phone = ref} />
                                         <MDBInput size="sm" label="Alamat Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.alamat = ref} />
-                                        <MDBInput size="sm" label="Input password" icon="lock" group type="password" inputRef={ref => this.password = ref} />
-                                        <MDBInput size="sm" label="Confirm password" icon="exclamation-triangle" group type="password" inputRef={ref => this.confpassword = ref} />
-                                        <MDBInput size="sm" label={`Link website Perushaan (Kalau tidak ada, ketik " tidak ada " )`} icon="exclamation-triangle" group type="text" inputRef={ref => this.linkperusahaan = ref} />
+                                        <MDBInput size="sm" label="Password" icon="lock" group type="password" inputRef={ref => this.password = ref} />
+                                        <MDBInput size="sm" label="Konfirmasi Password" icon="exclamation-triangle" group type="password" inputRef={ref => this.confpassword = ref} />
+                                        <MDBInput size="sm" label={`Website Perusahaan (Kalau Tidak Ada, Ketik " Tidak Ada " )`} icon="exclamation-triangle" group type="text" inputRef={ref => this.linkperusahaan = ref} />
                                         <FormGroup className="ml-4 pl-1" style={{ width: '50%' }}>
                                             <select name="jenisperusahaan" className="form-control"
                                                 onChange={e => this.setState({ jenisperusahaan: e.target.value })}
                                                 style={{ color: 'grey', fontSize: '14px' }}>
-                                                <option selected hidden value="">Jenis instansi..</option>
+                                                <option selected hidden value="">Jenis Instansi</option>
                                                 <option value="Pemerintahan">Pemerintahan</option>
-                                                <option value="Non Pemerintahan">Non Pemerintahan</option>
+                                                <option value="Non Pemerintahan">Non-Pemerintahan</option>
                                             </select>
                                         </FormGroup>
                                     </div>
@@ -175,21 +175,21 @@ class Home extends Component {
                                 {/* ----start form login----- */}
                                 <Card className="mt-3">
                                     <form className="py-3 pr-3" >
-                                        <p className="h5 text-center mt-3 mb-4">Sign in</p>
+                                        <p className="h5 text-center mt-3 mb-4">Masuk/Login</p>
                                         <div className="grey-text">
-                                            <MDBInput inputRef={ref => this.email_log = ref} label="Type your email" icon="envelope" group type="email" validate error="wrong"
+                                            <MDBInput inputRef={ref => this.email_log = ref} label="Masukkan Email" icon="envelope" group type="email" validate error="wrong"
                                                 success="right" />
-                                            <MDBInput inputRef={ref => this.password_log = ref} label="Type your password" icon="lock" group type="password" validate />
+                                            <MDBInput inputRef={ref => this.password_log = ref} label="Masukkan Password" icon="lock" group type="password" validate />
                                         </div>
                                         <div className="error_login">
                                             {this.renderErrorLogin()}
                                         </div>
                                         <div className="text-center">
-                                            <MDBBtn color='blue' onClick={this.btnLogin}>sign in</MDBBtn>
+                                            <MDBBtn color='blue' onClick={this.btnLogin}>Masuk</MDBBtn>
                                         </div>
                                         <div className="mt-1 pr-2 pb-3 text-right" style={{ fontSize: "13px" }}>
-                                            Belum terdaftar?
-                                    <br />Register <a className='blue-text font-weight-bold' onClick={() => { this.props.Open_Register(true) }}>disini sekarang!</a>{" "}
+                                            Belum Terdaftar?
+                                    <br />Register <a className='blue-text font-weight-bold' onClick={() => { this.props.Open_Register(true) }}>Disini Sekarang!</a>{" "}
                                         </div>
                                     </form>
                                 </Card>
@@ -221,7 +221,7 @@ class Home extends Component {
                             <h6>Menerapkan manajemen pendidikan tinggi yang efektif dan efisien, serta mengembangkan jaringan kerjasama dengan industri dan kemitraan yang berkelanjutan sebagai respon atas perubahan arus dan daya saing global.</h6>
                             <h6>Mengembangkan kompetensi dan menumbuh kembangkan jiwa kewirausahaan dan etika profesional kepada para mahasiswa dan staf yang memberikan kontribusi positif terhadap peningkatan kualitas hidup.</h6>
                         </div>
-                        <div className="misi col-6 text-center " style={{ paddingTop: '8%' }}>
+                        <div className="misi col-6 text-center " style={{ paddingTop: '11%' }}>
                             <h3 style={{ fontWeight: 'bold', fontSize: '45px' }}>MISI</h3>
                         </div>
                     </div>
@@ -231,7 +231,7 @@ class Home extends Component {
                     </div>
                     <div className="prof text-center" style={{ paddingBottom: '5%' }}>
                         <p><span style={{ fontWeight: 'bold' }}>Prof. Dr Ngadino Surip, MS</span> <br />
-                        Rektor Universitas Mercu Buana 2018-2022</p>
+                        Rektor Universitas Mercu Buana 2018 - 2022</p>
                         <button className="btn btn-outline-dark-blue" style={{ borderRadius: "25px" }}><a className="regist" target='_blank' href='https://www.mercubuana.ac.id' style={{ color: 'black' }}>Selengkapnya</a></button>
                     </div>
                     <div>

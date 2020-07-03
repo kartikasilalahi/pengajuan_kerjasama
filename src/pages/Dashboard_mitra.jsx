@@ -18,15 +18,16 @@ class Dashboard_mitra extends Component {
 
     btnlogout = () => {
         Swal.fire({
-            title: 'Anda yakin log out?',
+            title: 'Anda Yakin?',
             icon: 'warning',
             showCancelButton: 'true',
-            confirmButtonText: "Logout!"
+            confirmButtonText: "Ya",
+            cancelButtonText: 'Batal'
         }).then(result => {
             if (result.value) {
                 Swal.fire({
-                    title: 'Logging out',
-                    text: 'tunggu beberapa detik',
+                    title: 'Memproses',
+                    text: 'Tunggu Sebentar',
                     timer: 1800,
                     allowOutsideClick: false,
                     timerProgressBar: true,
@@ -36,7 +37,7 @@ class Dashboard_mitra extends Component {
                 })
                     .then(() => {
                         Swal.fire({
-                            title: 'Logout',
+                            title: 'Berhasil Keluar',
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 1000
@@ -100,7 +101,7 @@ class Dashboard_mitra extends Component {
                 {/* ----------------- TAB END HERE --------------------- */}
 
                 <div className="button_logout text-center" style={{ width: '20%' }} >
-                    <MDBBtn onClick={this.btnlogout} >Logout</MDBBtn>
+                    <MDBBtn onClick={this.btnlogout} >Keluar</MDBBtn>
                 </div>
             </div>
         )

@@ -64,15 +64,16 @@ function Manajemen_kerjasama() {
     /* --------- Accept Pengajuan ---------- */
     const acceptPengajuan = () => {
         Swal.fire({
-            title: 'Yakin terima kerjasama?',
+            title: 'Terima Kerjasama?',
             icon: 'warning',
             showCancelButton: 'true',
-            confirmButtonText: "Yes"
+            cancelButtonText: 'Tidak',
+            confirmButtonText: "Ya"
         }).then(result => {
             if (result.value) {
                 Swal.fire({
-                    title: 'Terima Tawaran Kerjasama',
-                    text: 'Tunggu beberapa detik',
+                    title: 'Memproses',
+                    text: 'Tunggu Sebentar',
                     timer: 2100,
                     allowOutsideClick: false,
                     timerProgressBar: true,
@@ -83,7 +84,7 @@ function Manajemen_kerjasama() {
                     .then(() => {
                         Swal.fire({
                             title: 'Berhasil',
-                            text: `Kerjasama Onprocess!`,
+                            text: `Kerjasama Sedang Berlangsung`,
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 2100
@@ -117,15 +118,16 @@ function Manajemen_kerjasama() {
     /* --------- Decline Pengajuan ---------- */
     const declinePengajuan = () => {
         Swal.fire({
-            title: 'Yakin decline/tolak kerjasama?',
+            title: 'Tolak Kerjasama?',
             icon: 'warning',
             showCancelButton: 'true',
-            confirmButtonText: "Yes"
+            cancelButtonText: 'Tidak',
+            confirmButtonText: "Ya"
         }).then(result => {
             if (result.value) {
                 Swal.fire({
-                    title: 'Decline Tawatan Kerjasama',
-                    text: 'Tunggu beberapa detik',
+                    title: 'Memproses',
+                    text: 'Tunggu Sebentar',
                     timer: 2100,
                     allowOutsideClick: false,
                     timerProgressBar: true,
@@ -136,7 +138,7 @@ function Manajemen_kerjasama() {
                     .then(() => {
                         Swal.fire({
                             title: 'Berhasil',
-                            text: `Kerjasama ditolak.`,
+                            text: `Kerjasama Ditolak.`,
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 2100
@@ -171,15 +173,16 @@ function Manajemen_kerjasama() {
     /* --------- Finish Kerjasama ---------- */
     const finishKerjasama = () => {
         Swal.fire({
-            title: 'Yakin untuk finish kerjasama?',
+            title: 'Akhiri Kerjasama?',
             icon: 'warning',
             showCancelButton: 'true',
-            confirmButtonText: "Yes"
+            cancelButtonText: 'Tidak',
+            confirmButtonText: "Ya"
         }).then(result => {
             if (result.value) {
                 Swal.fire({
-                    title: 'Mengakhiri kerjasama',
-                    text: 'Tunggu beberapa detik',
+                    title: 'Memproses',
+                    text: 'Tunggu Sebentar',
                     timer: 2100,
                     allowOutsideClick: false,
                     timerProgressBar: true,
@@ -266,9 +269,9 @@ function Manajemen_kerjasama() {
                                 .catch(err => { console.log(err) })
                         }}>Review</MDBBtn>
                     </td>
-                    <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>ONPROCESS</td>
+                    <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>Sedang Berlangsung</td>
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='success' onClick={finishKerjasama}> finish </MDBBtn>
+                        <MDBBtn size='sm' className="my-0" color='success' onClick={finishKerjasama}> Selesai </MDBBtn>
                     </td>
                 </tr>
             )
@@ -308,7 +311,7 @@ function Manajemen_kerjasama() {
                         }}>Review</MDBBtn>
                     </td>
                     <td style={{ color: 'red', fontWeight: 'bold' }}>
-                        DECLINE
+                        DITOLAK
                     </td>
                 </tr>
             )
@@ -371,7 +374,7 @@ function Manajemen_kerjasama() {
                                 <div className="d-flex">
                                     <div className="d-flex col-5 p-0">
                                         <div className="label-ajuan col-6 p-0">
-                                            <p>Nama yang mengajukan </p>
+                                            <p>Nama yang Mengajukan </p>
                                             <p>No HP/WA </p>
                                             <p>PIC </p>
                                             <p>No HP/WA PIC</p>
@@ -421,7 +424,7 @@ function Manajemen_kerjasama() {
                         }
                     </ModalBody>
                     <ModalFooter>
-                        <MDBBtn onClick={toggleDetail} size="sm" color="warning"> close </MDBBtn>
+                        <MDBBtn onClick={toggleDetail} size="sm" color="warning"> Tutup </MDBBtn>
                     </ModalFooter>
                 </div>
             </Modal>
@@ -542,22 +545,22 @@ function Manajemen_kerjasama() {
                         setaccept('false')
                         setdecline('false')
                     }}
-                > Daftar Pengajuan Baru</div>
+                > Pengajuan Baru</div>
                 <div className={`${accept} verified mr-4 pl-0`}
                     onClick={() => {
                         setbaru('false')
                         setaccept('true')
                         setdecline('false')
                     }}
-                > Pengajuan yang diterima dan Onprocess</div>
+                > Sedang Belangsung</div>
                 <div className={`${decline} verified mr-4 pl-0`}
                     onClick={() => {
                         setbaru('false')
                         setaccept('false')
                         setdecline('true')
                     }}
-                > Pengajuan yang ditolak</div>
-            </div >
+                > Pengajuan yang Ditolak</div>
+            </div>
             {
                 baru === 'true' ?
                     <div className="mx-auto pt-2" style={{ width: '85%' }
@@ -572,7 +575,7 @@ function Manajemen_kerjasama() {
                                             <th>Alamat</th>
                                             <th>Bidang Kerjasama</th>
                                             <th>Detail</th>
-                                            <th>Action</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -580,7 +583,7 @@ function Manajemen_kerjasama() {
                                     </tbody>
                                 </Table>
                                 :
-                                <div className="mx-auto mt-5" style={{ fontWeight: 'bold', color: 'gray' }}>Tidak Ada Pengajuan baru atau tidak ditemukan Pengajuan yang belum di accept</div>
+                                <div className="mx-auto mt-5" style={{ fontWeight: 'bold', color: 'gray' }}>Tidak Ada Pengajuan Baru</div>
                         }
                     </div >
                     :
@@ -592,14 +595,14 @@ function Manajemen_kerjasama() {
                                     <Table striped >
                                         <thead>
                                             <tr className="text-center">
-                                                <th>No.</th>
+                                                <th>No</th>
                                                 <th>Nama Instansi</th>
                                                 <th>Alamat</th>
                                                 <th>Bidang Kerjasama</th>
                                                 <th>Detail</th>
                                                 <th>Review</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -607,7 +610,7 @@ function Manajemen_kerjasama() {
                                         </tbody>
                                     </Table>
                                     :
-                                    <div className="mx-auto mt-5" style={{ fontWeight: 'bold', color: 'gray' }}>Tidak Ada Pengajuan baru atau tidak ditemukan Pengajuan yang belum di accept</div>
+                                    <div className="mx-auto mt-5" style={{ fontWeight: 'bold', color: 'gray' }}>Tidak Ada Kerjasama yang Sedang Berlangsung</div>
                             }
                         </div >
                         :
@@ -619,7 +622,7 @@ function Manajemen_kerjasama() {
                                         <Table striped >
                                             <thead>
                                                 <tr className="text-center">
-                                                    <th>No.</th>
+                                                    <th>No</th>
                                                     <th>Nama Instansi</th>
                                                     <th>Alamat</th>
                                                     <th>Bidang Kerjasama</th>
@@ -633,7 +636,7 @@ function Manajemen_kerjasama() {
                                             </tbody>
                                         </Table>
                                         :
-                                        <div className="mx-auto mt-5" style={{ fontWeight: 'bold', color: 'gray' }}>Tidak Ada Pengajuan baru atau tidak ditemukan Pengajuan yang belum di accept</div>
+                                        <div className="mx-auto mt-5" style={{ fontWeight: 'bold', color: 'gray' }}>Tidak Ada Pengajuan yang Ditolak</div>
                                 }
                             </div >
                             :
