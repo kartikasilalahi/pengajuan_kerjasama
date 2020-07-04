@@ -14,6 +14,8 @@ function Pengajuan() {
     const [dokumen, setdokumen] = useState([]);
     const [dataAjuan, setdataAjuan] = useState([]);
     const [dataOnprocess, setdataOnprocess] = useState([]);
+    const [dataEvaluasi, setdataEvaluasi] = useState({});
+    const [hasilEvaluasi, sethasilEvaluasi] = useState({});
     const [formAjuan, setformAjuan] = useState('true');
     const [ajuan, setajuan] = useState('false');
     const [onprocess, setonprocess] = useState('false');
@@ -151,12 +153,12 @@ function Pengajuan() {
             !jabatan ||
             !penanggungjawab ||
             !unit
-        ) Toast.fail('Ops! Pastikan semua sudah terisi..', 3000)
+        ) Toast.fail('Pastikan Form Lengkap Terisi', 3000)
 
-        else if (dokumen.length < 4) Toast.fail('Ops! Pastikan semua dokumen lengkap..', 2700)
+        else if (dokumen.length < 4) Toast.fail('Pastikan Semua Dokumen Terpenuhi..', 2700)
 
         else {
-            Toast.loading(`Loading.. Sedang mengirim Pengajuan`);
+            Toast.loading(`Memproses`);
             setTimeout(() => {
                 Axios.post(`${APIURL}pengajuan/addpengajuan`, formdata, Headers)
                     .then(() => {
@@ -261,7 +263,41 @@ function Pengajuan() {
                     </td>
                     <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>Sedang Berlangsung</td>
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='success' onClick={finishKerjasama}> Selesai </MDBBtn>
+                        <MDBBtn size='sm' className="my-0" color='success' onClick={() => {
+                            setidSellect(val.id)
+
+                            Swal.fire({
+                                title: 'Akhiri Kerjasama?',
+                                icon: 'warning',
+                                showCancelButton: 'true',
+                                cancelButtonText: 'Tidak',
+                                confirmButtonText: "Ya"
+                            }).then(result => {
+                                if (result.value) {
+                                    Swal.fire({
+                                        title: 'Memproses',
+                                        text: 'Tunggu Sebentar',
+                                        timer: 2100,
+                                        allowOutsideClick: false,
+                                        timerProgressBar: true,
+                                        onBeforeOpen: () => {
+                                            Swal.showLoading()
+                                        }
+                                    })
+                                        .then(() => {
+                                            Swal.fire({
+                                                title: 'Berhasil',
+                                                text: `Kerjasama Berakhir`,
+                                                icon: 'success',
+                                                showConfirmButton: false,
+                                                timer: 2100
+                                            }).then(() => {
+                                                setmodalEvaluasi(true)
+                                            })
+                                        })
+                                }
+                            })
+                        }}> Selesai </MDBBtn>
                     </td>
                 </tr>
             )
@@ -286,13 +322,74 @@ function Pengajuan() {
     }
 
 
+    /* ------------ Button Kirim Evaluasi --------- */
+    const kirimEvaluasi = () => {
+        let id = parseInt(localStorage.getItem('id'))
+        let {
+            nama_evaluator,
+            instansi,
+            jenis_kerjasama,
+            bidang_kerjasama,
+            skop_kerjasama,
+            lama_kerjasama,
+            kesepakatan,
+            tanggapan_umb,
+            penandatanganan,
+            implementasi_kegiatan,
+            implementasi_kerjasama,
+            kepuasan_kerjasama,
+            kelanjutan_kerjasama
+        } = dataEvaluasi
+        dataEvaluasi.id_instansi = id
+        dataEvaluasi.id_pengajuan = idSellect
+
+        console.log('dev', idSellect)
+        if (
+            !nama_evaluator ||
+            !instansi ||
+            !jenis_kerjasama ||
+            !bidang_kerjasama ||
+            !skop_kerjasama ||
+            !lama_kerjasama ||
+            !kesepakatan ||
+            !tanggapan_umb ||
+            !penandatanganan ||
+            !implementasi_kegiatan ||
+            !implementasi_kerjasama ||
+            !kepuasan_kerjasama ||
+            !kelanjutan_kerjasama
+        ) Toast.fail('Pastikan Form Lengkap Terisi', 3000)
+
+        else {
+            Axios.post(`${APIURL}pengajuan/addevaluasi`, dataEvaluasi)
+                .then(res => {
+                    Swal.fire({
+                        title: 'Evaluasi Berhasil Dikirim',
+                        text: 'Kerjasam Dapat Dilihat Kembali Di Menu History',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2600
+                    }).then(() => {
+                        sethasilEvaluasi(res.data.evaluasi)
+                        setdataOnprocess(res.data.waiting)
+                        setmodalEvaluasi(!modalEvaluasi)
+                    })
+
+                })
+                .catch(err => console.log(err))
+
+        }
+
+    }
+
+
+
 
     // =========== TEST CONSOLE======================================
 
     // console.log('ini data pengajuan', addPengajuan)
     // console.log('tls bdg', tulisBidang)
     // console.log(addPengajuan.idbidang)
-    console.log(dataOnprocess[0])
 
     // =========== TEST CONSOLE=======================================
 
@@ -409,34 +506,46 @@ function Pengajuan() {
                     <div className="d-flex">
                         <div className="col-5">
                             <FormGroup>
-                                <Label style={{ fontSize: "15px" }}>Nama Reviewer: </Label>
+                                <Label style={{ fontSize: "15px" }}>Nama Evaluator: </Label>
                                 <Input size="sm" className="w-100" type="text"
-                                // onChange={e => setdataPenilaian({ ...dataPenilaian, nama_reviewer: e.target.value })}
+                                    value={dataEvaluasi.nama_evaluator || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, nama_evaluator: e.target.value })}
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label style={{ fontSize: "15px" }}>Inatansi: </Label>
+                                <Label style={{ fontSize: "15px" }}>Instansi: </Label>
                                 <Input size="sm" className="w-100" type="text"
+                                    value={dataEvaluasi.instansi || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, instansi: e.target.value })}
+
                                 />
                             </FormGroup>
                             <FormGroup>
                                 <Label style={{ fontSize: "15px" }}>Jenis Kerjasama: </Label>
                                 <Input size="sm" className="w-100" type="text"
+                                    value={dataEvaluasi.jenis_kerjasama || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, jenis_kerjasama: e.target.value })}
                                 />
                             </FormGroup>
                             <FormGroup>
                                 <Label style={{ fontSize: "15px" }}>Skop Kerjasama: </Label>
                                 <Input size="sm" className="w-100" type="text"
+                                    value={dataEvaluasi.skop_kerjasama || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, skop_kerjasama: e.target.value })}
                                 />
                             </FormGroup>
                             <FormGroup>
                                 <Label style={{ fontSize: "15px" }}>Bidang Kerjasama: </Label>
                                 <Input size="sm" className="w-100" type="text"
+                                    value={dataEvaluasi.bidang_kerjasama || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, bidang_kerjasama: e.target.value })}
                                 />
                             </FormGroup>
                             <FormGroup>
                                 <Label style={{ fontSize: "15px" }}>Lama Kerjasama dengan UMB: </Label>
                                 <Input size="sm" className="w-100" type="text"
+                                    value={dataEvaluasi.lama_kerjasama || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, lama_kerjasama: e.target.value })}
                                 />
                             </FormGroup>
                         </div>
@@ -444,54 +553,67 @@ function Pengajuan() {
                         <div className="col-7 mt-4 pt-2">
                             <FormGroup>
                                 <select name="nilaiKinerja" className="form-control"
-                                // onChange={e => setdataPenilaian({ ...dataPenilaian, kinerja_institusi: e.target.value })} 
+                                    value={dataEvaluasi.kesepakatan || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, kesepakatan: e.target.value })}
                                 >
-                                    <option selected hidden value="">Kesepakatan kerjasama di lakukan dengan mudah</option>
+                                    <option selected hidden value="">Kesepakatan Kerjasama Dilakukan Dengan Mudah</option>
                                     {OptionNilai()}
                                 </select>
                             </FormGroup>
 
                             <FormGroup>
                                 <select name="nilaiKinerja" className="form-control"
+                                    value={dataEvaluasi.tanggapan_umb || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, tanggapan_umb: e.target.value })}
                                 >
-                                    <option selected hidden value="">Pihak UMB Jakarta telah menanggapi usulan kerjasama dengan cepat</option>
+                                    <option selected hidden value="">Pihak UMB Jakarta Telah Menanggapi Usulan Kerjasama Dengan Cepat</option>
                                     {OptionNilai()}
                                 </select>
                             </FormGroup>
 
                             <FormGroup>
                                 <select name="nilaiKinerja" className="form-control"
+                                    value={dataEvaluasi.penandatanganan || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, penandatanganan: e.target.value })}
                                 >
-                                    <option selected hidden value="">Kesepakatan kerjasama di lakukan dengan mudah</option>
+                                    <option selected hidden value="">Proses Penandatanganan Naskah Kerjasama Dilakukan Dengan Cepat</option>
                                     {OptionNilai()}
                                 </select>
                             </FormGroup>
 
                             <FormGroup>
                                 <select name="nilaiKinerja" className="form-control"
+                                    value={dataEvaluasi.implementasi_kegiatan || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, implementasi_kegiatan: e.target.value })}
                                 >
-                                    <option selected hidden value="">Kerjasama telah di implementasikan dengan kegiatan</option>
+                                    <option selected hidden value="">Kerjasama Telah Diimplementasikan Dengan kegiatan</option>
                                     {OptionNilai()}
                                 </select>
                             </FormGroup>
                             <FormGroup>
                                 <select name="nilaiKinerja" className="form-control"
+                                    value={dataEvaluasi.implementasi_kerjasama || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, implementasi_kerjasama: e.target.value })}
                                 >
-                                    <option selected hidden value="">Implementasi kerjasama telah sesuai</option>
+                                    <option selected hidden value="">Implementasi Kerjasama Telah Sesuai</option>
                                     {OptionNilai()}
                                 </select>
                             </FormGroup>
                             <FormGroup>
                                 <select name="nilaiKinerja" className="form-control"
+                                    value={dataEvaluasi.kepuasan_kerjasama || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, kepuasan_kerjasama: e.target.value })}
                                 >
-                                    <option selected hidden value="">Kerjasama kami telah memuaskan</option>
+                                    <option selected hidden value="">Kerjasama Kami Telah Memuaskan</option>
                                     {OptionNilai()}
                                 </select>
                             </FormGroup>
                             <FormGroup>
                                 <select name="nilaiKinerja" className="form-control"
+                                    value={dataEvaluasi.kelanjutan_kerjasama || ''}
+                                    onChange={e => setdataEvaluasi({ ...dataEvaluasi, kelanjutan_kerjasama: e.target.value })}
                                 >
-                                    <option selected hidden value="">Kami tetap akan melanjutkan kerjasama ini</option>
+                                    <option selected hidden value="">Kami Tetap Akan Melanjutkan Kerjasama Ini</option>
                                     <option value='ya'>Ya</option>
                                     <option value='tidak'>Tidak</option>
                                 </select>
@@ -503,11 +625,7 @@ function Pengajuan() {
 
                 </ModalBody>
                 <ModalFooter>
-                    <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
-                        // setmodalDetail(true)
-                        // setdetailPengajuan(daftarDecline[i])
-                        // setidSellect(val.id)
-                    }}>Simpan</MDBBtn>
+                    <MDBBtn size='sm' className="my-0" color='info' onClick={kirimEvaluasi}>Kirim</MDBBtn>
                 </ModalFooter>
             </Modal>
             {/* ---- end modal evaluasi ---- */}
@@ -540,7 +658,7 @@ function Pengajuan() {
                         setajuan('false')
                     }}
                     style={{ cursor: 'pointer' }}>
-                    Onprocess
+                    Sedang Berlangsung
                 </div>
             </div>
 
@@ -551,7 +669,7 @@ function Pengajuan() {
                         {
                             dataAjuan.length === 0 || dataAjuan === [] ?
                                 <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
-                                    <AiOutlineWarning />  Perhatikan! Pastikan Semua fForm Terisi.</p>
+                                    <AiOutlineWarning />  Perhatikan! Pastikan Semua Form Terisi.</p>
                                 :
                                 <p className="alert alert-danger mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
                                     <AiOutlineWarning />  Perhatikan! Saat Ini Anda Belum Dapat Mengajukan Kerjasama Baru, Karena Pengajuan Sebelumnya Masih Proses Menunggu. <span
@@ -684,11 +802,11 @@ function Pengajuan() {
                     :
                     ajuan === 'true' ?
                         dataAjuan.length === 0 || dataAjuan === [] ?
-                            <p>Belum ada</p>
+                            <p>Tidak Ada Kerjasama Baru yang Sedang Diajukan</p>
                             :
                             <div>
                                 <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
-                                    <AiOutlineWarning />  Pengajuan sedang dalam proses menunggu. Dimohon menunggu respon dari Administrator/Pihak UMB.</p>
+                                    <AiOutlineWarning />  Pengajuan sedang dalam proses menunggu. Mohon menunggu respon dari Admin/Pihak UMB.</p>
                                 <div className="sedang-diajukan d-flex">
                                     <div className="label-ajuan col-6">
                                         <p>Nama yang mengajukan </p>
@@ -732,23 +850,27 @@ function Pengajuan() {
                                 </div>
                             </div>
                         :
-                        <Table striped >
-                            <thead>
-                                <tr className="text-center">
-                                    <th>No.</th>
-                                    <th>Nama Instansi</th>
-                                    <th>Alamat</th>
-                                    <th>Bidang Kerjasama</th>
-                                    <th>Detail</th>
-                                    <th>Review</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {renderOnprocessKerjasama()}
-                            </tbody>
-                        </Table>
+                        dataOnprocess.length === 0 || dataOnprocess === [] ?
+                            <p>Tidak Ada Kerjasama yang Sedang Berlangsung</p> :
+                            <Table striped >
+                                <thead>
+                                    <tr className="text-center">
+                                        <th>No.</th>
+                                        <th>Nama Instansi</th>
+                                        <th>Alamat</th>
+                                        <th>Bidang Kerjasama</th>
+                                        <th>Detail</th>
+                                        <th>Review</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderOnprocessKerjasama()}
+                                </tbody>
+                            </Table>
+
+
 
             }
 

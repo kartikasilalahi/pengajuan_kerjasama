@@ -72,10 +72,12 @@ function Profil() {
         console.log('emaill', ubahEmail)
         let email = ubahEmail
         Swal.fire({
-            title: 'Yakin mengganti email? Login selanjutnya akan menggunakan email yang baru ',
+            title: 'Yakin Mengganti Email?',
+            text: ' Jika Ya Login Selanjutnya Akan Menggunakan Email yang Baru ',
             icon: 'warning',
             showCancelButton: 'true',
-            confirmButtonText: "Yes"
+            cancelButtonText: 'Tidak',
+            confirmButtonText: "Ya"
         }).then(result => {
             if (result.value) {
                 Swal.fire({
@@ -91,18 +93,28 @@ function Profil() {
                     .then(() => {
                         Axios.put(`${APIURL}auth/ubahemail/${id}`, email)
                             .then(res => {
-                                if (res.data.status) {
+                                if (res.data.status === 'error') {
                                     setmessage({ ...message, erroremail: res.data.message })
                                     Swal.fire({
-                                        title: 'Email gagal diubah',
+                                        title: 'Email Gagal Diubah',
                                         text: `${res.data.message}`,
                                         icon: 'error',
                                         showConfirmButton: false,
                                         timer: 2800
                                     })
-                                } else {
+                                } else if (res.data.status === 'warning') {
+                                    setmessage({ ...message, erroremail: res.data.message })
                                     Swal.fire({
-                                        title: 'Email berhasil diubah',
+                                        title: 'Email Tetap Sama',
+                                        text: `${res.data.message}`,
+                                        icon: 'warning',
+                                        showConfirmButton: false,
+                                        timer: 2800
+                                    })
+                                }
+                                else {
+                                    Swal.fire({
+                                        title: 'Email berhasil Diubah',
                                         text: `Perhatikan! Login selanjutnya tidak menggunakan email lama lagi`,
                                         icon: 'success',
                                         showConfirmButton: false,
@@ -122,10 +134,10 @@ function Profil() {
 
         let id = parseInt(localStorage.getItem('id'))
         if (!password || !newpassword || !confpass) {
-            setmessage({ ...message, errorpass: "Ops.. Form tidak boleh kosong" })
+            setmessage({ ...message, errorpass: "Pastikan Semua Form Sudah Terisi" })
 
         } else if (newpassword !== confpass) {
-            setmessage({ ...message, errorpass: "Ops.. Password Baru Dan Confirm Pasword harus sama!" })
+            setmessage({ ...message, errorpass: "Password Baru Dan Konfirmasi Pasword Harus Sama" })
         }
         else {
             Axios.put(`${APIURL}auth/editpassword/${id}`, { password, newpassword, confpass })
@@ -134,9 +146,9 @@ function Profil() {
                         setmessage({ ...message, errorpass: res.data.msg })
                     } else {
                         console.log('ya')
-                        Toast.loading(`Mengubah Password. Tunggu beberapa detik`);
+                        Toast.loading(`Sedang mengubah Password. Tunggu beberapa detik`);
                         setTimeout(() => {
-                            Toast.success('Success..', 2000)
+                            Toast.success('Berhasil', 2000)
                             Toast.hide();
                             seteditPass({ ...editPass, password: '', confpass: '', newpassword: '' })
                         }, 3000);
