@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios'
 import { APIURL, APIURLDoc } from '../../helper/apiurl'
 import { Table, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Label } from 'reactstrap'
-import { MDBBtn } from 'mdbreact'
+import { MDBBtn, MDBIcon } from 'mdbreact'
 import Swal from "sweetalert2";
 
 
@@ -424,7 +424,7 @@ function Manajemen_kerjasama() {
                         }
                     </ModalBody>
                     <ModalFooter>
-                        <MDBBtn onClick={toggleDetail} size="sm" color="warning"> Tutup </MDBBtn>
+                        <MDBBtn onClick={toggleDetail} size="sm" color="warning"> <MDBIcon icon="times-circle" /> Tutup </MDBBtn>
                     </ModalFooter>
                 </div>
             </Modal>
@@ -481,7 +481,7 @@ function Manajemen_kerjasama() {
                 <ModalFooter>
                     <MDBBtn size='sm' className="my-0" onClick={acceptPengajuan}>accept</MDBBtn>
                     <MDBBtn size='sm' className="my-0" onClick={declinePengajuan} color='danger'>decline</MDBBtn>
-                    <MDBBtn onClick={toggleKelayakan} size="sm" color="warning"> Tutup </MDBBtn>
+                    <MDBBtn onClick={toggleKelayakan} size="sm" color="warning"> <MDBIcon icon="times-circle" /> Tutup </MDBBtn>
                 </ModalFooter>
             </Modal >
             {/* ---- end modal kelayakan persetujuan ---- */}
@@ -509,7 +509,7 @@ function Manajemen_kerjasama() {
                     </Table>
                 </ModalBody>
                 <ModalFooter>
-                    <MDBBtn onClick={toggleReview} size="sm" color="warning"> Tutup </MDBBtn>
+                    <MDBBtn onClick={toggleReview} size="sm" color="warning"><MDBIcon icon="times-circle" /> Tutup </MDBBtn>
                 </ModalFooter>
             </Modal>
             {/* ---- end modal review penilaian kelayakan  ---- */}

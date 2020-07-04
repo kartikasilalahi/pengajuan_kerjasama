@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Input, FormGroup, Label, CustomInput, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Toast from 'light-toast'
 import Swal from "sweetalert2";
-import { MDBBtn } from 'mdbreact'
+import { MDBBtn, MDBIcon } from 'mdbreact'
 import { AiOutlineWarning } from 'react-icons/ai'
 import Axios from 'axios'
 import { APIURL, APIURLDoc } from '../../helper/apiurl'
@@ -625,7 +625,7 @@ function Pengajuan() {
 
                 </ModalBody>
                 <ModalFooter>
-                    <MDBBtn size='sm' className="my-0" color='info' onClick={kirimEvaluasi}>Kirim</MDBBtn>
+                    <MDBBtn size='sm' className="my-0" color='info' onClick={kirimEvaluasi}><MDBIcon icon="check-square" /> Kirim</MDBBtn>
                 </ModalFooter>
             </Modal>
             {/* ---- end modal evaluasi ---- */}

@@ -75,15 +75,15 @@ class Dashboard_mitra extends Component {
                 <Tabs defaultTab={this.state.tabActive} vertical>
                     <TabList className="mr-3">
                         <Tab tabFor="vertical-tab-one">
-                            <i className="fa fa-tasks"></i>
+                            <i className="fa fa-user-circle-o"></i>
                             <p>Profil </p>
                         </Tab>
                         <Tab tabFor="vertical-tab-two" onClick={() => this.setState({ tabActive: 'vertical-tab-two' })}>
-                            <i className="fa fa-money" ></i>
+                            <i className="fa fa-tasks" ></i>
                             <p>Pengajuan Kerjasama</p>
                         </Tab>
                         <Tab tabFor="vertical-tab-three">
-                            <i className="fa fa-money" ></i>
+                            <i className="fa fa-history" ></i>
                             <p>History</p>
                         </Tab>
 

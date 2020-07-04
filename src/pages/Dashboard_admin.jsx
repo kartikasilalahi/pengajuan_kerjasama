@@ -7,6 +7,7 @@ import { Logout } from '../redux/action'
 import { Redirect } from 'react-router-dom';
 import Verifikasi_akun from './Component_admin/Verifikasi_akun'
 import Manajemen_kerjasama from './Component_admin/Manajemen_kerjasama'
+import History_admin from './Component_admin/History_admin'
 
 
 class Dashboard_admin extends Component {
@@ -77,9 +78,13 @@ class Dashboard_admin extends Component {
                             <i className="fa fa-tasks"></i>
                             <p>Manajemen Kerjasama</p>
                         </Tab>
+                        <Tab tabFor="vertical-tab-three">
+                            <i className="fa fa-history"></i>
+                            <p>History</p>
+                        </Tab>
                         <Tab>
                             <div className="button_logout text-center" style={{ width: '20%' }} >
-                                <MDBBtn onClick={this.btnlogout} >Keluar</MDBBtn>
+                                <MDBBtn onClick={this.btnlogout} >Keluar </MDBBtn>
                             </div>
                         </Tab>
                     </TabList>
@@ -88,6 +93,9 @@ class Dashboard_admin extends Component {
                     </TabPanel>
                     <TabPanel style={{ width: "100%" }} tabId="vertical-tab-two">
                         <Manajemen_kerjasama />
+                    </TabPanel>
+                    <TabPanel style={{ width: "100%" }} tabId="vertical-tab-three">
+                        <History_admin />
                     </TabPanel>
                 </Tabs>
 

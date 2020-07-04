@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Toast from 'light-toast'
-import { MDBBtn, MDBCard, MDBInput } from 'mdbreact';
+import { MDBBtn, MDBIcon, MDBInput } from 'mdbreact';
 import { Carousel } from 'react-responsive-carousel'
 import { Card } from 'reactstrap';
-import { Modal, ModalBody, FormGroup, Label } from 'reactstrap'
+import { Modal, ModalBody, FormGroup } from 'reactstrap'
 import { Register, Open_Register, Error_Register, Login, Error_Login } from '../redux/action'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
@@ -124,10 +124,10 @@ class Home extends Component {
                                         <MDBInput size="sm" label="Nama Perusahaan/Instansi" icon="user" group type="text" className=" mt-1" inputRef={ref => this.nama = ref} />
                                         <MDBInput size="sm" label="Email Perusahaan/Instansi" icon="envelope" group type="email" inputRef={ref => this.email = ref} />
                                         <MDBInput size="sm" label="No. Telp Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.phone = ref} />
-                                        <MDBInput size="sm" label="Alamat Perusahaan/Instansi" icon="phone" group type="text" inputRef={ref => this.alamat = ref} />
+                                        <MDBInput size="sm" label="Alamat Perusahaan/Instansi" icon="location-arrow" group type="text" inputRef={ref => this.alamat = ref} />
                                         <MDBInput size="sm" label="Password" icon="lock" group type="password" inputRef={ref => this.password = ref} />
                                         <MDBInput size="sm" label="Konfirmasi Password" icon="exclamation-triangle" group type="password" inputRef={ref => this.confpassword = ref} />
-                                        <MDBInput size="sm" label={`Website Perusahaan (Kalau Tidak Ada, Ketik " Tidak Ada " )`} icon="exclamation-triangle" group type="text" inputRef={ref => this.linkperusahaan = ref} />
+                                        <MDBInput size="sm" label={`Website Perusahaan (Kalau Tidak Ada, Ketik " Tidak Ada " )`} icon="link" group type="text" inputRef={ref => this.linkperusahaan = ref} />
                                         <FormGroup className="ml-4 pl-1" style={{ width: '50%' }}>
                                             <select name="jenisperusahaan" className="form-control"
                                                 onChange={e => this.setState({ jenisperusahaan: e.target.value })}
@@ -142,7 +142,7 @@ class Home extends Component {
                                         {this.renderErrorRegister()}
                                     </div>
                                     <div className="text-center">
-                                        <MDBBtn color='blue' onClick={this.btnRegister}>Registrasi</MDBBtn>
+                                        <MDBBtn color='blue' onClick={this.btnRegister}><MDBIcon icon="paper-plane" /> Registrasi</MDBBtn>
                                     </div>
                                 </form>
                                 {/* end form register */}
@@ -174,7 +174,7 @@ class Home extends Component {
                                 <h5>Universitas Mercubuana</h5>
                                 {/* ----start form login----- */}
                                 <Card className="mt-3">
-                                    <form className="py-3 pr-3" >
+                                    <form className="p-3" >
                                         <p className="h5 text-center mt-3 mb-4">Masuk/Login</p>
                                         <div className="grey-text">
                                             <MDBInput inputRef={ref => this.email_log = ref} label="Masukkan Email" icon="envelope" group type="email" validate error="wrong"
@@ -185,7 +185,7 @@ class Home extends Component {
                                             {this.renderErrorLogin()}
                                         </div>
                                         <div className="text-center">
-                                            <MDBBtn color='blue' onClick={this.btnLogin}>Masuk</MDBBtn>
+                                            <MDBBtn color='blue' onClick={this.btnLogin}><i class="fa fa-sign-in"></i> Masuk</MDBBtn>
                                         </div>
                                         <div className="mt-1 pr-2 pb-3 text-right" style={{ fontSize: "13px" }}>
                                             Belum Terdaftar?
@@ -203,7 +203,7 @@ class Home extends Component {
                 </div>
 
                 {/* --------------- start footer -------------------- */}
-                <div className="footer py-4">
+                <div className="footer pt-4">
                     <div className="visi-side d-flex" style={{ padding: '10% 2%' }}>
                         <div className="visi col-6 text-center" style={{ paddingTop: '7%' }}>
                             <h3 style={{ fontWeight: 'bold', fontSize: '45px' }}>VISI</h3>

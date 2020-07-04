@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 import { APIURL, APIURLDoc } from '../../helper/apiurl'
-import { Table, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Label } from 'reactstrap'
-import { MDBBtn } from 'mdbreact'
+import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { MDBBtn, MDBIcon } from 'mdbreact'
 
-function History() {
+function History_admin() {
 
     /* -------  State Awal -----------*/
     const [dataHistory, setdataHistory] = useState([]);
@@ -20,6 +20,10 @@ function History() {
 
     const [modalReview, setmodalReview] = useState(false);
     const toggleReview = () => setmodalReview(!modalReview);
+
+    const [modalEvaluasi, setmodalEvaluasi] = useState(false);
+    const toggleEvaluasi = () => setmodalEvaluasi(!modalEvaluasi);
+
     /*--Modal--*/
 
     /* -------- function show doc -------- */
@@ -33,12 +37,10 @@ function History() {
     /* -------- USEEFFECT -------- */
     useEffect(() => {
         let id = parseInt(localStorage.getItem('id'))
-        Axios(`${APIURL}pengajuan/gethistory/${id}`)
+        Axios(`${APIURL}pengajuan/getallhistory`)
             .then(res => {
-                // console.log(`${APIURL}pengajuan/gethistory/${id}`)
                 setdataHistory(res.data)
             })
-
             .catch(err => { console.log(err) })
     }, [])
 
@@ -51,7 +53,7 @@ function History() {
     const renderHistory = () => {
         return dataHistory.map((val, i) => {
             return (
-                <tr key={i}>
+                <tr className="text-center" key={i}>
                     <th>{i + 1}</th>
                     <td>{val.nama_institusi}</td>
                     <td>{val.alamat_institusi}</td>
@@ -61,6 +63,13 @@ function History() {
                             :
                             <td>{val.nama + ' (' + val.bidanglain + ')'}</td>
                     }
+                    {
+                        val.status === 'finish' ?
+                            <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>Selesai</td>
+                            :
+                            <td style={{ color: 'red', fontWeight: 'bold' }}>Ditolak</td>
+
+                    }
                     <td>
                         <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
                             setmodalDetail(true)
@@ -69,22 +78,33 @@ function History() {
                         }}>Detail</MDBBtn>
                     </td>
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
-                            setmodalReview(true)
-                            // setsellectrole('decline')
-                            Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
-                                .then(res => { setdataReview(res.data) })
-                                .catch(err => { console.log(err) })
-                        }}>Review</MDBBtn>
+                        {
+                            val.status === 'finish' ?
+                                <div className="d-flex">
+                                    <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                                        setmodalReview(true)
+                                        Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
+                                            .then(res => { setdataReview(res.data) })
+                                            .catch(err => { console.log(err) })
+                                    }}>Review</MDBBtn>
+                                    <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                                        setmodalEvaluasi(true)
+                                        setidSellect(val.id)
+
+                                        // Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
+                                        //     .then(res => { setdataReview(res.data) })
+                                        //     .catch(err => { console.log(err) })
+                                    }}>Evaluasi</MDBBtn>
+                                </div>
+                                :
+                                <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                                    setmodalReview(true)
+                                    Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
+                                        .then(res => { setdataReview(res.data) })
+                                        .catch(err => { console.log(err) })
+                                }}>Review</MDBBtn>
+                        }
                     </td>
-                    {
-                        val.status === 'finish' ?
-                            <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>Selesai</td>
-                            :
-                            <td style={{ color: 'red', fontWeight: 'bold' }}>Ditolak</td>
-
-                    }
-
                 </tr>
             )
         })
@@ -110,7 +130,7 @@ function History() {
     return (
         <div>
 
-            {/* ---- start modal detail new pengajuan ---- */}
+            {/* ---- start modal detail pengajuan ---- */}
             <Modal isOpen={modalDetail} toggle={toggleDetail} centered style={{ width: "100%", maxWidth: "1200px" }}>
                 <div className="m-2">
                     <ModalHeader>
@@ -174,11 +194,11 @@ function History() {
                         }
                     </ModalBody>
                     <ModalFooter>
-                        <MDBBtn onClick={toggleDetail} size="sm" color="warning"> Tutup </MDBBtn>
+                        <MDBBtn onClick={toggleDetail} size="sm" color="warning"> <MDBIcon icon="times-circle" /> Tutup </MDBBtn>
                     </ModalFooter>
                 </div>
             </Modal>
-            {/* ---- end modal detail new pengajuan ---- */}
+            {/* ---- end modal detail pengajuan ---- */}
 
 
             {/* ---- start modal review penilaian kelayakan  ---- */}
@@ -203,10 +223,13 @@ function History() {
                     </Table>
                 </ModalBody>
                 <ModalFooter>
-                    <MDBBtn onClick={toggleReview} size="sm" color="warning"> Tutup </MDBBtn>
+                    <MDBBtn onClick={toggleReview} size="sm" color="warning"> <MDBIcon icon="times-circle" /> Tutup </MDBBtn>
                 </ModalFooter>
             </Modal>
             {/* ---- end modal review penilaian kelayakan  ---- */}
+
+            {/* ---- start modal evaluasi kerjasama  ---- */}
+            {/* ---- start modal evaluasi kerjasama  ---- */}
 
 
             <h5 className="mt-3" style={{ fontWeight: 'bolder' }}>History Pengajuan/Kerjasama</h5>
@@ -223,9 +246,9 @@ function History() {
                                 <th>Nama Instansi</th>
                                 <th>Alamat</th>
                                 <th>Bidang Kerjasama</th>
-                                <th>Detail</th>
-                                <th>Review</th>
                                 <th>Status</th>
+                                <th>Detail</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -239,4 +262,4 @@ function History() {
 
 }
 
-export default History 
+export default History_admin;
