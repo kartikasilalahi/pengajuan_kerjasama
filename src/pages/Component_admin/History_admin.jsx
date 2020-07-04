@@ -11,7 +11,7 @@ function History_admin() {
     const [detailPengajuan, setdetailPengajuan] = useState([]);
     const [idSellect, setidSellect] = useState(0);
     const [dataReview, setdataReview] = useState([]);
-
+    const [dataEvaluasi, setdataEvaluasi] = useState();
 
 
     /*--Modal--*/
@@ -91,9 +91,9 @@ function History_admin() {
                                         setmodalEvaluasi(true)
                                         setidSellect(val.id)
 
-                                        // Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
-                                        //     .then(res => { setdataReview(res.data) })
-                                        //     .catch(err => { console.log(err) })
+                                        Axios.get(`${APIURL}pengajuan/getevaluasi/${val.id}`)
+                                            .then(res => { setdataEvaluasi(res.data) })
+                                            .catch(err => { console.log(err) })
                                     }}>Evaluasi</MDBBtn>
                                 </div>
                                 :
@@ -123,10 +123,9 @@ function History_admin() {
                 </tr>
             )
         })
-
     }
 
-
+    console.log('idsellect', dataEvaluasi)
     return (
         <div>
 
@@ -229,6 +228,17 @@ function History_admin() {
             {/* ---- end modal review penilaian kelayakan  ---- */}
 
             {/* ---- start modal evaluasi kerjasama  ---- */}
+            <Modal isOpen={modalEvaluasi} toggle={toggleEvaluasi} centered style={{ width: "100%", maxWidth: "1200px" }}>
+                <ModalHeader>
+                    <h4 className="font-weight-bold">Evaluasi Kerjasama</h4>
+                </ModalHeader>
+                <ModalBody>
+                    INI BODY
+                </ModalBody>
+                <ModalFooter>
+                    <MDBBtn onClick={toggleEvaluasi} size="sm" color="warning"> <MDBIcon icon="times-circle" /> Tutup </MDBBtn>
+                </ModalFooter>
+            </Modal>
             {/* ---- start modal evaluasi kerjasama  ---- */}
 
 
