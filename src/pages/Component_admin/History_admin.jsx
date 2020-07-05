@@ -11,7 +11,7 @@ function History_admin() {
     const [detailPengajuan, setdetailPengajuan] = useState([]);
     const [idSellect, setidSellect] = useState(0);
     const [dataReview, setdataReview] = useState([]);
-    const [dataEvaluasi, setdataEvaluasi] = useState();
+    const [dataEvaluasi, setdataEvaluasi] = useState([]);
 
 
     /*--Modal--*/
@@ -71,7 +71,7 @@ function History_admin() {
 
                     }
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                        <MDBBtn size='sm' className="my-0 px-2" color='info' onClick={() => {
                             setmodalDetail(true)
                             setdetailPengajuan(dataHistory[i])
                             setidSellect(val.id)
@@ -81,28 +81,28 @@ function History_admin() {
                         {
                             val.status === 'finish' ?
                                 <div className="d-flex">
-                                    <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                                    <MDBBtn size='sm' className="my-0 px-2" color='info' onClick={() => {
                                         setmodalReview(true)
                                         Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
                                             .then(res => { setdataReview(res.data) })
                                             .catch(err => { console.log(err) })
-                                    }}>Review</MDBBtn>
-                                    <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                                    }}><MDBIcon icon="eye" /> Review</MDBBtn>
+                                    <MDBBtn size='sm' className="my-0 px-2" color='info' onClick={() => {
                                         setmodalEvaluasi(true)
                                         setidSellect(val.id)
 
                                         Axios.get(`${APIURL}pengajuan/getevaluasi/${val.id}`)
                                             .then(res => { setdataEvaluasi(res.data) })
                                             .catch(err => { console.log(err) })
-                                    }}>Evaluasi</MDBBtn>
+                                    }}><MDBIcon icon="eye" /> Evaluasi</MDBBtn>
                                 </div>
                                 :
-                                <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                                <MDBBtn size='sm' className="my-0 px-2" color='info' onClick={() => {
                                     setmodalReview(true)
                                     Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
                                         .then(res => { setdataReview(res.data) })
                                         .catch(err => { console.log(err) })
-                                }}>Review</MDBBtn>
+                                }}><MDBIcon icon="eye" /> Review</MDBBtn>
                         }
                     </td>
                 </tr>
@@ -125,7 +125,57 @@ function History_admin() {
         })
     }
 
-    console.log('idsellect', dataEvaluasi)
+    const renderEvaluasi = () => {
+        if (dataEvaluasi[0] !== undefined || dataEvaluasi[0].length === 0) {
+            return (
+                <div>
+
+                    <div className="col-7">
+                        <h6 style={{ fontWeight: 'bold' }}>Identitas Kerjasama</h6>
+                        <p>Nama Evaluator</p>
+                        <p>Instansi</p>
+                        <p>Jenis Kerjasama</p>
+                        <p>Skop Kerjasama</p>
+                        <p>Bidang Kerjasama</p>
+                        <p>Lama Kerjasama</p>
+
+                        <h6 className="mt-5" style={{ fontWeight: 'bold' }}>Kepuasan Terhadap Proses dan Pelaksanaan Kerjasama</h6>
+                        <p>Kesepakatan Kerjasama Dilakukan Dengan Mudah</p>
+                        <p>Pihak UMB Jakarta Telah Menanggapi Usulan Kerjasama Dengan Cepat</p>
+                        <p>Proses Penandatanganan Naskah Kerjasama Dilakukan Dengan Cepat</p>
+                        <p>Kerjasama Telah Diimplementasikan Dengan kegiatan</p>
+                        <p>Implementasi Kerjasama Telah Sesuai</p>
+                        <p>Kerjasama Kami Telah Memuaskan</p>
+                        <p>Tetap Akan Melanjutkan Kerjasama Ini</p>
+
+                    </div>
+                    <div className="col-5">
+                        <h6 style={{ fontWeight: 'bold' }}></h6>
+                        <p>{dataEvaluasi[0].nama_evaluator}</p>
+                        <p>{dataEvaluasi[0].instansi}</p>
+                        <p>{dataEvaluasi[0].jenis_kerjasama}</p>
+                        <p>{dataEvaluasi[0].skop_kerjasama}</p>
+                        <p>{dataEvaluasi[0].bidang_kerjasama}</p>
+                        <p>{dataEvaluasi[0].lama_kerjasama}</p>
+
+                        <h6 className="mt-5" style={{ fontWeight: 'bold' }}>Kepuasan Terhadap Proses dan Pelaksanaan Kerjasama</h6>
+                        <p>Kesepakatan Kerjasama Dilakukan Dengan Mudah</p>
+                        <p>Pihak UMB Jakarta Telah Menanggapi Usulan Kerjasama Dengan Cepat</p>
+                        <p>Proses Penandatanganan Naskah Kerjasama Dilakukan Dengan Cepat</p>
+                        <p>Kerjasama Telah Diimplementasikan Dengan kegiatan</p>
+                        <p>Implementasi Kerjasama Telah Sesuai</p>
+                        <p>Kerjasama Kami Telah Memuaskan</p>
+                        <p>Tetap Akan Melanjutkan Kerjasama Ini</p>
+                    </div>
+                </div>
+            )
+        } else {
+            return null
+        }
+
+    }
+
+    console.log(dataEvaluasi)
     return (
         <div>
 
@@ -228,12 +278,60 @@ function History_admin() {
             {/* ---- end modal review penilaian kelayakan  ---- */}
 
             {/* ---- start modal evaluasi kerjasama  ---- */}
-            <Modal isOpen={modalEvaluasi} toggle={toggleEvaluasi} centered style={{ width: "100%", maxWidth: "1200px" }}>
+            <Modal isOpen={modalEvaluasi} toggle={toggleEvaluasi} centered style={{ width: "60%", maxWidth: "1200px" }}>
                 <ModalHeader>
                     <h4 className="font-weight-bold">Evaluasi Kerjasama</h4>
                 </ModalHeader>
                 <ModalBody>
-                    INI BODY
+                    {
+                        dataEvaluasi[0] === undefined || dataEvaluasi[0].length === 0 ? null :
+                            <div>
+                                <div className="d-flex identitas">
+                                    <div className="col-5">
+                                        <h6 style={{ fontWeight: 'bold' }}>Identitas Kerjasama</h6>
+                                        <p>Nama Evaluator</p>
+                                        <p>Instansi</p>
+                                        <p>Jenis Kerjasama</p>
+                                        <p>Skop Kerjasama</p>
+                                        <p>Bidang Kerjasama</p>
+                                        <p>Lama Kerjasama</p>
+
+                                    </div>
+                                    <div className="col-7">
+                                        <h6 style={{ fontWeight: 'bold', color: 'white' }}> xd  </h6>
+                                        <p>{dataEvaluasi[0].nama_evaluator}</p>
+                                        <p>{dataEvaluasi[0].instansi}</p>
+                                        <p>{dataEvaluasi[0].jenis_kerjasama}</p>
+                                        <p>{dataEvaluasi[0].skop_kerjasama}</p>
+                                        <p>{dataEvaluasi[0].bidang_kerjasama}</p>
+                                        <p>{dataEvaluasi[0].lama_kerjasama}</p>
+                                    </div>
+                                </div>
+                                <div className="d-flex kepuasan">
+                                    <div className="col-9">
+                                        <h6 className="mt-5" style={{ fontWeight: 'bold' }}>Kepuasan Terhadap Proses dan Pelaksanaan Kerjasama</h6>
+                                        <p>Kesepakatan Kerjasama Dilakukan Dengan Mudah</p>
+                                        <p>Pihak UMB Jakarta Telah Menanggapi Usulan Kerjasama Dengan Cepat</p>
+                                        <p>Proses Penandatanganan Naskah Kerjasama Dilakukan Dengan Cepat</p>
+                                        <p>Kerjasama Telah Diimplementasikan Dengan kegiatan</p>
+                                        <p>Implementasi Kerjasama Telah Sesuai</p>
+                                        <p>Kerjasama Kami Telah Memuaskan</p>
+                                        <p>Tetap Akan Melanjutkan Kerjasama Ini</p>
+
+                                    </div>
+                                    <div className="col-3">
+                                        <h6 className="mt-5" style={{ fontWeight: 'bold', color: 'white' }}>ds  </h6>
+                                        <p>{dataEvaluasi[0].kesepakatan}</p>
+                                        <p>{dataEvaluasi[0].tanggapan_umb}</p>
+                                        <p>{dataEvaluasi[0].penandatanganan}</p>
+                                        <p>{dataEvaluasi[0].implementasi_kegiatan}</p>
+                                        <p>{dataEvaluasi[0].implementasi_kerjasama}</p>
+                                        <p>{dataEvaluasi[0].kepuasan_kerjasama}</p>
+                                        <p>{dataEvaluasi[0].kelanjutan_kerjasama}</p>
+                                    </div>
+                                </div>
+                            </div>
+                    }
                 </ModalBody>
                 <ModalFooter>
                     <MDBBtn onClick={toggleEvaluasi} size="sm" color="warning"> <MDBIcon icon="times-circle" /> Tutup </MDBBtn>
@@ -267,7 +365,7 @@ function History_admin() {
                     </Table>
             }
 
-        </div>
+        </div >
     )
 
 }

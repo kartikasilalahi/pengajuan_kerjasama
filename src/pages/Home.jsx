@@ -172,6 +172,7 @@ class Home extends Component {
                                 </div>
                                 <h4>Sistem Pengajuan Kerjasama</h4>
                                 <h5>Universitas Mercubuana</h5>
+
                                 {/* ----start form login----- */}
                                 <Card className="mt-3">
                                     <form className="p-3" >
