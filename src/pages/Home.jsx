@@ -113,6 +113,7 @@ class Home extends Component {
                     {/* ----modal register----- */}
                     <Modal centered isOpen={this.props.modalregister} toggle={() => { this.props.Open_Register(false) }}>
                         <ModalBody >
+
                             <div className="gbr_login text-center">
                                 <img alt='img' src={require('../image/logo_mercubuana.png')} />
                             </div>
@@ -120,6 +121,8 @@ class Home extends Component {
                                 <h5 className="text-center judul_form mt-3" style={{ fontWeight: 'bold' }}>Registrasi</h5>
                                 {/* start form register */}
                                 <form>
+                                    <img alt='img' src={require('../image/logo_mercubuana.png')} width="300px"
+                                        style={{ opacity: 0.1, zIndex: 1, position: "absolute", top: 280, left: 100, transform: 'rotate(-17deg)' }} />
                                     <div className="grey-text">
                                         <MDBInput size="sm" label="Nama Perusahaan/Instansi" icon="user" group type="text" className=" mt-1" inputRef={ref => this.nama = ref} />
                                         <MDBInput size="sm" label="Email Perusahaan/Instansi" icon="envelope" group type="email" inputRef={ref => this.email = ref} />
@@ -175,6 +178,8 @@ class Home extends Component {
 
                                 {/* ----start form login----- */}
                                 <Card className="mt-3">
+                                    <img alt='img' src={require('../image/logo_mercubuana.png')} width="250px"
+                                        style={{ opacity: 0.1, zIndex: 1, position: "absolute", top: 110, left: 120 }} />
                                     <form className="p-3" >
                                         <p className="h5 text-center mt-3 mb-4">Masuk/Login</p>
                                         <div className="grey-text">
@@ -205,16 +210,23 @@ class Home extends Component {
 
                 {/* --------------- start footer -------------------- */}
                 <div className="footer pt-4">
-                    <div className="visi-side d-flex" style={{ padding: '10% 2%' }}>
+                    <div className="visi-side d-flex" style={{ padding: '10% 2% 3% 2%' }}>
                         <div className="visi col-6 text-center" style={{ paddingTop: '7%' }}>
-                            <h3 style={{ fontWeight: 'bold', fontSize: '45px' }}>VISI</h3>
+                            <h3 style={{ fontWeight: 'bold', fontSize: '45px' }}>V I S I</h3>
+
                         </div>
                         <div className="isi-visi col-6 text-center px-4 py-5">
                             <h5 style={{ fontWeight: 'bolder', fontSize: '25px' }}>“Menjadi Universitas Unggul dan Terkemuka di Indonesia untuk Menghasilkan Tenaga Profesional yang Memenuhi Kebutuhan Industri dan Masyarakat dalam Persaingan Global Pada tahun 2024”.</h5>
                         </div>
                     </div>
 
-                    <div className="misi-side d-flex" style={{ padding: '5% 2% 10% 2%' }}>
+
+                    <div className="text-center">
+                        <img alt='img' src={require('../image/logo_mercubuana.png')} width="400px"
+                            style={{ opacity: 0.2 }} />
+                    </div>
+
+                    <div className="misi-side d-flex" style={{ padding: '7% 2% 10% 2%' }}>
                         <div className="isi-misi col-6 text-center">
                             <h6>
                                 Menyelenggarakan pendidikan, penelitian dan pengabdian kepada masyarakat, dan mencapai keunggulan akademik untuk menghasilkan tenaga profesional dan lulusan yang memenuhi standar kualitas kerja yang disyaratkan.
@@ -223,11 +235,12 @@ class Home extends Component {
                             <h6>Mengembangkan kompetensi dan menumbuh kembangkan jiwa kewirausahaan dan etika profesional kepada para mahasiswa dan staf yang memberikan kontribusi positif terhadap peningkatan kualitas hidup.</h6>
                         </div>
                         <div className="misi col-6 text-center " style={{ paddingTop: '11%' }}>
-                            <h3 style={{ fontWeight: 'bold', fontSize: '45px' }}>MISI</h3>
+                            <h3 style={{ fontWeight: 'bold', fontSize: '45px' }}>M I S I</h3>
                         </div>
                     </div>
 
                     <div className="quotes text-center" style={{ padding: '5% 8% 3% 8%' }}>
+
                         <h5 style={{ fontFamily: 'Josefin Sans' }}>" ... perguruan tinggi memiliki tanggung jawab pada pundaknya, sesuai amanah dalam Undang-Undang No.12 Tahun 2012 tentang Pendidikan Tinggi yaitu perguruan tinggi memiliki kewajiban untuk turut serta dalam kemajuan peradaban bangsa Indonesia. Amanah tersebut memberi arti bahwa Universitas Mercu Buana harus terus mendorong kualitas dirinya, mengembangkan kemampuan ilmu pengetahuannya, sekaligus meningkatkan produk riset dan inovasi yang semua itu menjadi ukuran kinerja perguruan tinggi."</h5>
                     </div>
                     <div className="prof text-center" style={{ paddingBottom: '5%' }}>
