@@ -36,7 +36,6 @@ function History_admin() {
 
     /* -------- USEEFFECT -------- */
     useEffect(() => {
-        let id = parseInt(localStorage.getItem('id'))
         Axios(`${APIURL}pengajuan/getallhistory`)
             .then(res => {
                 setdataHistory(res.data)
@@ -65,7 +64,7 @@ function History_admin() {
                     }
                     {
                         val.status === 'finish' ?
-                            <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>Selesai</td>
+                            <td style={{ color: 'green', fontWeight: 'bold' }}>Selesai</td>
                             :
                             <td style={{ color: 'red', fontWeight: 'bold' }}>Ditolak</td>
 
@@ -81,28 +80,30 @@ function History_admin() {
                         {
                             val.status === 'finish' ?
                                 <div className="d-flex">
-                                    <MDBBtn size='sm' className="my-0 px-2" color='info' onClick={() => {
+                                    <MDBBtn size='sm' className="my-0 px-2" color='blue-grey' onClick={() => {
                                         setmodalReview(true)
                                         Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
                                             .then(res => { setdataReview(res.data) })
                                             .catch(err => { console.log(err) })
-                                    }}><MDBIcon icon="eye" /> Review</MDBBtn>
-                                    <MDBBtn size='sm' className="my-0 px-2" color='info' onClick={() => {
+                                    }}> Review</MDBBtn>
+                                    <MDBBtn size='sm' className="my-0 px-2" color="blue-grey" onClick={() => {
                                         setmodalEvaluasi(true)
                                         setidSellect(val.id)
 
                                         Axios.get(`${APIURL}pengajuan/getevaluasi/${val.id}`)
                                             .then(res => { setdataEvaluasi(res.data) })
                                             .catch(err => { console.log(err) })
-                                    }}><MDBIcon icon="eye" /> Evaluasi</MDBBtn>
+                                    }}> Evaluasi</MDBBtn>
                                 </div>
                                 :
-                                <MDBBtn size='sm' className="my-0 px-2" color='info' onClick={() => {
-                                    setmodalReview(true)
-                                    Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
-                                        .then(res => { setdataReview(res.data) })
-                                        .catch(err => { console.log(err) })
-                                }}><MDBIcon icon="eye" /> Review</MDBBtn>
+                                <div className="text-left">
+                                    <MDBBtn size='sm' className="my-0 px-2" color='blue-grey' onClick={() => {
+                                        setmodalReview(true)
+                                        Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
+                                            .then(res => { setdataReview(res.data) })
+                                            .catch(err => { console.log(err) })
+                                    }}> Review</MDBBtn>
+                                </div>
                         }
                     </td>
                 </tr>
@@ -125,6 +126,14 @@ function History_admin() {
         })
     }
 
+    /* ------------ button refresh --------- */
+    const btnRefresh = () => {
+        Axios(`${APIURL}pengajuan/getallhistory`)
+            .then(res => setdataHistory(res.data))
+            .catch(err => { console.log(err) })
+    }
+
+    /* ------------ render Evaluasi --------- */
     const renderEvaluasi = () => {
         if (dataEvaluasi[0] !== undefined || dataEvaluasi[0].length === 0) {
             return (
@@ -175,7 +184,8 @@ function History_admin() {
 
     }
 
-    console.log(dataEvaluasi)
+
+
     return (
         <div>
 
@@ -341,6 +351,8 @@ function History_admin() {
 
 
             <h5 className="mt-3" style={{ fontWeight: 'bolder' }}>History Pengajuan/Kerjasama</h5>
+            <MDBBtn onClick={btnRefresh} size="sm" color="success"> Refresh </MDBBtn>
+
             {
                 dataHistory.length === 0 || dataHistory === [] ?
                     <div>

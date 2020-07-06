@@ -53,8 +53,12 @@ class Verifikasi_akun extends Component {
                         <td>{val.phone}</td>
                         <td>{val.alamat}</td>
                         <td>{val.jenisperusahaan}</td>
-                        <td ><a href={val.linkperusahaan} target="_blank" style={{ color: 'blue' }}>{val.linkperusahaan}</a></td>
-                        {/* <td>{val.status}</td> */}
+                        {(val.linkperusahaan).toLowerCase() === 'tidak ada' || (val.linkperusahaan).toUpperCase() === 'TIDAK ADA' ?
+                            <td >Tidak Ada</td> :
+                            <td  >
+                                <a href={val.linkperusahaan} target="_blank" style={{ color: 'blue' }}>{val.linkperusahaan}</a>
+                            </td>
+                        }
                         <td >
                             <Tooltip TransitionComponent={Zoom} title="Belum Diverifikasi" arrow placement="top">
                                 <img src={require('../../image/unverified.png')} width="22px" alt='img' style={{ cursor: "pointer" }} />
@@ -83,18 +87,24 @@ class Verifikasi_akun extends Component {
                         <td>{val.phone}</td>
                         <td>{val.alamat}</td>
                         <td>{val.jenisperusahaan}</td>
-                        <td ><a href={val.linkperusahaan} target="_blank" style={{ color: 'blue' }}>{val.linkperusahaan}</a></td>
+                        {(val.linkperusahaan).toLowerCase() === 'tidak ada' || (val.linkperusahaan).toUpperCase() === 'TIDAK ADA' ?
+                            <td >Tidak Ada</td> :
+                            <td  >
+                                <a href={val.linkperusahaan} target="_blank" style={{ color: 'blue' }}>{val.linkperusahaan}</a>
+                            </td>
+                        }
                         <td>
                             <Tooltip TransitionComponent={Zoom} title="Sudah Diverifikasi" arrow placement="top">
                                 <img src={require('../../image/verified.png')} width="22px" style={{ cursor: "pointer" }} alt='img' />
                             </Tooltip>
                         </td>
 
-                    </tr>
+                    </tr >
                 )
             })
         )
     }
+
 
 
     render() {

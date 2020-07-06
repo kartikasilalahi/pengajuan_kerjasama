@@ -138,7 +138,7 @@ function Manajemen_kerjasama() {
                     .then(() => {
                         Swal.fire({
                             title: 'Berhasil',
-                            text: `Kerjasama Ditolak.`,
+                            text: 'Kerjasama Ditolak. Pengajuan Dapat Dilihat Kembali Di Menu History (Jika Belum Tampil, Silahkan Klik tombol "refresh")',
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 2100
@@ -221,7 +221,7 @@ function Manajemen_kerjasama() {
                             <td>{val.nama + ' (' + val.bidanglain + ')'}</td>
                     }
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                        <MDBBtn size='sm' className="my-0" color='blue-grey' onClick={() => {
                             setmodalDetail(true)
                             setdetailPengajuan(newPengajuan[i])
                             setidSellect(val.id)
@@ -231,7 +231,7 @@ function Manajemen_kerjasama() {
                         <MDBBtn size='sm' className="my-0" onClick={() => {
                             setmodalFormKelayakan(true)
                             setidSellect(val.id)
-                        }}>accept / decline</MDBBtn>
+                        }}>terima / tolak</MDBBtn>
                     </td>
                 </tr>
             )
@@ -254,14 +254,14 @@ function Manajemen_kerjasama() {
                             <td>{val.nama + ' (' + val.bidanglain + ')'}</td>
                     }
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                        <MDBBtn size='sm' className="my-0" color='blue-grey' onClick={() => {
                             setmodalDetail(true)
                             setdetailPengajuan(daftarKerjasama[i])
                             setidSellect(val.id)
                         }}>Detail</MDBBtn>
                     </td>
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                        <MDBBtn size='sm' className="my-0" color='blue-grey' onClick={() => {
                             setmodalReview(true)
                             // setsellectrole('decline')
                             Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
@@ -270,9 +270,6 @@ function Manajemen_kerjasama() {
                         }}>Review</MDBBtn>
                     </td>
                     <td style={{ color: '#33B5E5', fontWeight: 'bold' }}>Sedang Berlangsung</td>
-                    {/* <td>
-                        <MDBBtn size='sm' className="my-0" color='success' onClick={finishKerjasama}> Selesai </MDBBtn>
-                    </td> */}
                 </tr>
             )
         })
@@ -293,25 +290,23 @@ function Manajemen_kerjasama() {
                             <td>{val.nama + ' (' + val.bidanglain + ')'}</td>
                     }
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                        <MDBBtn size='sm' className="my-0" color='blue-grey' onClick={() => {
                             setmodalDetail(true)
                             setdetailPengajuan(daftarDecline[i])
                             setidSellect(val.id)
                         }}>Detail</MDBBtn>
                     </td>
                     <td>
-                        <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                        <MDBBtn size='sm' className="my-0" color='blue-grey' onClick={() => {
                             setmodalReview(true)
                             setsellectrole('decline')
-                            // setidSellect(val.id)
-                            // setdetailPengajuan(daftarDecline[i])
                             Axios.get(`${APIURL}pengajuan/getreviewpenilaian/${val.id}`)
                                 .then(res => { setdataReview(res.data) })
                                 .catch(err => { console.log(err) })
                         }}>Review</MDBBtn>
                     </td>
                     <td style={{ color: 'red', fontWeight: 'bold' }}>
-                        DITOLAK
+                        Ditolak
                     </td>
                 </tr>
             )
@@ -479,8 +474,8 @@ function Manajemen_kerjasama() {
 
                 </ModalBody >
                 <ModalFooter>
-                    <MDBBtn size='sm' className="my-0" onClick={acceptPengajuan}>accept</MDBBtn>
-                    <MDBBtn size='sm' className="my-0" onClick={declinePengajuan} color='danger'>decline</MDBBtn>
+                    <MDBBtn size='sm' className="my-0" onClick={acceptPengajuan}>terima</MDBBtn>
+                    <MDBBtn size='sm' className="my-0" onClick={declinePengajuan} color='danger'>tolak</MDBBtn>
                     <MDBBtn onClick={toggleKelayakan} size="sm" color="warning"> <MDBIcon icon="times-circle" /> Tutup </MDBBtn>
                 </ModalFooter>
             </Modal >
@@ -528,7 +523,7 @@ function Manajemen_kerjasama() {
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                    <MDBBtn size='sm' className="my-0" color='blue-grey' onClick={() => {
                         // setmodalDetail(true)
                         // setdetailPengajuan(daftarDecline[i])
                         // setidSellect(val.id)

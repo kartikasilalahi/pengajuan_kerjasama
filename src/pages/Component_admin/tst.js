@@ -1,0 +1,1 @@
+console.log('tidak ADa'.toUpperCase())

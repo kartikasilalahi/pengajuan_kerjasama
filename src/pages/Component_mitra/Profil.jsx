@@ -217,14 +217,16 @@ function Profil() {
                                             <option value="Non Pemerintahan">Non Pemerintahan</option>
                                         </select>
                                         :
-                                        <select>
+                                        <select name="jenisperusahaan" className="form-control">
                                             <option selected value="Non Pemerintahan">Non Pemerintahan</option>
                                             <option value="Pemerintahan">Pemerintahan</option>
                                         </select>
                                 }
                             </div>
                     }
-                    <Button className="btn btn-green mt-2 ml-0" size="md" onClick={btnEdit}> Edit </Button>
+                    <div className="text-right">
+                        <Button className="btn btn-green mt-2" size="md" onClick={btnEdit}> Edit </Button>
+                    </div>
                 </div>
             </div>
 

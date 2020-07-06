@@ -38,7 +38,6 @@ function History() {
                 // console.log(`${APIURL}pengajuan/gethistory/${id}`)
                 setdataHistory(res.data)
             })
-
             .catch(err => { console.log(err) })
     }, [])
 
@@ -103,8 +102,17 @@ function History() {
                 </tr>
             )
         })
-
     }
+
+    /* ------------ button refresh --------- */
+    const btnRefresh = () => {
+        let id = parseInt(localStorage.getItem('id'))
+        Axios(`${APIURL}pengajuan/gethistory/${id}`)
+            .then(res => {
+                setdataHistory(res.data)
+            }).catch(err => { console.log(err) })
+    }
+
 
 
     return (
@@ -185,6 +193,7 @@ function History() {
             <Modal isOpen={modalReview} toggle={toggleReview} centered style={{ width: "50%", maxWidth: "1200px" }}>
                 <ModalHeader>
                     <h4 className="font-weight-bold">Table Review Kelayakan Persetujuan Kerjasama</h4>
+
                 </ModalHeader>
                 <ModalBody>
                     <Table>
@@ -210,6 +219,8 @@ function History() {
 
 
             <h5 className="mt-3" style={{ fontWeight: 'bolder' }}>History Pengajuan/Kerjasama</h5>
+            <MDBBtn onClick={btnRefresh} size="sm" color="success"> Refresh </MDBBtn>
+
             {
                 dataHistory.length === 0 || dataHistory === [] ?
                     <div>

@@ -365,16 +365,15 @@ function Pengajuan() {
                 .then(res => {
                     Swal.fire({
                         title: 'Evaluasi Berhasil Dikirim',
-                        text: 'Kerjasam Dapat Dilihat Kembali Di Menu History',
+                        text: 'Kerjasama Dapat Dilihat Kembali Di Menu History (Jika Belum Tampil, Silahkan Klik tombol "refresh")',
                         icon: 'success',
                         showConfirmButton: false,
-                        timer: 2600
+                        timer: 3200
                     }).then(() => {
                         sethasilEvaluasi(res.data.evaluasi)
                         setdataOnprocess(res.data.waiting)
                         setmodalEvaluasi(!modalEvaluasi)
                     })
-
                 })
                 .catch(err => console.log(err))
 
