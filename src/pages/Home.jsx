@@ -166,6 +166,11 @@ class Home extends Component {
                                         <div><img alt='img' src={require('../image/umb2.jpeg')} width="50px" /></div>
                                         <div><img alt='img' src={require('../image/umb3.jpeg')} width="50px" /></div>
                                         <div><img alt='img' src={require('../image/umb4.jpeg')} width="50px" /></div>
+                                        <div><img alt='img' src={require('../image/umb9.jpg')} width="50px" /></div>
+                                        <div><img alt='img' src={require('../image/umb10.jpg')} width="50px" /></div>
+                                        <div><img alt='img' src={require('../image/umb11.jpg')} width="50px" /></div>
+                                        <div><img alt='img' src={require('../image/umb12.jpg')} width="50px" /></div>
+                                        <div><img alt='img' src={require('../image/umb13.jpg')} width="50px" /></div>
                                     </Carousel>
                                 </div>
                             </div>
