@@ -204,7 +204,7 @@ function Profil() {
                                     defaultValue={dataProfil[0].phone}
                                     onChange={e => seteditProfil({ ...editProfil, phone: e.target.value })}
                                 />
-                                <Label className="mt-3" style={{ fontSize: '13px' }}>Link/website Institusi</Label>
+                                <Label className="mt-3" style={{ fontSize: '13px' }}>Website Institusi</Label>
                                 <Input type="text"
                                     defaultValue={dataProfil[0].linkperusahaan}
                                     onChange={e => seteditProfil({ ...editProfil, linkperusahaan: e.target.value })}
@@ -237,31 +237,32 @@ function Profil() {
                     {
                         dataProfil === [] || dataProfil.length === 0 ? null :
                             <div>
+                                <Label style={{ fontSize: '13px' }}>Ubah Email</Label>
                                 <Form inline>
                                     <Input className="w-75" type="email"
                                         defaultValue={dataProfil[0].email}
                                         onChange={e => setubahEmail({ ...ubahEmail, email: e.target.value })}
                                     />
-                                    <Button onClick={btnUbahEmail} className="btn btn-grey ml-4 mr-0" style={{ fontSize: '10px' }} size="sm" >change</Button>
+                                    <Button onClick={btnUbahEmail} className="btn btn-green ml-4 mr-0" style={{ fontSize: '10px' }} size="sm" >Ubah</Button>
                                 </Form>
                             </div>
                     }
                 </div>
                 {/* ----- change password ----- */}
-                <Label style={{ fontSize: '13px' }}>current password</Label>
-                <Input defaultValue='' type="password" placeholder="input password sekarang"
+                <Label className="mt-3" style={{ fontSize: '13px' }}>Password Saat Ini</Label>
+                <Input defaultValue='' type="password"
                     onChange={e => seteditPass({ ...editPass, password: e.target.value })}
                 />
-                <Label className="mt-3" style={{ fontSize: '13px' }}>new password</Label>
-                <Input type="password" placeholder="input password baru"
+                <Label className="mt-3" style={{ fontSize: '13px' }}>Password Baru</Label>
+                <Input type="password"
                     onChange={e => seteditPass({ ...editPass, newpassword: e.target.value })}
                 />
-                <Label className="mt-3" style={{ fontSize: '13px' }}>confirm new password</Label>
-                <Input type="password" placeholder="confirm password baru"
+                <Label className="mt-3" style={{ fontSize: '13px' }}>Konfirmasi Password Baru</Label>
+                <Input type="password"
                     onChange={e => seteditPass({ ...editPass, confpass: e.target.value })}
                 />
                 {renderError()}
-                <Button onClick={btnUbahPassword} className="btn btn-green mt-3" style={{ fontSize: '10px', marginLeft: '68%' }} size="sm" >change password</Button>
+                <Button onClick={btnUbahPassword} className="btn btn-green mt-3" style={{ fontSize: '10px', marginLeft: '68%' }} size="sm" >Ubah Password</Button>
             </div>
         </div>
     )

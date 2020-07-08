@@ -83,7 +83,7 @@ class Dashboard_admin extends Component {
                             <p>History</p>
                         </Tab>
                         <Tab>
-                            <div className="button_logout text-center" style={{ width: '20%' }} >
+                            <div className="button_logout text-center" >
                                 <MDBBtn onClick={this.btnlogout} >Keluar </MDBBtn>
                             </div>
                         </Tab>

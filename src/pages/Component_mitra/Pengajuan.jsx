@@ -155,14 +155,14 @@ function Pengajuan() {
             !unit
         ) Toast.fail('Pastikan Form Lengkap Terisi', 3000)
 
-        else if (dokumen.length < 4) Toast.fail('Pastikan Semua Dokumen Terpenuhi..', 2700)
+        else if (dokumen.length < 4) Toast.fail('Pastikan Semua Dokumen Terpenuhi', 2700)
 
         else {
             Toast.loading(`Memproses`);
             setTimeout(() => {
                 Axios.post(`${APIURL}pengajuan/addpengajuan`, formdata, Headers)
                     .then(() => {
-                        Toast.success('Berhasil..', 2500)
+                        Toast.success('Berhasil', 2500)
                         Toast.hide();
                         setdokumen([])
                         setaddPengajuan({})
@@ -365,7 +365,7 @@ function Pengajuan() {
                 .then(res => {
                     Swal.fire({
                         title: 'Evaluasi Berhasil Dikirim',
-                        text: 'Kerjasama Dapat Dilihat Kembali Di Menu History (Jika Belum Tampil, Silahkan Klik tombol "refresh")',
+                        text: 'Kerjasama Dapat Dilihat Kembali di Menu History (Jika Belum Tampil, Silahkan Klik Tombol "Refresh")',
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 3200
@@ -505,14 +505,14 @@ function Pengajuan() {
                     <div className="d-flex">
                         <div className="col-5">
                             <FormGroup>
-                                <Label style={{ fontSize: "15px" }}>Nama Evaluator: </Label>
+                                <Label style={{ fontSize: "15px" }}>Nama Evaluator </Label>
                                 <Input size="sm" className="w-100" type="text"
                                     value={dataEvaluasi.nama_evaluator || ''}
                                     onChange={e => setdataEvaluasi({ ...dataEvaluasi, nama_evaluator: e.target.value })}
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label style={{ fontSize: "15px" }}>Instansi: </Label>
+                                <Label style={{ fontSize: "15px" }}>Instansi </Label>
                                 <Input size="sm" className="w-100" type="text"
                                     value={dataEvaluasi.instansi || ''}
                                     onChange={e => setdataEvaluasi({ ...dataEvaluasi, instansi: e.target.value })}
@@ -520,7 +520,7 @@ function Pengajuan() {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label style={{ fontSize: "15px" }}>Jenis Kerjasama: </Label>
+                                <Label style={{ fontSize: "15px" }}>Jenis Kerjasama </Label>
                                 <Input size="sm" className="w-100" type="text"
                                     value={dataEvaluasi.jenis_kerjasama || ''}
                                     onChange={e => setdataEvaluasi({ ...dataEvaluasi, jenis_kerjasama: e.target.value })}
@@ -681,14 +681,14 @@ function Pengajuan() {
                         <div className="form-pengajuan d-flex">
                             <div className="left col-6 mr-2 py-2" style={{ backgroundColor: 'whitesmoke' }}>
                                 <FormGroup>
-                                    <Label style={{ fontSize: "15px" }}>Nama Pengaju: </Label>
+                                    <Label style={{ fontSize: "15px" }}>Nama Pengaju </Label>
                                     <Input size="sm" className="w-100" type="text"
                                         value={addPengajuan.pengaju || ''}
                                         onChange={e => setaddPengajuan({ ...addPengajuan, pengaju: e.target.value })}
                                     />
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label style={{ fontSize: "15px" }}>No HP/WA: </Label>
+                                    <Label style={{ fontSize: "15px" }}>No HP/WA </Label>
                                     <Input size="sm" type="text"
                                         value={addPengajuan.no_pengaju || ''}
                                         onChange={e => setaddPengajuan({ ...addPengajuan, no_pengaju: e.target.value })}
@@ -728,9 +728,9 @@ function Pengajuan() {
                                     <select name="idbidang" className="form-control" onChange={handleBidang}>
                                         {
                                             addPengajuan.idbidang === undefined ?
-                                                <option selected hidden value="">Pilih Kategori..</option>
+                                                <option selected hidden value="">Pilih Kategori</option>
                                                 :
-                                                <option hidden value="">Pilih Kategori..</option>
+                                                <option hidden value="">Pilih Kategori</option>
                                         }
                                         {renderSelectBidang()}
                                     </select>
@@ -738,10 +738,10 @@ function Pengajuan() {
                                     {
                                         tulisBidang ?
                                             (
-                                                <Input className="mt-3" type="text" placeholder='Sebutkan Bidang kerja sama'
+                                                <Input className="mt-3" type="text" placeholder='Sebutkan Bidang Kerjasama'
                                                     value={addPengajuan.bidanglain || ''}
                                                     onChange={e => setaddPengajuan({ ...addPengajuan, bidanglain: e.target.value })} />
-                                            ) : <Input disabled className="mt-3" size="sm" type="text" placeholder='Sebutkan Bidang kerja sama' />
+                                            ) : <Input disabled className="mt-3" size="sm" type="text" placeholder='Sebutkan Bidang Kerjasama' />
                                     }
                                 </FormGroup>
                             </div>
@@ -775,16 +775,16 @@ function Pengajuan() {
                                 <FormGroup>
                                     <Label style={{ fontSize: "15px" }}>Dokumen: </Label>
                                     <CustomInput
-                                        onChange={handleDocument} label='Select MoU' name='MOU' size="sm" type='file' className='form-control mb-3' />
+                                        onChange={handleDocument} label='Unggah File MoU' name='MOU' size="sm" type='file' className='form-control mb-3' />
                                     <CustomInput
                                         onChange={handleDocument}
-                                        name='MOA' type='file' label='Upload file MoA' className='form-control mb-3' />
+                                        name='MOA' type='file' label='Unggah File MoA' className='form-control mb-3' />
                                     <CustomInput
                                         onChange={handleDocument}
-                                        name='IA' type='file' label='Upload file IA' className='form-control mb-3' />
+                                        name='IA' type='file' label='Unggah File IA' className='form-control mb-3' />
                                     <CustomInput
                                         onChange={handleDocument}
-                                        name='perpanjangan' type='file' label='Upload file Perpanjangan MoU/MoA/IA' className='form-control mb-3' />
+                                        name='perpanjangan' type='file' label='Unggah File Perpanjangan MoU/MoA/IA' className='form-control mb-3' />
 
                                 </FormGroup>
                                 {

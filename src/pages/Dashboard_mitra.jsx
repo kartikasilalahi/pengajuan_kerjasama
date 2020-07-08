@@ -67,9 +67,7 @@ class Dashboard_mitra extends Component {
                         <h5>Universitas Mercubuana</h5>
                     </div>
                 </div>
-                {/* <div className="nama-mitra text-center my-3" style={{ width: '20%' }}>
-                    <h6>HI, THERE</h6>
-                </div> */}
+
 
                 {/* ----------------- TAB START HERE --------------------- */}
                 <Tabs defaultTab={this.state.tabActive} vertical>
@@ -86,6 +84,11 @@ class Dashboard_mitra extends Component {
                             <i className="fa fa-history" ></i>
                             <p>History</p>
                         </Tab>
+                        <Tab>
+                            <div className="button_logout text-center" >
+                                <MDBBtn onClick={this.btnlogout} >Keluar </MDBBtn>
+                            </div>
+                        </Tab>
 
                     </TabList>
                     <TabPanel style={{ width: "100%" }} tabId="vertical-tab-one">
@@ -100,9 +103,6 @@ class Dashboard_mitra extends Component {
                 </Tabs>
                 {/* ----------------- TAB END HERE --------------------- */}
 
-                <div className="button_logout text-center" style={{ width: '20%' }} >
-                    <MDBBtn onClick={this.btnlogout} >Keluar</MDBBtn>
-                </div>
             </div>
         )
     }

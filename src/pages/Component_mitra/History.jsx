@@ -50,7 +50,7 @@ function History() {
     const renderHistory = () => {
         return dataHistory.map((val, i) => {
             return (
-                <tr key={i}>
+                <tr className="text-center" key={i}>
                     <th>{i + 1}</th>
                     <td>{val.nama_institusi}</td>
                     <td>{val.alamat_institusi}</td>
@@ -218,7 +218,7 @@ function History() {
             {/* ---- end modal review penilaian kelayakan  ---- */}
 
 
-            <h5 className="mt-3" style={{ fontWeight: 'bolder' }}>History Pengajuan/Kerjasama</h5>
+            <h5 className="mt-3 mb-4" style={{ fontWeight: 'bolder' }}>History Pengajuan/Kerjasama</h5>
             <MDBBtn onClick={btnRefresh} size="sm" color="success"> Refresh </MDBBtn>
 
             {
