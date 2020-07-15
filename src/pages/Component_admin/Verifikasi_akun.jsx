@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import Zoom from '@material-ui/core/Zoom';
 import Tooltip from '@material-ui/core/Tooltip';
 import { APIURL } from '../../helper/apiurl'
-import { Table } from 'reactstrap'
+import { Table, Input } from 'reactstrap'
 import { MDBBtn } from 'mdbreact'
 
 
@@ -16,7 +16,8 @@ class Verifikasi_akun extends Component {
         daftarUnverified: [],
         verified: 'false',
         unverified: 'true',
-        indexedit: -1
+        indexedit: -1,
+        searchField: ''
     }
 
     // ---------- Componentdidmount ------------
@@ -76,9 +77,17 @@ class Verifikasi_akun extends Component {
 
     // ---------- render isi tabel daftar user verified ------------
     userVerified = () => {
-        let { daftarVerified } = this.state
+        let { daftarVerified, searchField } = this.state
+
+        const filterProduct = daftarVerified.filter(val => {
+            return val.nama.toLowerCase().includes(searchField.toLowerCase())
+        })
+
+        if (filterProduct.length === 0)
+            return 'Tidak Ditemukan Hasil Pencarian'
+
         return (
-            daftarVerified.map((val, i) => {
+            filterProduct.map((val, i) => {
                 return (
                     <tr key={i} className="text-center">
                         <th>{i + 1}</th>
@@ -108,7 +117,8 @@ class Verifikasi_akun extends Component {
 
 
     render() {
-        let { verified, unverified, indexedit, daftarUnverified, daftarVerified } = this.state
+        console.log(this.state.searchField)
+        let { verified, unverified, indexedit, daftarUnverified, daftarVerified, searchField } = this.state
 
         if (indexedit > -1) {
             Swal.fire({
@@ -154,6 +164,7 @@ class Verifikasi_akun extends Component {
                     </div>
                 </div>
 
+
                 <div>
                     {
                         unverified === "true" ?
@@ -182,26 +193,34 @@ class Verifikasi_akun extends Component {
                             </div>
                             :
                             verified === "true" ?
-                                <div className="mx-auto" style={{ width: '98%' }}>{
-                                    daftarVerified.length > 0 ?
-                                        <Table className="tabel-user m-3" striped >
-                                            <thead>
-                                                <tr className="text-center">
-                                                    <th>No</th>
-                                                    <th>Nama Instansi</th>
-                                                    <th>Email</th>
-                                                    <th>No. Telp</th>
-                                                    <th>Alamat</th>
-                                                    <th>Jenis Instansi</th>
-                                                    <th>Website</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {this.userVerified()}
-                                            </tbody>
-                                        </Table> : <div className="mx-auto mt-5" style={{ fontWeight: 'bold', color: 'gray' }}>Belum ada akun yang terverifikasi</div>
-                                }
+                                <div className="mx-auto" style={{ width: '98%' }}>
+                                    <div>
+                                        <Input type="search"
+                                            className="w-25 my-3 ml-3"
+                                            placeholder="Ketik Nama Institusi"
+                                            onChange={(e) => this.setState({ searchField: e.target.value })}
+                                        />
+                                    </div>
+                                    {
+                                        daftarVerified.length > 0 ?
+                                            <Table className="tabel-user m-3" striped >
+                                                <thead>
+                                                    <tr className="text-center">
+                                                        <th>No</th>
+                                                        <th>Nama Instansi</th>
+                                                        <th>Email</th>
+                                                        <th>No. Telp</th>
+                                                        <th>Alamat</th>
+                                                        <th>Jenis Instansi</th>
+                                                        <th>Website</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {this.userVerified()}
+                                                </tbody>
+                                            </Table> : <div className="mx-auto mt-5" style={{ fontWeight: 'bold', color: 'gray' }}>Belum ada akun yang terverifikasi</div>
+                                    }
                                 </div>
                                 : null
                     }

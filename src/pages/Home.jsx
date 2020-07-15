@@ -83,6 +83,10 @@ class Home extends Component {
         }
     }
 
+    copyright = () => {
+        var d = new Date();
+        return d.getFullYear()
+    }
 
     render() {
         // console.log('jenis', this.state.jenisperusahaan)
@@ -248,10 +252,29 @@ class Home extends Component {
 
                         <h5 style={{ fontFamily: 'Josefin Sans' }}>" ... perguruan tinggi memiliki tanggung jawab pada pundaknya, sesuai amanah dalam Undang-Undang No.12 Tahun 2012 tentang Pendidikan Tinggi yaitu perguruan tinggi memiliki kewajiban untuk turut serta dalam kemajuan peradaban bangsa Indonesia. Amanah tersebut memberi arti bahwa Universitas Mercu Buana harus terus mendorong kualitas dirinya, mengembangkan kemampuan ilmu pengetahuannya, sekaligus meningkatkan produk riset dan inovasi yang semua itu menjadi ukuran kinerja perguruan tinggi."</h5>
                     </div>
-                    <div className="prof text-center" style={{ paddingBottom: '5%' }}>
+                    <div className="prof text-center" style={{ paddingBottom: '2%' }}>
                         <p><span style={{ fontWeight: 'bold' }}>Prof. Dr Ngadino Surip, MS</span> <br />
                         Rektor Universitas Mercu Buana 2018 - 2022</p>
                         <button className="btn btn-outline-dark-blue" style={{ borderRadius: "25px" }}><a className="regist" target='_blank' href='https://www.mercubuana.ac.id' style={{ color: 'black' }}>Selengkapnya</a></button>
+                        <div className="mt-5 my-0">
+                            <p className="mb-1" style={{ fontWeight: 'bolder' }}>Find us on:</p>
+                            <a href="https://twitter.com/univmercubuana" target="_blank" >
+                                <img className="mr-3" src={require('../image/twitter.svg')} alt="t" width="20px" />
+                            </a>
+                            <a href="https://www.facebook.com/univmercubuana" target="_blank" >
+                                <img className="mr-3" src={require('../image/fb.svg')} alt="t" width="20px" />
+                            </a>
+                            <a href="https://www.instagram.com/univmercubuana/" target="_blank" >
+                                <img className="mr-3" src={require('../image/ig.svg')} alt="t" width="20px" />
+                            </a>
+                            <a href="https://www.youtube.com/channel/UCwVzX-FQiOlt45Y2cHcnVyQ" target="_blank" >
+                                <img className="mr-3" src={require('../image/yt.svg')} alt="t" width="20px" />
+                            </a>
+                        </div>
+                        <div className="copy-right mt-5">
+                            <p className="footer-company-name" style={{ color: 'black', fontSize: '13px' }}>Let's Build Our Own Project ©{this.copyright()}<br />
+                                <a href="mailto:buildwithmeh@gmail.com">buildwithmeh@gmail.com</a></p>
+                        </div>
                     </div>
                     <div>
                     </div>

@@ -21,6 +21,7 @@ function Manajemen_kerjasama() {
     const [accept, setaccept] = useState('false');
     const [decline, setdecline] = useState('false');
     const [idSellect, setidSellect] = useState(0);
+    const [idInstansi, setidInstansi] = useState(0);
     const [sellectrole, setsellectrole] = useState('');
 
 
@@ -96,6 +97,7 @@ function Manajemen_kerjasama() {
                                 reputasi_institusi: dataPenilaian.reputasi_institusi,
                                 nama_reviewer: dataPenilaian.nama_reviewer,
                                 jabatan_reviewer: dataPenilaian.jabatan_reviewer
+                                // id_instansi: idSellect
                             }
 
                             Axios.put(`${APIURL}pengajuan/accept/${idSellect}`, data)
