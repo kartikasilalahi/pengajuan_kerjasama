@@ -267,7 +267,7 @@ class Home extends Component {
                             <a href="https://www.instagram.com/univmercubuana/" target="_blank" >
                                 <img className="mr-3" src={require('../image/ig.svg')} alt="t" width="20px" />
                             </a>
-                            <a href="https://www.youtube.com/channel/UCwVzX-FQiOlt45Y2cHcnVyQ" target="_blank" >
+                            <a href="https://www.youtube.com/channel/UCbbBjlA0DJZvW0e6zoQcD_g" target="_blank" >
                                 <img className="mr-3" src={require('../image/yt.svg')} alt="t" width="20px" />
                             </a>
                         </div>
