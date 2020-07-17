@@ -497,7 +497,7 @@ function Pengajuan() {
 
 
             {/* ---- start modal evaluasi ---- */}
-            <Modal isOpen={modalEvaluasi} toggle={toggleEvaluasi} centered style={{ width: "80%", maxWidth: "1200px" }}>
+            <Modal isOpen={modalEvaluasi} centered style={{ width: "80%", maxWidth: "1200px" }}>
                 <ModalHeader>
                     <h4 className="font-weight-bold">Form Evaluasi Kerjasama</h4>
                 </ModalHeader>
@@ -621,10 +621,15 @@ function Pengajuan() {
                         </div>
                     </div>
 
-
                 </ModalBody>
                 <ModalFooter>
-                    <MDBBtn size='sm' className="my-0" color='info' onClick={kirimEvaluasi}><MDBIcon icon="check-square" /> Kirim</MDBBtn>
+                    {
+                        dataEvaluasi.length === 0 || dataEvaluasi === {} ?
+                            <MDBBtn size='sm' className="my-0" color='info' disabled><MDBIcon icon="check-square" /> Kirim</MDBBtn>
+                            :
+                            <MDBBtn size='sm' className="my-0" color='info' onClick={kirimEvaluasi}><MDBIcon icon="check-square" /> Kirim</MDBBtn>
+
+                    }
                 </ModalFooter>
             </Modal>
             {/* ---- end modal evaluasi ---- */}

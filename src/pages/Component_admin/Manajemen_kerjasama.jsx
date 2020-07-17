@@ -476,8 +476,17 @@ function Manajemen_kerjasama() {
 
                 </ModalBody >
                 <ModalFooter>
-                    <MDBBtn size='sm' className="my-0" onClick={acceptPengajuan}>terima</MDBBtn>
-                    <MDBBtn size='sm' className="my-0" onClick={declinePengajuan} color='danger'>tolak</MDBBtn>
+                    {
+                        dataPenilaian.length === 0 || dataPenilaian === [] ?
+                            <div>
+                                <MDBBtn size='sm' className="my-0" disabled>terima</MDBBtn>
+                                <MDBBtn size='sm' className="my-0" disabled color='danger'>tolak</MDBBtn>
+                            </div> :
+                            <div>
+                                <MDBBtn size='sm' className="my-0" onClick={acceptPengajuan}>terima</MDBBtn>
+                                <MDBBtn size='sm' className="my-0" onClick={declinePengajuan} color='danger'>tolak</MDBBtn>
+                            </div>
+                    }
                     <MDBBtn onClick={toggleKelayakan} size="sm" color="warning"> <MDBIcon icon="times-circle" /> Tutup </MDBBtn>
                 </ModalFooter>
             </Modal >
@@ -520,7 +529,6 @@ function Manajemen_kerjasama() {
                     <FormGroup>
                         <Label style={{ fontSize: "15px" }}>Nama Reviewer: </Label>
                         <Input size="sm" className="w-100" type="text"
-                        // onChange={e => setdataPenilaian({ ...dataPenilaian, nama_reviewer: e.target.value })}
                         />
                     </FormGroup>
                 </ModalBody>
