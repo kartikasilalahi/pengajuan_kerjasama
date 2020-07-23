@@ -273,7 +273,7 @@ class Home extends Component {
                         </div>
                         <div className="copy-right mt-5">
                             <p className="footer-company-name" style={{ color: 'black', fontSize: '13px' }}>Let's Build Our Own Project ©{this.copyright()}<br />
-                                <a href="mailto:buildwithmeh@gmail.com">buildwithmeh@gmail.com</a></p>
+                                <a href="">buildwithmeh@gmail.com</a></p>
                         </div>
                     </div>
                     <div>
