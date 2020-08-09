@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, FormGroup, Label, CustomInput, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Input, FormGroup, Label, CustomInput, Table, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import Toast from 'light-toast'
 import Swal from "sweetalert2";
 import { MDBBtn, MDBIcon } from 'mdbreact'
@@ -48,7 +48,10 @@ function Pengajuan() {
     useEffect(() => {
         let id = parseInt(localStorage.getItem('id'))
         Axios.get(`${APIURL}pengajuan/getajuan/${id}`)
-            .then(res => { setdataAjuan(res.data) })
+            .then(res => {
+                setdataAjuan(res.data)
+                console.log('res', res.data)
+            })
             .catch(err => { console.log(err) })
         Axios.get(`${APIURL}pengajuan/getonprocess/${id}`)
             .then(res => { setdataOnprocess(res.data) })
@@ -230,7 +233,6 @@ function Pengajuan() {
     }
 
 
-
     /* ------ Render Daftar Accept/Kerjasama Onprocess ------ */
     const renderOnprocessKerjasama = () => {
         return dataOnprocess.map((val, i) => {
@@ -381,12 +383,42 @@ function Pengajuan() {
 
     }
 
+    /* ------------ Table/Daftar Kerjasama yang sedang diajukan --------- */
+    const renderSedangDiajukan = () => {
+        return dataAjuan.map((val, i) => {
+            return (
+                <tr className="text-center" key={i}>
+                    <th>{i + 1}</th>
+                    <td>{val.pengaju}</td>
+                    <td>{val.PIC}</td>
+                    {
+                        dataAjuan[0].bidanglain != "tidak ada" ?
+                            <td>{dataAjuan[0].nama + '(' + dataAjuan[0].bidanglain + ')'}</td>
+                            :
+                            <td>{dataAjuan[0].nama}</td>
+                    }
+                    <td>{val.pejabat} / {val.jabatan}</td>
+                    {/* <td>{val.jabatan}</td> */}
+                    <td>{val.penanggungjawab}</td>
+                    <td>
+                        {/* <MDBBtn size='sm' className="my-0 px-2" color='blue-grey' onClick={}> detail </MDBBtn> */
+                            <MDBBtn size='sm' className="my-0" color='info' onClick={() => {
+                                setmodalDetail(true)
+                                setdetailPengajuan(dataAjuan[i])
+                                setidSellect(val.id)
+                            }}>Detail</MDBBtn>}
+                    </td>
+                </tr>
+            )
+        })
+    }
+
 
 
 
     // =========== TEST CONSOLE======================================
 
-    // console.log('ini data pengajuan', addPengajuan)
+    console.log('ini data pengajuan', dataAjuan)
     // console.log('tls bdg', tulisBidang)
     // console.log(addPengajuan.idbidang)
 
@@ -670,10 +702,10 @@ function Pengajuan() {
                 formAjuan === 'true' ?
                     <div>
                         <h5 style={{ fontWeight: 'bolder' }}>Form Pengajuan Kerjasama</h5>
-                        {
+                        <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
+                            <AiOutlineWarning />  Perhatikan! Pastikan Semua Form Terisi.</p>
+                        {/* {
                             dataAjuan.length === 0 || dataAjuan === [] ?
-                                <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
-                                    <AiOutlineWarning />  Perhatikan! Pastikan Semua Form Terisi.</p>
                                 :
                                 <p className="alert alert-danger mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
                                     <AiOutlineWarning />  Perhatikan! Saat Ini Anda Belum Dapat Mengajukan Kerjasama Baru, Karena Pengajuan Sebelumnya Masih Proses Menunggu. <span
@@ -682,7 +714,7 @@ function Pengajuan() {
                                             setformAjuan('false')
                                             setajuan('true')
                                         }}>klik Untuk melihat</span> </p>
-                        }
+                        } */}
                         <div className="form-pengajuan d-flex">
                             <div className="left col-6 mr-2 py-2" style={{ backgroundColor: 'whitesmoke' }}>
                                 <FormGroup>
@@ -792,12 +824,12 @@ function Pengajuan() {
                                         name='perpanjangan' type='file' label='Unggah File Perpanjangan MoU/MoA/IA' className='form-control mb-3' />
 
                                 </FormGroup>
-                                {
+                                <MDBBtn color='success' onClick={addNewPengajuan}  >KIRIM</MDBBtn >
+                                {/* {
                                     dataAjuan.length === 0 || dataAjuan === [] ?
-                                        <MDBBtn color='success' onClick={addNewPengajuan}  >KIRIM</MDBBtn >
                                         :
                                         <MDBBtn color='success' style={{ cursor: 'text' }} >KIRIM</MDBBtn >
-                                }
+                                } */}
 
 
                             </div>
@@ -811,7 +843,70 @@ function Pengajuan() {
                             <div>
                                 <p className="alert alert-warning mb-3 pl-2" style={{ fontSize: '12px', marginTop: '0px' }}>
                                     <AiOutlineWarning />  Pengajuan sedang dalam proses menunggu. Mohon menunggu respon dari Admin/Pihak UMB.</p>
-                                <div className="sedang-diajukan d-flex">
+                                <Table>
+                                    <thead>
+                                        <tr className="text-center">
+                                            <th>No</th>
+                                            <th>Nama Pengaju</th>
+                                            <th>PIC </th>
+                                            <th>Bidang Kerjasama</th>
+                                            <th>Pejabat Penandatangan / Jabatan</th>
+                                            {/* <th>Jabatan Pejabat Penandatangan</th> */}
+                                            <th>Penanggungjawab Pelaksana</th>
+                                            <th>Detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {renderSedangDiajukan()}
+                                    </tbody>
+                                </Table>
+
+                            </div>
+                        :
+                        dataOnprocess.length === 0 || dataOnprocess === [] ?
+                            <p>Tidak Ada Kerjasama yang Sedang Berlangsung</p> :
+                            <Table striped >
+                                <thead>
+                                    <tr className="text-center">
+                                        <th>No.</th>
+                                        <th>Nama Instansi</th>
+                                        <th>Alamat</th>
+                                        <th>Bidang Kerjasama</th>
+                                        <th>Detail</th>
+                                        <th>Review</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderOnprocessKerjasama()}
+                                </tbody>
+                            </Table>
+
+
+
+            }
+
+        </div>
+    )
+
+}
+
+export default Pengajuan
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* <div className="sedang-diajukan d-flex">
                                     <div className="label-ajuan col-6">
                                         <p>Nama yang mengajukan </p>
                                         <p>No HP/WA </p>
@@ -851,39 +946,12 @@ function Pengajuan() {
                                         <p><a target="_blank" href={APIURLDoc + dataAjuan[0].IA}>{showDocs(dataAjuan[0].IA)}</a></p>
                                         <p><a target="_blank" href={APIURLDoc + dataAjuan[0].perpanjangan}>{showDocs(dataAjuan[0].perpanjangan)}</a></p>
                                     </div>
-                                </div>
-                            </div>
-                        :
-                        dataOnprocess.length === 0 || dataOnprocess === [] ?
-                            <p>Tidak Ada Kerjasama yang Sedang Berlangsung</p> :
-                            <Table striped >
-                                <thead>
-                                    <tr className="text-center">
-                                        <th>No.</th>
-                                        <th>Nama Instansi</th>
-                                        <th>Alamat</th>
-                                        <th>Bidang Kerjasama</th>
-                                        <th>Detail</th>
-                                        <th>Review</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderOnprocessKerjasama()}
-                                </tbody>
-                            </Table>
+                                </div> */}
 
 
 
-            }
 
-        </div>
-    )
 
-}
-
-export default Pengajuan
 
 
 
